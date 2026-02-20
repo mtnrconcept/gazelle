@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { MenuSection as MenuSectionType, MenuItem } from '@/data/menu';
 import styles from './MenuSection.module.css';
 
@@ -9,9 +8,10 @@ type MenuSectionProps = {
 
 export function MenuSection({ section, level = 1 }: MenuSectionProps) {
     const TitleTag = level === 1 ? 'h2' : 'h3';
+    const revealDirection = level % 2 === 0 ? 'right' : 'up';
 
     return (
-        <section className={styles.section}>
+        <section className={`${styles.section} reveal`} data-reveal={revealDirection}>
             <TitleTag className={level === 1 ? styles.mainTitle : styles.subTitle}>
                 {section.title}
             </TitleTag>
@@ -44,7 +44,7 @@ export function MenuSection({ section, level = 1 }: MenuSectionProps) {
 }
 
 function MenuItemCard({ item }: { item: MenuItem }) {
-    const imageUrl = item.image ? `https://lagazelledorgeneva.com${item.image}` : null;
+    const imageUrl = item.image ?? null;
 
     return (
         <div className={styles.card}>

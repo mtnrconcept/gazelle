@@ -1,6 +1,6 @@
-.section {
-    padding: var(--spacing-xl) 0;
-    background-color: white;
+﻿.section {
+    padding: 9rem 0;
+    background: linear-gradient(180deg, rgba(253, 251, 247, 0.4), rgba(244, 239, 231, 0.8));
 }
 
 .container {
@@ -10,17 +10,55 @@
     align-items: center;
 }
 
+.content {
+    max-width: 560px;
+}
+
+.kicker {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--color-secondary);
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
 .title {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 4vw, 3rem);
     color: var(--color-primary);
     margin-bottom: var(--spacing-md);
 }
 
 .text {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: var(--color-text-light);
     margin-bottom: var(--spacing-sm);
-    max-width: 600px;
+}
+
+.stats {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.statValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-ink);
+}
+
+.statLabel {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-text-light);
 }
 
 .link {
@@ -46,16 +84,23 @@
     width: 100%;
 }
 
+.media {
+    position: relative;
+    display: grid;
+    gap: 1.5rem;
+    padding: 2rem 0;
+}
+
 .imageWrapper {
-    border-radius: var(--border-radius);
+    border-radius: 24px;
     overflow: hidden;
     box-shadow: var(--shadow-xl);
-    transform: rotate(3deg);
-    transition: transform 0.3s ease;
+    transform: rotate(2deg);
+    transition: transform 0.4s ease;
 }
 
 .imageWrapper:hover {
-    transform: rotate(0deg);
+    transform: rotate(0deg) scale(1.01);
 }
 
 .image {
@@ -64,16 +109,24 @@
     display: block;
 }
 
-@media (min-width: 768px) {
+.highlightCard {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 18px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(139, 69, 19, 0.1);
+}
+
+.highlightTitle {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    color: var(--color-primary);
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+@media (min-width: 900px) {
     .container {
         grid-template-columns: 1fr 1fr;
-    }
-
-    .content {
-        order: 1;
-    }
-
-    .imageWrapper {
-        order: 2;
     }
 }

@@ -1,0 +1,196 @@
+/* ══ SIGNATURE SECTION (parchment) ════════════════════════════════════ */
+.section {
+    background:
+        linear-gradient(180deg, rgba(198, 162, 100, 0.92), rgba(175, 138, 74, 0.94)),
+        url('/images/d%C3%A9cor2/d%C3%A9cor5.png') center/cover no-repeat;
+    color: #2a1004;
+    border-top: 3px solid #7a3a0e;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    text-align: center;
+}
+
+/* ── Section heading with side lines ── */
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.titleRow {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    width: 100%;
+    justify-content: center;
+}
+
+.titleRow::before,
+.titleRow::after {
+    content: '';
+    flex: 1;
+    max-width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #6a2e08);
+}
+
+.titleRow::after {
+    background: linear-gradient(90deg, #6a2e08, transparent);
+}
+
+.title {
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 3vw, 1.9rem);
+    color: #2a1004;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.eyebrow {
+    font-family: var(--font-display);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    color: #7c3a10;
+}
+
+/* ── Dish grid ── */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+/* ── Dish card (transparent, just image + text) ── */
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 0.25s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+.imageWrapper {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid rgba(100, 48, 12, 0.4);
+    box-shadow:
+        0 0 0 2px rgba(100, 48, 12, 0.15),
+        0 8px 24px rgba(40, 16, 4, 0.45);
+    background: #c8a060;
+    flex-shrink: 0;
+}
+
+.imageWrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.card:hover .imageWrapper img {
+    transform: scale(1.06);
+}
+
+.cardInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.cardInfo h3 {
+    font-family: var(--font-display);
+    color: #2a1004;
+    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.cardInfo p {
+    color: #5a3010;
+    font-size: 0.88rem;
+    font-style: italic;
+}
+
+.price {
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    color: #7a3010;
+    letter-spacing: 1px;
+}
+
+/* ── CTA button ── */
+.ctaRow {
+    margin-top: 0.5rem;
+}
+
+.ctaButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.9rem 3rem;
+    background: linear-gradient(180deg, #7a2808, #5c1c04);
+    border: 2px solid #c8882a;
+    color: #f5e2b0;
+    font-family: var(--font-display);
+    font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    box-shadow:
+        0 4px 20px rgba(0,0,0,0.35),
+        inset 0 1px 0 rgba(255,220,120,0.1);
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+}
+
+.ctaButton::before {
+    content: '»';
+    color: #c8922a;
+}
+
+.ctaButton::after {
+    content: '«';
+    color: #c8922a;
+}
+
+.ctaButton:hover {
+    background: linear-gradient(180deg, #8e3010, #6e2206);
+    border-color: #e0a840;
+    transform: translateY(-1px);
+}
+
+/* ── Responsive ── */
+@media (min-width: 640px) and (max-width: 899px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 639px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .imageWrapper {
+        width: 160px;
+        height: 160px;
+    }
+}
+
+@media (min-width: 640px) and (max-width: 899px) {
+    .imageWrapper {
+        width: 150px;
+        height: 150px;
+    }
+}

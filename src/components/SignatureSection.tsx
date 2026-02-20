@@ -1,0 +1,74 @@
+import styles from './SignatureSection.module.css';
+
+const dishes = [
+    {
+        name: 'La Gazelle Royale',
+        description: 'Notre plat signature : Agneau, Zegni et Doro servis sur un grand injera partagé. Le symbole de notre restaurant.',
+        price: 'dès 32 CHF',
+        image: 'https://lagazelledorgeneva.com/assets/LA%20GAZELLE%20ROYALE-EI-niyer.png'
+    },
+    {
+        name: 'Doro Wet',
+        description: 'Poulet juteux mariné au citron, mijoté dans une sauce paprika aux épices ancestrales. Un classique incontournable.',
+        price: '27 CHF',
+        image: 'https://lagazelledorgeneva.com/assets/DORO%20WET-qlKOx6dc.png'
+    },
+    {
+        name: 'Sambusa Maison',
+        description: 'Feuilletés croustillants farcis à la viande ou aux légumes, faits chaque jour dans notre cuisine.',
+        price: '3.50 CHF / pièce',
+        image: 'https://lagazelledorgeneva.com/assets/SAMBUSA%20FAIT%20MAISON-D_wwG_sv.jpeg'
+    },
+    {
+        name: 'Kitfo',
+        description: "Steak tartare éthiopien assaisonné d'un beurre aux herbes, de piments rouges et de gingembre frais.",
+        price: '30 CHF',
+        image: 'https://lagazelledorgeneva.com/assets/KITEFO-D2dNuOak.png'
+    },
+    {
+        name: 'Dégustation Végétarienne',
+        description: 'Un assortiment généreux de Shiro, épinards, lentilles rouges et jaunes, chou et laitue sur injera.',
+        price: '25 CHF',
+        image: 'https://lagazelledorgeneva.com/assets/D%C3%A9gustation%20de%20L%C3%A9gumes-BHGAtiLV.png'
+    },
+    {
+        name: "Tibs d'Agneau",
+        description: "Morceaux d'agneau maigre sautés au beurre avec oignons, piments verts et poivre vert exotique.",
+        price: '32 CHF',
+        image: "https://lagazelledorgeneva.com/assets/Tibs%20d'agneau-CTyXF8Tl.png"
+    }
+];
+
+export function SignatureSection() {
+    return (
+        <section className={`${styles.section} panel decoratedSection reveal`} data-reveal="right">
+            <div className={`container ${styles.container}`}>
+                <div className={styles.header}>
+                    <p className={styles.eyebrow}>Escale au cœur de l'Éthiopie</p>
+                    <div className={styles.titleRow}>
+                        <h2 className={styles.title}>Nos plats signatures</h2>
+                    </div>
+                </div>
+                <div className={styles.grid}>
+                    {dishes.map((dish) => (
+                        <article key={dish.name} className={styles.card}>
+                            <div className={styles.imageWrapper}>
+                                <img src={dish.image} alt={dish.name} loading="lazy" />
+                            </div>
+                            <div className={styles.cardInfo}>
+                                <h3>{dish.name}</h3>
+                                <p>{dish.description}</p>
+                                <span className={styles.price}>{dish.price}</span>
+                            </div>
+                        </article>
+                    ))}
+                </div>
+                <div className={styles.ctaRow}>
+                    <a href="tel:+41223403350" className={styles.ctaButton}>
+                        Réserver une table
+                    </a>
+                </div>
+            </div>
+        </section>
+    );
+}

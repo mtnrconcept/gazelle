@@ -1,37 +1,60 @@
+"use client";
+
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import styles from './Hero.module.css';
 
+const slides = [
+    '/images/5.jpg',
+    '/images/6.jpg',
+    '/images/7.jpg',
+    '/images/8.jpg',
+    '/images/9.jpg',
+];
+
 export function Hero() {
+    const [current, setCurrent] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrent((prev) => (prev + 1) % slides.length);
+        }, 5000);
+        return () => clearInterval(interval);
+    }, []);
+
     return (
-        <section className={styles.hero}>
-            <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                className={styles.videoBackground}
-            >
-                <source src="https://lagazelledorgeneva.com/assets/video_hero-Ck-O8Wsn.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-            </video>
+        <section className={`${styles.hero} panel`}>
+            <div className={styles.slideshow}>
+                {slides.map((src, idx) => (
+                    <img
+                        key={src}
+                        src={src}
+                        alt=""
+                        aria-hidden="true"
+                        className={`${styles.slide} ${idx === current ? styles.slideActive : ''}`}
+                    />
+                ))}
+            </div>
 
             <div className={styles.overlay}></div>
 
-            <div className={`container ${styles.content}`}>
+            {/* Brand – upper area */}
+            <div className={styles.topContent}>
                 <img
-                    src="https://lagazelledorgeneva.com/assets/logo-hero-B4ENhAYs.png"
-                    alt="La Gazelle d'Or Logo"
-                    className={styles.heroLogo}
+                    src="/images/logo.png"
+                    alt="La Gazelle d'Or"
+                    className={styles.emblem}
                 />
+                <h1 className={styles.title}>La Gazelle d'Or</h1>
+                <p className={styles.location}>Geneva</p>
+            </div>
 
-                <div className={styles.ctaGroup}>
-                    <Link href="/histoire" className={`${styles.ctaButton} ${styles.ctaOutline}`}>
-                        Notre Histoire
-                    </Link>
-                    <Link href="/menu" className={`${styles.ctaButton} ${styles.ctaOutline}`}>
-                        Découvrir le Menu
-                    </Link>
-                </div>
+            {/* Tagline + CTA – lower area */}
+            <div className={styles.bottomContent}>
+                <p className={styles.tagline}>Voyage culinaire au cœur de l'Afrique</p>
+                <Link href="/menu" className={styles.ctaButton}>
+                    Découvrir
+                </Link>
             </div>
         </section>
     );

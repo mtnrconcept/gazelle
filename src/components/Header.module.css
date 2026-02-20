@@ -1,60 +1,58 @@
-.header {
+﻿.header {
     position: sticky;
     top: 0;
     z-index: 100;
-    background-color: rgba(253, 251, 247, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(139, 69, 19, 0.1);
-    padding: 1rem 0;
-    transition: all 0.3s ease;
+    background-color: rgb(22, 10, 3);
+    border-bottom: 1px solid rgba(217, 162, 79, 0.6);
+}
+
+.header::after {
+    content: '';
+    display: block;
+    height: 6px;
+    background: url('/images/d%C3%A9cor2/d%C3%A9cor2.png') repeat-x center;
+    background-size: auto 100%;
+    opacity: 0.85;
 }
 
 .container {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.logo {
-    display: flex;
     flex-direction: column;
-    color: var(--color-primary);
-}
-
-.logoTitle {
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1;
-}
-
-.logoSubtitle {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--color-secondary);
+    gap: 0.5rem;
 }
 
 .desktopNav {
     display: none;
     align-items: center;
+    justify-content: space-between;
     gap: 2rem;
+    padding: 0.9rem 0;
+}
+
+.navGroup {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
 }
 
 .navLink {
-    font-weight: 500;
-    color: var(--color-text);
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #f2d28a;
     position: relative;
 }
 
 .navLink::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: -6px;
     left: 0;
     width: 0;
     height: 2px;
-    background-color: var(--color-secondary);
+    background: var(--color-secondary);
     transition: width 0.3s ease;
 }
 
@@ -62,73 +60,161 @@
     width: 100%;
 }
 
-.ctaButton {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background-color: var(--color-primary);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--border-radius);
-    font-weight: 600;
-    transition: background-color 0.2s;
+.navLinkActive {
+    color: #e8c472;
 }
 
-.ctaButton:hover {
-    background-color: var(--color-text-light);
+.navLinkActive::after {
+    width: 100%;
+    background: #e8c472;
+}
+
+.brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.2rem;
+    color: var(--color-secondary);
+}
+
+.brandMark {
+    width: 110px;
+    height: auto;
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6));
+}
+
+.brandTitle {
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+}
+
+.brandSubtitle {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: rgba(245, 230, 200, 0.8);
+}
+
+.langButton {
+    border: 1px solid rgba(217, 162, 79, 0.8);
+    color: var(--color-secondary);
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: rgba(20, 12, 7, 0.6);
+}
+
+.reserveButton {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.45rem 1.1rem;
+    background: linear-gradient(180deg, #7a2808, #5c1c04);
+    border: 1px solid #c8882a;
+    color: #f5e2b0;
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.reserveButton:hover {
+    background: linear-gradient(180deg, #8e3010, #6e2206);
+    color: #f5e2b0;
+}
+
+.mobileRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.8rem 0;
 }
 
 .mobileMenuBtn {
-    display: block;
-    color: var(--color-text);
+    color: var(--color-secondary);
+    border: 1px solid rgba(217, 162, 79, 0.8);
+    padding: 0.45rem 0.9rem;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    background: rgba(20, 12, 7, 0.6);
+}
+
+.backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 98;
+    background: transparent;
 }
 
 .mobileNav {
     position: fixed;
-    top: 73px;
-    /* Header height approx */
+    top: 0;
     left: 0;
     right: 0;
-    background-color: var(--color-background);
-    border-bottom: 1px solid rgba(139, 69, 19, 0.1);
-    padding: 2rem;
+    background: rgb(22, 10, 3);
+    border-bottom: 1px solid rgba(217, 162, 79, 0.35);
+    padding: 5rem 1.5rem 1.5rem;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    transform: translateY(-150%);
-    transition: transform 0.3s ease;
+    gap: 1.25rem;
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform 0.35s ease, opacity 0.3s ease;
     z-index: 99;
+    max-height: 100dvh;
+    overflow-y: auto;
 }
 
 .mobileNav.open {
     transform: translateY(0);
-    box-shadow: var(--shadow-lg);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 .mobileNavLink {
-    font-size: 1.25rem;
-    font-family: var(--font-serif);
-    color: var(--color-text);
-    text-align: center;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #f2d28a;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(217, 162, 79, 0.15);
+}
+
+.mobileNavLinkActive {
+    color: #e8c472;
+    border-bottom-color: rgba(232, 196, 114, 0.4);
 }
 
 .mobileCtaButton {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     display: block;
     text-align: center;
-    background-color: var(--color-primary);
-    color: white;
-    padding: 1rem;
-    border-radius: var(--border-radius);
+    background: linear-gradient(135deg, #a4471e, #d19336);
+    color: #fef6e5;
+    padding: 0.85rem;
+    border-radius: 6px;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 900px) {
     .desktopNav {
         display: flex;
     }
 
-    .mobileMenuBtn {
+    .mobileRow {
         display: none;
     }
 

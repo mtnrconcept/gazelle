@@ -1,0 +1,138 @@
+/* ══ EXPERIENCE SECTION ════════════════════════════════════════════════ */
+.section {
+    background:
+        linear-gradient(180deg, rgba(22, 10, 4, 0.97), rgba(28, 13, 5, 0.97)),
+        url('/images/d%C3%A9cor2/d%C3%A9cor5.png') center/cover no-repeat;
+    border-top: 3px solid #7a3a0e;
+    border-bottom: 3px solid #7a3a0e;
+}
+
+.container {
+    width: 100%;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+/* ── Card ── */
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.4rem;
+    padding: 2rem 1.5rem;
+    background:
+        linear-gradient(180deg, rgba(45, 20, 8, 0.93), rgba(30, 12, 4, 0.95)),
+        url('/images/d%C3%A9cor2/d%C3%A9cor2.png') center/contain repeat;
+    border: 2px solid #6a3010;
+    box-shadow:
+        0 0 0 1px rgba(200, 140, 50, 0.12),
+        inset 0 0 30px rgba(0,0,0,0.4);
+    transition: border-color 0.2s;
+}
+
+.card:hover {
+    border-color: #c8882a;
+}
+
+/* ── Card header (title + diamond) ── */
+.cardHeader {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cardTitle {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2.2vw, 1.2rem);
+    color: #e8c472;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin: 0;
+}
+
+.diamond {
+    color: #c8882a;
+    font-size: 0.6rem;
+    opacity: 0.8;
+}
+
+/* ── Circular image ── */
+.imageWrapper {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid rgba(200, 140, 50, 0.5);
+    box-shadow:
+        0 0 0 1px rgba(200, 140, 50, 0.2),
+        0 8px 32px rgba(0,0,0,0.7);
+    background: #2a1205;
+    flex-shrink: 0;
+}
+
+.imageWrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card:hover .imageWrapper img {
+    transform: scale(1.06);
+}
+
+/* ── Button ── */
+.cardButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.6rem;
+    background: linear-gradient(180deg, #7a2808, #5c1c04);
+    border: 1px solid #b07030;
+    color: #f0d898;
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.cardButton::before {
+    content: '»';
+    color: #c8882a;
+}
+
+.cardButton:hover {
+    background: linear-gradient(180deg, #903010, #6e2206);
+    border-color: #d4a040;
+}
+
+@media (min-width: 640px) and (max-width: 899px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .imageWrapper {
+        width: 160px;
+        height: 160px;
+    }
+}
+
+@media (min-width: 900px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .imageWrapper {
+        width: 210px;
+        height: 210px;
+    }
+}

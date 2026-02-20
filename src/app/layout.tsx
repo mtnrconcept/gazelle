@@ -1,18 +1,22 @@
-import type { Metadata } from 'next';
-import { Playfair_Display, Inter } from 'next/font/google';
+﻿import type { Metadata } from 'next';
+import { Cinzel, Cormorant_Garamond } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { ScrollReveal } from '@/components/ScrollReveal';
+import { BodySnapManager } from '@/components/BodySnapManager';
 
-const playfair = Playfair_Display({
+const cinzel = Cinzel({
   subsets: ['latin'],
-  variable: '--font-serif',
+  variable: '--font-display',
+  weight: ['400', '600', '700'],
   display: 'swap',
 });
 
-const inter = Inter({
+const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
-  variable: '--font-sans',
+  variable: '--font-body',
+  weight: ['400', '500', '600'],
   display: 'swap',
 });
 
@@ -27,11 +31,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" className={`${playfair.variable} ${inter.variable}`}>
+    <html lang="fr" className={`${cinzel.variable} ${cormorant.variable}`}>
       <body>
         <Header />
         <main>{children}</main>
         <Footer />
+        <ScrollReveal />
+        <BodySnapManager />
       </body>
     </html>
   );
