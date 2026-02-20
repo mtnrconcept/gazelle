@@ -12,6 +12,7 @@
     position: relative;
     height: 60vh;
     min-height: 420px;
+    padding-top: clamp(70px, 10vh, 100px);
     background-image:
         linear-gradient(180deg, rgba(52, 28, 12, 0.55), rgba(52, 28, 12, 0.72)),
         url('/images/2.jpg');

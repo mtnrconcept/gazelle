@@ -1,6 +1,7 @@
 ﻿:root {
   --font-display: "Cinzel", serif;
   --font-body: "Cormorant Garamond", serif;
+  --header-h: 115px;
 
   --color-primary: #b86a2c;
   --color-secondary: #d9a24f;

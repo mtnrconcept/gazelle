@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { menuData } from '@/data/menu';
 import { MenuSection } from '@/components/MenuSection';
 import { SignatureSection } from '@/components/SignatureSection';
@@ -28,6 +28,42 @@ const tabMap: Record<string, string> = {
 export default function MenuPage() {
     const [activeTab, setActiveTab] = useState('all');
 
+    useEffect(() => {
+        requestAnimationFrame(() => {
+            const nodes = document.querySelectorAll<HTMLElement>('.reveal:not(.is-visible), [data-reveal]:not(.is-visible)');
+            if (nodes.length === 0) return;
+
+            // Immediately reveal elements already in view
+            nodes.forEach((node) => {
+                const rect = node.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    node.classList.add('is-visible');
+                }
+            });
+
+            // Observe elements below the fold so they animate on scroll
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            (entry.target as HTMLElement).classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                },
+                { rootMargin: '0px 0px -2% 0px', threshold: 0.05 }
+            );
+
+            nodes.forEach((node) => {
+                if (!node.classList.contains('is-visible')) {
+                    observer.observe(node);
+                }
+            });
+
+            return () => observer.disconnect();
+        });
+    }, [activeTab]);
+
     const visibleSections = activeTab === 'all'
         ? menuData
         : menuData.filter((s) => s.title === tabMap[activeTab]);
@@ -49,7 +85,10 @@ export default function MenuPage() {
                             key={tab.id}
                             type="button"
                             className={`${styles.tab} ${activeTab === tab.id ? styles.tabActive : ''}`}
-                            onClick={() => setActiveTab(tab.id)}
+                            onClick={(e) => {
+                                setActiveTab(tab.id);
+                                (e.currentTarget as HTMLButtonElement).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                            }}
                         >
                             {tab.label}
                         </button>
@@ -58,8 +97,8 @@ export default function MenuPage() {
             </div>
 
             <div className={`container ${styles.menuContainer}`}>
-                {visibleSections.map((section, idx) => (
-                    <MenuSection key={idx} section={section} />
+                {visibleSections.map((section) => (
+                    <MenuSection key={section.title} section={section} />
                 ))}
             </div>
 

@@ -10,6 +10,7 @@
     position: relative;
     height: 55vh;
     min-height: 380px;
+    padding-top: clamp(70px, 10vh, 100px);
     background-image:
         linear-gradient(180deg, rgba(52, 28, 12, 0.5), rgba(52, 28, 12, 0.68)),
         url('/images/2.jpg');
@@ -57,12 +58,18 @@
 
 .tabsRow {
     position: sticky;
-    top: 0;
+    top: var(--header-h, 115px);
     z-index: 50;
     background:
         linear-gradient(180deg, rgba(35, 18, 8, 0.98), rgba(28, 14, 6, 0.98));
     border-bottom: 2px solid rgba(200, 136, 42, 0.5);
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: top 0.4s ease;
+}
+
+:global([data-header="hidden"]) .tabsRow {
+    top: 0;
 }
 
 .tabsInner {
@@ -70,6 +77,12 @@
     gap: 0;
     overflow-x: auto;
     scrollbar-width: none;
+}
+
+@media (min-width: 900px) {
+    .tabsInner {
+        justify-content: center;
+    }
 }
 
 .tabsInner::-webkit-scrollbar {

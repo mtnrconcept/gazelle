@@ -12,6 +12,7 @@
     position: relative;
     height: 52vh;
     min-height: 380px;
+    padding-top: clamp(70px, 10vh, 100px);
     overflow: hidden;
     background-image:
         linear-gradient(180deg, rgba(52, 28, 12, 0.55), rgba(52, 28, 12, 0.72)),

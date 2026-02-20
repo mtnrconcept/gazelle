@@ -5,6 +5,7 @@
         url('/images/d%C3%A9cor2/d%C3%A9cor5.png') center/cover no-repeat;
     border-top: 3px solid #7a3a0e;
     border-bottom: 3px solid #7a3a0e;
+    overflow: hidden;
 }
 
 .container {
@@ -123,6 +124,31 @@
     .imageWrapper {
         width: 160px;
         height: 160px;
+    }
+}
+
+@media (max-width: 639px) {
+    .card {
+        padding: 1.5rem 1rem;
+    }
+
+    .cardTitle {
+        font-size: 0.95rem;
+        letter-spacing: 1px;
+    }
+
+    .imageWrapper {
+        width: 170px;
+        height: 170px;
+    }
+
+    .cardButton {
+        font-size: 0.65rem;
+        letter-spacing: 1.5px;
+        padding: 0.5rem 1.2rem;
+        white-space: normal;
+        text-align: center;
+        justify-content: center;
     }
 }
 

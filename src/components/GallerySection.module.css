@@ -63,6 +63,18 @@
     object-fit: cover;
 }
 
+@media (max-width: 639px) {
+    .title {
+        font-size: 1.5rem;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .eyebrow {
+        letter-spacing: 2px;
+    }
+}
+
 @media (min-width: 900px) {
     .carousel {
         grid-auto-columns: minmax(300px, 1fr);

@@ -126,7 +126,7 @@ export const menuData: MenuSection[] = [
                     },
                     {
                         name: "Kitfo",
-                        description: "Steak tartare éthiopien assaisonné avec un beurre aux herbes, des piments rouges finement hachés, du gingembre et du poivre.",
+                        description: "Steak tartare éthiopien assaisonné avec un beurre aux herbes, des piments rouges finement hachés, du gingembre et du poivre, arrosé avec un goût de whisky.",
                         price: "30.00 CHF",
                         image: "https://lagazelledorgeneva.com/assets/KITEFO-D2dNuOak.png"
                     },
@@ -144,12 +144,12 @@ export const menuData: MenuSection[] = [
                     },
                     {
                         name: "ZilzilTibs",
-                        description: "Viande en lanières sautées avec poivrons, oignons, ail et épinards.",
+                        description: "Viande bien cuite coupée en lanières avec poivrons, oignons, ail, épinards, laitue et injera.",
                         price: "30.00 CHF"
                     },
                     {
                         name: "Firfir Tibs",
-                        description: "Cubes de viande revenus dans un beurre épicé et des épices traditionnelles éthiopiennes.",
+                        description: "Cubes d'agneau, de poulet ou de bœuf frits dans un beurre épicé fondu et des épices traditionnelles. Ingrédients : bœuf, oignons, berbère, poivrons doux, ail, tomates et épices.",
                         price: "28.00 CHF"
                     }
                 ]
