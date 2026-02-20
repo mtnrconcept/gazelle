@@ -1,0 +1,37 @@
+.page {
+    background-color: var(--color-background);
+    min-height: 100vh;
+}
+
+.hero {
+    position: relative;
+    height: 40vh;
+    background-image: url('https://lagazelledorgeneva.com/assets/de7fdc3d21e40889d465e604276b8af7a1f7f99e-J02816G1.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4rem;
+}
+
+.heroOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.heroTitle {
+    position: relative;
+    z-index: 1;
+    color: white;
+    font-size: 3.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.menuContainer {
+    padding-bottom: 4rem;
+}
