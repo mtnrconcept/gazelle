@@ -77,38 +77,21 @@
     background: linear-gradient(
         195deg,
         rgba(255, 230, 160, 0.12) 0%,
-        rgba(255, 220, 130, 0.06) 30%,
+        rgba(255, 183, 0, 0.06) 30%,
         transparent 70%
     );
     transform: rotate(-15deg);
     transform-origin: top right;
-    animation: sunbeamPulse 8s ease-in-out infinite;
-}
-
-.sunbeam2 {
-    position: absolute;
-    top: -5%;
-    right: 18%;
-    width: 20%;
-    height: 110%;
-    background: linear-gradient(
-        200deg,
-        rgba(255, 235, 170, 0.08) 0%,
-        rgba(255, 215, 120, 0.04) 40%,
-        transparent 70%
-    );
-    transform: rotate(-22deg);
-    transform-origin: top right;
-    animation: sunbeamPulse 10s ease-in-out 2s infinite;
+    animation: sunbeamPulse 18s ease-in-out infinite;
 }
 
 .dustMote {
     position: absolute;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 235, 180, 0.9), rgba(232, 196, 114, 0.3));
+    background: radial-gradient(circle, rgba(248, 175, 126, 0.9), rgba(232, 196, 114, 0.3));
     animation: dustFloat linear infinite;
     box-shadow: 0 0 4px rgba(255, 235, 180, 0.4);
-    filter: blur(0.3px);
+    filter: blur(1.3px);
 }
 
 @keyframes dustFloat {
@@ -168,12 +151,12 @@
     letter-spacing: 6px;
     text-transform: uppercase;
     text-shadow:
-        0 2px 4px rgba(0,0,0,0.9),
-        0 0 60px rgba(212, 160, 50, 0.35),
-        0 0 120px rgba(212, 160, 50, 0.15);
+        0 2px 4px rgba(139, 76, 4, 0.9),
+        0 0 60px rgba(255, 174, 0, 0.35),
+        0 0 120px rgba(214, 152, 19, 0.15);
     line-height: 1.05;
     margin: 0;
-    background: linear-gradient(135deg, #f5e2b0, #e8c472, #d9a24f, #e8c472, #f5e2b0);
+    background: linear-gradient(135deg, #ffde8b, #ffbc20, #d9a24f, #e8c472, #f5e2b0);
     background-size: 300% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
