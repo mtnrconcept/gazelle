@@ -7,24 +7,25 @@
     color: var(--color-text);
 }
 
-/* ── Hero ── */
 .hero {
     position: relative;
     height: 60vh;
     min-height: 420px;
-    padding-top: clamp(70px, 10vh, 100px);
+    margin-top: calc(-1 * var(--header-h));
+    padding-top: var(--header-h);
     background-image:
+        radial-gradient(ellipse at center, transparent 0%, rgba(18, 8, 2, 0.3) 70%),
         linear-gradient(180deg, rgba(52, 28, 12, 0.55), rgba(52, 28, 12, 0.72)),
         url('/images/2.jpg');
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     margin-bottom: 4rem;
 }
-
 
 .heroContent {
     position: relative;
@@ -34,6 +35,7 @@
     align-items: center;
     gap: 0.8rem;
     padding: 0 1.5rem;
+    animation: fadeInUp 1s var(--ease-out-expo) 0.2s backwards;
 }
 
 .heroEyebrow {
@@ -45,9 +47,14 @@
 }
 
 .heroTitle {
-    color: #e8c472;
     font-size: clamp(2.5rem, 6vw, 4rem);
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(135deg, #f5e2b0, #e8c472, #d9a24f, #e8c472);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: goldShimmer 5s linear infinite;
 }
 
 .heroTagline {
@@ -57,7 +64,6 @@
     max-width: 500px;
 }
 
-/* ── Content ── */
 .content {
     max-width: 1100px;
 }
@@ -72,7 +78,6 @@
     margin-bottom: 0.5rem;
 }
 
-/* ── Events Grid ── */
 .eventsGrid {
     display: grid;
     grid-template-columns: 1fr;
@@ -84,16 +89,22 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 2rem;
-    background:
-        linear-gradient(180deg, rgba(255, 248, 235, 0.95), rgba(247, 235, 212, 0.95));
+    background: rgba(255, 248, 235, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(182, 106, 44, 0.3);
     box-shadow: var(--shadow-md);
     overflow: hidden;
-    transition: transform 0.3s;
+    transition:
+        transform 0.5s var(--ease-out-expo),
+        box-shadow 0.5s var(--ease-out-expo),
+        border-color 0.3s;
 }
 
 .eventCard:hover {
-    transform: translateY(-4px);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(182, 106, 44, 0.5);
 }
 
 .eventImageWrapper {
@@ -106,11 +117,11 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.4s ease;
+    transition: transform 0.6s var(--ease-out-expo);
 }
 
 .eventCard:hover .eventImageWrapper img {
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 
 .eventBody {
@@ -132,7 +143,6 @@
     color: var(--color-text-muted);
 }
 
-/* ── Privatisation CTA ── */
 .privatisationCta {
     background:
         linear-gradient(180deg, rgba(80, 40, 15, 0.95), rgba(55, 25, 8, 0.97)),
@@ -141,6 +151,23 @@
     padding: 4rem 2rem;
     text-align: center;
     margin-bottom: 3rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.4s;
+}
+
+.privatisationCta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--color-secondary), transparent);
+}
+
+.privatisationCta:hover {
+    border-color: rgba(200, 136, 42, 0.7);
 }
 
 .ctaInner {
@@ -158,7 +185,10 @@
 
 .ctaTitle {
     font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-    color: #e8c472;
+    background: linear-gradient(135deg, #f5e2b0, #e8c472);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .ctaText {
@@ -188,12 +218,31 @@
     font-size: 0.85rem;
     letter-spacing: 4px;
     text-transform: uppercase;
-    transition: background 0.2s, transform 0.15s;
+    transition:
+        background 0.3s var(--ease-smooth),
+        transform 0.4s var(--ease-spring),
+        box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.ctaButton::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(255, 220, 120, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.5s var(--ease-smooth);
 }
 
 .ctaButton:hover {
     background: linear-gradient(180deg, #8e3010, #6e2206);
-    transform: translateY(-1px);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+}
+
+.ctaButton:hover::before {
+    transform: translateX(100%);
 }
 
 .ctaButtonOutline {
@@ -206,15 +255,26 @@
     font-size: 0.85rem;
     letter-spacing: 4px;
     text-transform: uppercase;
-    transition: border-color 0.2s, color 0.2s;
+    transition:
+        border-color 0.3s,
+        color 0.3s,
+        transform 0.4s var(--ease-spring),
+        background 0.3s;
 }
 
 .ctaButtonOutline:hover {
     border-color: #c8882a;
     color: #f5e2b0;
+    transform: translateY(-3px);
+    background: rgba(200, 136, 42, 0.1);
 }
 
-/* ── Responsive ── */
+@media (max-width: 900px) {
+    .hero {
+        background-attachment: scroll;
+    }
+}
+
 @media (min-width: 768px) {
     .eventsGrid {
         grid-template-columns: repeat(3, 1fr);

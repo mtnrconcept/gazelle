@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --font-display: "Cinzel", serif;
   --font-body: "Cormorant Garamond", serif;
   --header-h: 115px;
@@ -22,10 +22,22 @@
   --shadow-sm: 0 6px 16px rgba(0, 0, 0, 0.18);
   --shadow-md: 0 16px 32px rgba(0, 0, 0, 0.22);
   --shadow-lg: 0 26px 60px rgba(0, 0, 0, 0.28);
+
+  /* Animation tokens */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --duration-fast: 0.2s;
+  --duration-normal: 0.4s;
+  --duration-slow: 0.8s;
+  --duration-slower: 1.2s;
 }
 
 html {
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 * {
@@ -43,6 +55,11 @@ body {
   line-height: 1.7;
   min-height: 100vh;
   overflow-x: hidden;
+  padding-top: var(--header-h);
+}
+
+.heroFullBleed {
+  margin-top: calc(-1 * var(--header-h));
 }
 
 body.snap-enabled {
@@ -67,7 +84,7 @@ h1, h2, h3, h4, h5, h6 {
 a {
   color: inherit;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color var(--duration-fast) var(--ease-smooth);
 }
 
 button {
@@ -77,9 +94,7 @@ button {
   font-family: inherit;
 }
 
-input,
-select,
-textarea {
+input, select, textarea {
   font-family: inherit;
 }
 
@@ -125,38 +140,147 @@ body.snap-enabled .panel {
   background: url('/images/d%C3%A9cor2/bandeau.png') no-repeat center;
   background-size: 100% 100%;
   opacity: 1;
-  animation: none;
   pointer-events: none;
   z-index: 1;
-}
-
-.decoratedSection::before {
   top: 0;
 }
 
+/* ══ SCROLL REVEAL SYSTEM ═══════════════════════════════════════════ */
 .reveal {
   opacity: 0;
-  transform: perspective(1200px) translate3d(0, 40px, 0) rotateX(6deg);
-  transition: opacity 0.9s ease-in-out, transform 0.9s ease-in-out;
+  transform: perspective(1200px) translate3d(0, 60px, 0) rotateX(4deg);
+  transition:
+    opacity var(--duration-slower) var(--ease-out-expo),
+    transform var(--duration-slower) var(--ease-out-expo);
   transition-delay: var(--reveal-delay, 0ms);
   will-change: transform, opacity;
   transform-style: preserve-3d;
 }
 
 [data-reveal="right"] {
-  transform: perspective(1200px) translate3d(60px, 0, 0) rotateY(-8deg);
+  transform: perspective(1200px) translate3d(80px, 0, 0) rotateY(-6deg);
 }
 
 [data-reveal="left"] {
-  transform: perspective(1200px) translate3d(-60px, 0, 0) rotateY(8deg);
+  transform: perspective(1200px) translate3d(-80px, 0, 0) rotateY(6deg);
+}
+
+[data-reveal="scale"] {
+  transform: perspective(1200px) scale(0.9) translate3d(0, 30px, 0);
+}
+
+[data-reveal="fade"] {
+  transform: none;
 }
 
 .reveal.is-visible,
 [data-reveal="right"].is-visible,
-[data-reveal="left"].is-visible {
+[data-reveal="left"].is-visible,
+[data-reveal="scale"].is-visible,
+[data-reveal="fade"].is-visible {
   opacity: 1;
-  transform: perspective(1200px) translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg);
+  transform: perspective(1200px) translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale(1);
 }
+
+/* ══ GLOBAL KEYFRAMES ═══════════════════════════════════════════════ */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-8px) rotate(1deg); }
+  66% { transform: translateY(-4px) rotate(-1deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(217, 162, 79, 0.2), 0 4px 20px rgba(0,0,0,0.3); }
+  50% { box-shadow: 0 0 40px rgba(217, 162, 79, 0.45), 0 4px 20px rgba(0,0,0,0.3); }
+}
+
+@keyframes borderGlow {
+  0%, 100% { border-color: rgba(217, 162, 79, 0.3); }
+  50% { border-color: rgba(217, 162, 79, 0.7); }
+}
+
+@keyframes kenBurns {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.15) translate(-2%, -1%); }
+}
+
+@keyframes kenBurns2 {
+  0% { transform: scale(1.05) translate(1%, 0); }
+  100% { transform: scale(1.18) translate(-1%, -2%); }
+}
+
+@keyframes goldShimmer {
+  0% { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 0.5; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes particleDrift {
+  0% { transform: translateY(0) translateX(0) scale(0); opacity: 0; }
+  10% { opacity: 1; transform: translateY(-10vh) translateX(5px) scale(1); }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-80vh) translateX(-15px) scale(0.3); opacity: 0; }
+}
+
+/* ══ STAGGER CHILDREN ═══════════════════════════════════════════════ */
+.staggerChild:nth-child(1) { --reveal-delay: 0ms; }
+.staggerChild:nth-child(2) { --reveal-delay: 100ms; }
+.staggerChild:nth-child(3) { --reveal-delay: 200ms; }
+.staggerChild:nth-child(4) { --reveal-delay: 300ms; }
+.staggerChild:nth-child(5) { --reveal-delay: 400ms; }
+.staggerChild:nth-child(6) { --reveal-delay: 500ms; }
+
+/* ══ RESPONSIVE ═══════════════════════════════════════════════════ */
 
 @media (max-width: 900px) {
   body {

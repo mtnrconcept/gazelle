@@ -10,19 +10,21 @@
     position: relative;
     height: 55vh;
     min-height: 380px;
-    padding-top: clamp(70px, 10vh, 100px);
+    margin-top: calc(-1 * var(--header-h));
+    padding-top: var(--header-h);
     background-image:
+        radial-gradient(ellipse at center, transparent 0%, rgba(18, 8, 2, 0.3) 70%),
         linear-gradient(180deg, rgba(52, 28, 12, 0.5), rgba(52, 28, 12, 0.68)),
         url('/images/2.jpg');
     background-size: cover;
     background-position: center;
+    background-attachment: fixed;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     margin-bottom: 0;
 }
-
 
 .heroContent {
     position: relative;
@@ -32,11 +34,12 @@
     align-items: center;
     gap: 0.75rem;
     padding: 0 1.5rem;
+    animation: fadeInUp 1s var(--ease-out-expo) 0.2s backwards;
 }
 
 .heroEyebrow {
     font-family: var(--font-display);
-    font-size: 0.72rem;
+    font-size: 0.82rem;
     letter-spacing: 5px;
     text-transform: uppercase;
     color: rgba(255, 240, 200, 0.82);
@@ -45,13 +48,18 @@
 .heroTitle {
     position: relative;
     z-index: 1;
-    color: #e8c472;
     font-size: clamp(2.5rem, 5vw, 3.5rem);
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, #f5e2b0, #e8c472, #d9a24f, #e8c472);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: goldShimmer 5s linear infinite;
 }
 
 .heroTagline {
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     color: rgba(255, 245, 220, 0.85);
     font-style: italic;
 }
@@ -60,16 +68,10 @@
     position: sticky;
     top: var(--header-h, 115px);
     z-index: 50;
-    background:
-        linear-gradient(180deg, rgba(35, 18, 8, 0.98), rgba(28, 14, 6, 0.98));
+    background: rgba(35, 18, 8, 0.95);
     border-bottom: 2px solid rgba(200, 136, 42, 0.5);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    transition: top 0.4s ease;
-}
-
-:global([data-header="hidden"]) .tabsRow {
-    top: 0;
+    backdrop-filter: blur(16px) saturate(1.3);
+    -webkit-backdrop-filter: blur(16px) saturate(1.3);
 }
 
 .tabsInner {
@@ -93,7 +95,7 @@
     flex-shrink: 0;
     padding: 1rem 1.6rem;
     font-family: var(--font-display);
-    font-size: 0.78rem;
+    font-size: 0.85rem;
     letter-spacing: 2.5px;
     text-transform: uppercase;
     color: rgba(245, 226, 183, 0.6);
@@ -101,7 +103,11 @@
     border: none;
     border-bottom: 3px solid transparent;
     cursor: pointer;
-    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    transition:
+        color 0.3s var(--ease-smooth),
+        border-color 0.3s var(--ease-smooth),
+        background 0.3s var(--ease-smooth);
+    position: relative;
 }
 
 .tab:hover {
@@ -117,4 +123,10 @@
 
 .menuContainer {
     padding: 3rem 0 4rem;
+}
+
+@media (max-width: 900px) {
+    .hero {
+        background-attachment: scroll;
+    }
 }

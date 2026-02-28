@@ -1,4 +1,4 @@
-/* ══ SIGNATURE SECTION (parchment) ════════════════════════════════════ */
+/* ══ SIGNATURE SECTION ═════════════════════════════════════════════════ */
 .section {
     background:
         linear-gradient(180deg, rgba(198, 162, 100, 0.92), rgba(175, 138, 74, 0.94)),
@@ -14,7 +14,6 @@
     text-align: center;
 }
 
-/* ── Section heading with side lines ── */
 .header {
     display: flex;
     flex-direction: column;
@@ -37,10 +36,16 @@
     max-width: 120px;
     height: 2px;
     background: linear-gradient(90deg, transparent, #6a2e08);
+    transition: max-width 0.6s var(--ease-out-expo);
 }
 
 .titleRow::after {
     background: linear-gradient(90deg, #6a2e08, transparent);
+}
+
+.section:hover .titleRow::before,
+.section:hover .titleRow::after {
+    max-width: 180px;
 }
 
 .title {
@@ -60,24 +65,22 @@
     color: #7c3a10;
 }
 
-/* ── Dish grid ── */
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
 }
 
-/* ── Dish card (transparent, just image + text) ── */
 .card {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    transition: transform 0.25s;
+    transition: transform 0.5s var(--ease-out-expo);
 }
 
 .card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-8px);
 }
 
 .imageWrapper {
@@ -91,17 +94,28 @@
         0 8px 24px rgba(40, 16, 4, 0.45);
     background: #c8a060;
     flex-shrink: 0;
+    transition:
+        border-color 0.4s var(--ease-smooth),
+        box-shadow 0.5s var(--ease-smooth);
+}
+
+.card:hover .imageWrapper {
+    border-color: rgba(100, 48, 12, 0.7);
+    box-shadow:
+        0 0 0 2px rgba(100, 48, 12, 0.25),
+        0 0 30px rgba(180, 120, 40, 0.25),
+        0 12px 32px rgba(40, 16, 4, 0.5);
 }
 
 .imageWrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.4s ease;
+    transition: transform 0.6s var(--ease-out-expo);
 }
 
 .card:hover .imageWrapper img {
-    transform: scale(1.06);
+    transform: scale(1.12);
 }
 
 .cardInfo {
@@ -116,6 +130,11 @@
     font-size: clamp(0.9rem, 1.8vw, 1.1rem);
     letter-spacing: 1px;
     margin: 0;
+    transition: color 0.3s;
+}
+
+.card:hover .cardInfo h3 {
+    color: #1a0802;
 }
 
 .cardInfo p {
@@ -129,9 +148,13 @@
     font-size: 0.8rem;
     color: #7a3010;
     letter-spacing: 1px;
+    transition: color 0.3s;
 }
 
-/* ── CTA button ── */
+.card:hover .price {
+    color: #5c2008;
+}
+
 .ctaRow {
     margin-top: 0.5rem;
 }
@@ -151,29 +174,52 @@
     box-shadow:
         0 4px 20px rgba(0,0,0,0.35),
         inset 0 1px 0 rgba(255,220,120,0.1);
-    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    transition:
+        background 0.3s var(--ease-smooth),
+        border-color 0.3s var(--ease-smooth),
+        transform 0.4s var(--ease-spring),
+        box-shadow 0.4s var(--ease-smooth);
+    position: relative;
+    overflow: hidden;
 }
 
 .ctaButton::before {
     content: '»';
     color: #c8922a;
+    transition: transform 0.3s var(--ease-spring);
 }
 
 .ctaButton::after {
     content: '«';
     color: #c8922a;
+    transition: transform 0.3s var(--ease-spring);
 }
 
 .ctaButton:hover {
     background: linear-gradient(180deg, #8e3010, #6e2206);
     border-color: #e0a840;
-    transform: translateY(-1px);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+        0 8px 30px rgba(0,0,0,0.4),
+        0 0 20px rgba(200, 136, 42, 0.2);
 }
 
-/* ── Responsive ── */
+.ctaButton:hover::before {
+    transform: translateX(-3px);
+}
+
+.ctaButton:hover::after {
+    transform: translateX(3px);
+}
+
 @media (min-width: 640px) and (max-width: 899px) {
     .grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .imageWrapper {
+        width: 150px;
+        height: 150px;
     }
 }
 
@@ -185,12 +231,5 @@
     .imageWrapper {
         width: 160px;
         height: 160px;
-    }
-}
-
-@media (min-width: 640px) and (max-width: 899px) {
-    .imageWrapper {
-        width: 150px;
-        height: 150px;
     }
 }

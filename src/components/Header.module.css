@@ -1,16 +1,22 @@
-﻿.header {
+/* ══ HEADER ═══════════════════════════════════════════════════════════ */
+.header {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    z-index: 100;
-    background-color: rgb(22, 10, 3);
-    border-bottom: 1px solid rgba(217, 162, 79, 0.6);
-    transition: transform 0.4s ease;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(22, 10, 3, 0.92);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border-bottom: 1px solid rgba(217, 162, 79, 0.4);
+    transition:
+        background 0.5s var(--ease-smooth),
+        box-shadow 0.5s var(--ease-smooth),
+        border-color 0.5s var(--ease-smooth);
 }
 
-.headerHidden {
-    transform: translateY(-100%);
+.header:hover {
+    border-bottom-color: rgba(217, 162, 79, 0.6);
 }
 
 .header::after {
@@ -50,21 +56,27 @@
     font-weight: 600;
     color: #f2d28a;
     position: relative;
+    transition: color 0.3s var(--ease-smooth);
 }
 
 .navLink::after {
     content: '';
     position: absolute;
     bottom: -6px;
-    left: 0;
+    left: 50%;
     width: 0;
     height: 2px;
-    background: var(--color-secondary);
-    transition: width 0.3s ease;
+    background: linear-gradient(90deg, transparent, var(--color-secondary), transparent);
+    transition: width 0.4s var(--ease-out-expo), left 0.4s var(--ease-out-expo);
+}
+
+.navLink:hover {
+    color: #fff;
 }
 
 .navLink:hover::after {
     width: 100%;
+    left: 0;
 }
 
 .navLinkActive {
@@ -73,7 +85,8 @@
 
 .navLinkActive::after {
     width: 100%;
-    background: #e8c472;
+    left: 0;
+    background: linear-gradient(90deg, transparent, #e8c472, transparent);
 }
 
 .brand {
@@ -83,17 +96,32 @@
     text-align: center;
     gap: 0.2rem;
     color: var(--color-secondary);
+    transition: transform 0.4s var(--ease-spring);
+}
+
+.brand:hover {
+    transform: scale(1.03);
 }
 
 .brandMark {
     width: 110px;
     height: auto;
     filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6));
+    transition: filter 0.4s var(--ease-smooth);
+}
+
+.brand:hover .brandMark {
+    filter: drop-shadow(0 6px 20px rgba(217, 162, 79, 0.4)) brightness(1.1);
 }
 
 .brandTitle {
     font-size: 1.2rem;
     letter-spacing: 3px;
+    background: linear-gradient(135deg, #f5e2b0, #d9a24f, #f5e2b0);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .brandSubtitle {
@@ -101,17 +129,6 @@
     text-transform: uppercase;
     letter-spacing: 4px;
     color: rgba(245, 230, 200, 0.8);
-}
-
-.langButton {
-    border: 1px solid rgba(217, 162, 79, 0.8);
-    color: var(--color-secondary);
-    padding: 0.4rem 0.8rem;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    background: rgba(20, 12, 7, 0.6);
 }
 
 .reserveButton {
@@ -122,16 +139,36 @@
     border: 1px solid #c8882a;
     color: #f5e2b0;
     font-family: var(--font-display);
-    font-size: 0.75rem;
+    font-size: 0.82rem;
     letter-spacing: 2px;
     text-transform: uppercase;
-    transition: background 0.2s;
+    transition:
+        background 0.3s var(--ease-smooth),
+        transform 0.3s var(--ease-spring),
+        box-shadow 0.3s var(--ease-smooth);
     white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+}
+
+.reserveButton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(255, 220, 120, 0.15), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.5s var(--ease-smooth);
 }
 
 .reserveButton:hover {
     background: linear-gradient(180deg, #8e3010, #6e2206);
     color: #f5e2b0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(200, 136, 42, 0.3);
+}
+
+.reserveButton:hover::after {
+    transform: translateX(100%);
 }
 
 .mobileRow {
@@ -150,13 +187,27 @@
     letter-spacing: 2px;
     font-size: 0.8rem;
     background: rgba(20, 12, 7, 0.6);
+    transition: background 0.3s, border-color 0.3s;
+}
+
+.mobileMenuBtn:hover {
+    background: rgba(200, 136, 42, 0.15);
+    border-color: #d9a24f;
 }
 
 .backdrop {
     position: fixed;
     inset: 0;
     z-index: 98;
-    background: transparent;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s var(--ease-smooth);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 .mobileNav {
@@ -164,7 +215,9 @@
     top: 0;
     left: 0;
     right: 0;
-    background: rgb(22, 10, 3);
+    background: rgba(22, 10, 3, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(217, 162, 79, 0.35);
     padding: 5rem 1.5rem 1.5rem;
     display: flex;
@@ -174,7 +227,9 @@
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: transform 0.35s ease, opacity 0.3s ease;
+    transition:
+        transform 0.5s var(--ease-out-expo),
+        opacity 0.4s var(--ease-smooth);
     z-index: 99;
     max-height: 100dvh;
     overflow-y: auto;
@@ -194,8 +249,14 @@
     font-size: 1rem;
     font-weight: 500;
     color: #f2d28a;
-    padding: 0.5rem 0;
+    padding: 0.6rem 0;
     border-bottom: 1px solid rgba(217, 162, 79, 0.15);
+    transition: color 0.3s, padding-left 0.3s var(--ease-spring);
+}
+
+.mobileNavLink:hover {
+    color: #fff;
+    padding-left: 0.5rem;
 }
 
 .mobileNavLinkActive {
@@ -214,7 +275,24 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 2px;
+    transition: transform 0.3s var(--ease-spring), box-shadow 0.3s;
 }
+
+.mobileCtaButton:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 20px rgba(200, 136, 42, 0.3);
+}
+
+.open .mobileNavLink {
+    animation: slideDown 0.4s var(--ease-out-expo) backwards;
+}
+
+.open .mobileNavLink:nth-child(1) { animation-delay: 0.05s; }
+.open .mobileNavLink:nth-child(2) { animation-delay: 0.1s; }
+.open .mobileNavLink:nth-child(3) { animation-delay: 0.15s; }
+.open .mobileNavLink:nth-child(4) { animation-delay: 0.2s; }
+.open .mobileNavLink:nth-child(5) { animation-delay: 0.25s; }
+.open .mobileCtaButton { animation: slideDown 0.4s var(--ease-out-expo) 0.3s backwards; }
 
 @media (min-width: 900px) {
     .desktopNav {

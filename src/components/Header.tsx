@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import styles from './Header.module.css';
 
@@ -18,61 +18,7 @@ const navRight = [
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
   const pathname = usePathname();
-  const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const visibleRef = useRef(true);
-
-  // Sync visibility state to <html> so other elements (e.g. sticky tabs) can react
-  useEffect(() => {
-    visibleRef.current = isVisible;
-    document.documentElement.setAttribute('data-header', isVisible ? 'visible' : 'hidden');
-  }, [isVisible]);
-
-  useEffect(() => {
-    const show = () => {
-      if (hideTimer.current) clearTimeout(hideTimer.current);
-      if (!visibleRef.current) setIsVisible(true);
-    };
-
-    const scheduleHide = () => {
-      if (hideTimer.current) clearTimeout(hideTimer.current);
-      hideTimer.current = setTimeout(() => {
-        if (window.scrollY >= 60) setIsVisible(false);
-      }, 2500);
-    };
-
-    const handleScroll = () => {
-      if (window.scrollY < 60) {
-        show();
-        return;
-      }
-      if (!visibleRef.current) setIsVisible(true);
-      scheduleHide();
-    };
-
-    // Desktop: show when cursor approaches top
-    const handleMouseMove = (e: MouseEvent) => {
-      if (e.clientY < 80 && !visibleRef.current) show();
-    };
-
-    // Mobile: show when user starts touching (new scroll gesture)
-    const handleTouchStart = () => {
-      if (!visibleRef.current) setIsVisible(true);
-      scheduleHide();
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('touchstart', handleTouchStart, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchstart', handleTouchStart);
-      if (hideTimer.current) clearTimeout(hideTimer.current);
-    };
-  }, []);
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
@@ -82,7 +28,7 @@ export function Header() {
   };
 
   return (
-    <header className={`${styles.header} ${isVisible ? '' : styles.headerHidden}`}>
+    <header className={styles.header}>
       <div className={`container ${styles.container}`}>
         <nav className={styles.desktopNav}>
           <div className={styles.navGroup}>
