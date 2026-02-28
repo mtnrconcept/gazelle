@@ -1,9 +1,9 @@
-import { MenuSection as MenuSectionType, MenuItem } from '@/data/menu';
+﻿import { MenuSection as MenuSectionType, MenuItem } from '@/data/menu';
 import styles from './MenuSection.module.css';
 
 type MenuSectionProps = {
     section: MenuSectionType;
-    level?: number;
+    level: number;
 };
 
 export function MenuSection({ section, level = 1 }: MenuSectionProps) {

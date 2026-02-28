@@ -1,29 +1,29 @@
-import styles from './page.module.css';
+﻿import styles from './page.module.css';
 import { Metadata } from 'next';
 import { ReserveSection } from '@/components/ReserveSection';
 
 export const metadata: Metadata = {
-    title: "Événements - La Gazelle d'Or",
-    description: "Soirées africaines, événements privés et privatisation du restaurant La Gazelle d'Or à Genève.",
+    title: "Événements africains à Genève",
+    description: "Soirées africaines, événements privés et privatisations à La Gazelle d'Or à Genève. Musique, cérémonie du café et expériences culturelles.",
 };
 
 const events = [
     {
         title: 'Soirées Culturelles',
         eyebrow: 'Chaque semaine',
-        description: 'Plongez dans la culture éthiopienne et érythréenne avec nos soirées musicales. Musiques traditionnelles, danses et cérémonie du café pour une immersion totale.',
+        description: "Plongez dans la culture éthiopienne et érythréenne avec nos soirées musicales. Musiques traditionnelles, danses et cérémonie du café pour une immersion totale.",
         image: 'https://lagazelledorgeneva.com/assets/TIMATUM%20SALADE-B7XlvVoD.jpg',
     },
     {
         title: 'Cérémonies du Café',
         eyebrow: 'Sur réservation',
-        description: 'Le café est originaire d\'Éthiopie. Vivez le rituel ancestral de torréfaction sur place, accompagné d\'encens traditionnel. Une expérience sensorielle unique.',
+        description: "Le café est originaire d'Éthiopie. Vivez le rituel ancestral de torréfaction sur place, accompagné d'encens traditionnel. Une expérience sensorielle unique.",
         image: 'https://lagazelledorgeneva.com/assets/SALADE%20DU%20CHEF-DwkqqRvX.jpg',
     },
     {
         title: 'Privatisation',
         eyebrow: 'Événements privés',
-        description: 'Mariages, anniversaires, repas d\'affaires… Privatisez notre espace aux décors africains authentiques pour un événement inoubliable. Menus personnalisés sur demande.',
+        description: "Mariages, anniversaires, repas d'affaires… Privatisez notre espace aux décors africains authentiques pour un événement inoubliable. Menus personnalisés sur demande.",
         image: 'https://lagazelledorgeneva.com/assets/SAMBUSA%20FAIT%20MAISON-D_wwG_sv.jpeg',
     },
 ];
@@ -34,19 +34,15 @@ export default function EvenementsPage() {
             <div className={styles.hero}>
                 <div className={styles.heroContent}>
                     <p className={styles.heroEyebrow}>Vivez l'Afrique à Genève</p>
-                    <h1 className={styles.heroTitle}>Événements & Soirées</h1>
+                    <h1 className={styles.heroTitle}>Événements africains à Genève</h1>
                     <p className={styles.heroTagline}>Des expériences culturelles uniques au cœur du restaurant</p>
                 </div>
             </div>
 
             <div className={`container ${styles.content}`}>
-
                 <section className={styles.eventsGrid}>
                     {events.map((event) => (
                         <article key={event.title} className={styles.eventCard}>
-                            <div className={styles.eventImageWrapper}>
-                                <img src={event.image} alt={event.title} loading="lazy" />
-                            </div>
                             <div className={styles.eventBody}>
                                 <span className={styles.eyebrow}>{event.eyebrow}</span>
                                 <h2 className={styles.eventTitle}>{event.title}</h2>
@@ -65,7 +61,7 @@ export default function EvenementsPage() {
                         </p>
                         <div className={styles.ctaButtons}>
                             <a href="tel:+41223403350" className={styles.ctaButton}>
-                                » Nous appeler «
+                                « Nous appeler »
                             </a>
                             <a href="mailto:lagazelledorgeneva@gmail.com" className={styles.ctaButtonOutline}>
                                 Envoyer un email
@@ -73,7 +69,6 @@ export default function EvenementsPage() {
                         </div>
                     </div>
                 </section>
-
             </div>
 
             <ReserveSection />

@@ -2,7 +2,7 @@
 .section {
     background:
         linear-gradient(180deg, rgba(248, 236, 210, 0.94), rgba(240, 221, 190, 0.94)),
-        url('/images/d%C3%A9cor2/d%C3%A9cor5.png') center/cover no-repeat;
+        url('/images/d%C3%A9cor2/d%C3%A9cor5.webp') center/cover no-repeat;
 }
 
 .container {
@@ -61,7 +61,7 @@
     height: 280px;
     background:
         linear-gradient(180deg, rgba(255, 247, 231, 0.92), rgba(242, 229, 203, 0.92)),
-        url('/images/d%C3%A9cor2/d%C3%A9cor2.png') center/contain repeat;
+        url('/images/d%C3%A9cor2/d%C3%A9cor2.webp') center/contain repeat;
     transition:
         transform 0.5s var(--ease-out-expo),
         box-shadow 0.5s var(--ease-out-expo);

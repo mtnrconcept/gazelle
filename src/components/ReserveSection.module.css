@@ -2,7 +2,7 @@
 .section {
     background:
         linear-gradient(180deg, rgba(248, 236, 214, 0.95), rgba(238, 221, 196, 0.95)),
-        url('/images/d%C3%A9cor2/d%C3%A9cor5.png') center/cover no-repeat;
+        url('/images/d%C3%A9cor2/d%C3%A9cor5.webp') center/cover no-repeat;
     padding: 7rem 0 5rem !important;
     position: relative;
     overflow: hidden;
@@ -17,7 +17,7 @@
 .card {
     background:
         linear-gradient(180deg, rgba(255, 248, 235, 0.97), rgba(247, 235, 212, 0.97)),
-        url('/images/d%C3%A9cor2/d%C3%A9cor2.png') center/contain repeat;
+        url('/images/d%C3%A9cor2/d%C3%A9cor2.webp') center/contain repeat;
     border: 1px solid rgba(182, 106, 44, 0.5);
     box-shadow: var(--shadow-lg);
     padding: 3.5rem;

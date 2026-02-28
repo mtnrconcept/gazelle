@@ -1,15 +1,15 @@
-"use client";
+﻿"use client";
 
 import Link from 'next/link';
 import { useState, useEffect, useMemo } from 'react';
 import styles from './Hero.module.css';
 
 const slides = [
-    '/images/5.jpg',
-    '/images/6.jpg',
-    '/images/7.jpg',
-    '/images/8.jpg',
-    '/images/9.jpg',
+    '/images/5.webp',
+    '/images/6.webp',
+    '/images/7.webp',
+    '/images/8.webp',
+    '/images/9.webp',
 ];
 
 function seededRandom(seed: number) {
@@ -95,11 +95,11 @@ export function Hero() {
             {/* Brand — logo, title, location */}
             <div className={styles.topContent}>
                 <img
-                    src="/images/logo.png"
+                    src="/images/logo.webp"
                     alt="La Gazelle d'Or"
                     className={styles.emblem}
                 />
-                <h1 className={styles.title}>La Gazelle d&apos;Or</h1>
+                <h1 className={styles.title} data-text="La Gazelle d'Or">La Gazelle d&apos;Or</h1>
                 <p className={styles.location}>Geneva</p>
             </div>
 

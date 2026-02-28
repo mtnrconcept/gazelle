@@ -50,7 +50,7 @@ body {
   font-family: var(--font-body);
   background:
     linear-gradient(180deg, rgba(248, 238, 215, 0.92), rgba(244, 228, 198, 0.92)),
-    url('/images/d%C3%A9cor2/fond.png') center/cover no-repeat fixed;
+    url('/images/d%C3%A9cor2/fond.webp') center/cover no-repeat fixed;
   color: var(--color-text);
   line-height: 1.7;
   min-height: 100vh;
@@ -137,7 +137,7 @@ body.snap-enabled .panel {
   width: 100vw;
   transform: translateX(-50%);
   height: 62px;
-  background: url('/images/d%C3%A9cor2/bandeau.png') no-repeat center;
+  background: url('/images/d%C3%A9cor2/bandeau.webp') no-repeat center;
   background-size: 100% 100%;
   opacity: 1;
   pointer-events: none;

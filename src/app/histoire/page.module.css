@@ -2,7 +2,7 @@
     min-height: 100vh;
     background:
         linear-gradient(180deg, rgba(248, 236, 214, 0.92), rgba(242, 224, 194, 0.92)),
-        url('/images/d%C3%A9cor2/fond.png') center/cover no-repeat fixed;
+        url('/images/d%C3%A9cor2/fond.webp') center/cover no-repeat fixed;
     padding-bottom: 4rem;
     color: var(--color-text);
 }

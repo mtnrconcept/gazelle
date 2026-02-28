@@ -2,7 +2,7 @@
 .footer {
     background:
         linear-gradient(180deg, rgba(58, 33, 18, 0.97), rgba(36, 20, 10, 0.97)),
-        url('/images/d%C3%A9cor2/bandeau.png') center/cover no-repeat;
+        url('/images/d%C3%A9cor2/bandeau.webp') center/cover no-repeat;
     color: #f0dfc0;
     padding: var(--spacing-xl) 0 var(--spacing-lg);
     margin-top: auto;

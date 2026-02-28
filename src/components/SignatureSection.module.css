@@ -2,7 +2,7 @@
 .section {
     background:
         linear-gradient(180deg, rgba(198, 162, 100, 0.92), rgba(175, 138, 74, 0.94)),
-        url('/images/d%C3%A9cor2/d%C3%A9cor5.png') center/cover no-repeat;
+        url('/images/d%C3%A9cor2/d%C3%A9cor5.webp') center/cover no-repeat;
     color: #2a1004;
     border-top: 3px solid #7a3a0e;
 }

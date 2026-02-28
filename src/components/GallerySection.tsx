@@ -1,16 +1,16 @@
 ﻿import styles from './GallerySection.module.css';
 
 const gallery = [
-    { src: '/images/2.jpg', alt: 'Ambiance La Gazelle d\'Or' },
+    { src: '/images/2.webp', alt: 'Ambiance La Gazelle d\'Or' },
     { src: 'https://lagazelledorgeneva.com/assets/SAMBUSA%20FAIT%20MAISON-D_wwG_sv.jpeg', alt: 'Sambusa fait maison' },
-    { src: '/images/3.jpg', alt: 'Intérieur du restaurant' },
+    { src: '/images/3.webp', alt: 'Intérieur du restaurant' },
     { src: 'https://lagazelledorgeneva.com/assets/SALADE%20DU%20CHEF-DwkqqRvX.jpg', alt: 'Salade du Chef' },
-    { src: '/images/4.jpg', alt: 'Décoration africaine' },
+    { src: '/images/4.webp', alt: 'Décoration africaine' },
     { src: 'https://lagazelledorgeneva.com/assets/SPECIALITES%20DE%20LA%20MAISON-CNPs4Yvd.png', alt: 'Spécialités de la maison' },
-    { src: '/images/5.jpg', alt: 'Salle de restaurant' },
+    { src: '/images/5.webp', alt: 'Salle de restaurant' },
     { src: 'https://lagazelledorgeneva.com/assets/LA%20GAZELLE%20ROYALE-EI-niyer.png', alt: 'La Gazelle Royale' },
     { src: 'https://lagazelledorgeneva.com/assets/DORO%20WET-qlKOx6dc.png', alt: 'Doro Wet' },
-    { src: '/images/6.jpg', alt: 'Ambiance' },
+    { src: '/images/6.webp', alt: 'Ambiance' },
     { src: 'https://lagazelledorgeneva.com/assets/TIMATUM%20SALADE-B7XlvVoD.jpg', alt: 'Timatum Salade' },
     { src: 'https://lagazelledorgeneva.com/assets/D%C3%A9gustation%20de%20L%C3%A9gumes-BHGAtiLV.png', alt: 'Dégustation de légumes' },
 ];

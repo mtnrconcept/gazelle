@@ -147,21 +147,80 @@
     font-family: var(--font-display);
     font-size: clamp(2.6rem, 7vw, 5.5rem);
     font-weight: 700;
-    color: #e8c472;
-    letter-spacing: 6px;
+    color: #f2d28a;
+    letter-spacing: 5px;
     text-transform: uppercase;
     text-shadow:
-        0 2px 4px rgba(139, 76, 4, 0.9),
-        0 0 60px rgba(255, 174, 0, 0.35),
-        0 0 120px rgba(214, 152, 19, 0.15);
+        0 2px 3px rgba(120, 60, 10, 0.85),
+        0 0 30px rgba(255, 200, 90, 0.35),
+        0 0 70px rgba(255, 190, 60, 0.25);
     line-height: 1.05;
     margin: 0;
-    background: linear-gradient(135deg, #ffde8b, #ffbc20, #d9a24f, #e8c472, #f5e2b0);
-    background-size: 300% auto;
+    background: linear-gradient(135deg, #fff1c8, #f3c567 40%, #c9872f 55%, #f5e2b0 75%, #fff1c8);
+    background-size: 240% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: goldShimmer 6s linear infinite;
+    animation: goldShimmer 7s linear infinite;
+    position: relative;
+    display: inline-block;
+    margin-bottom: clamp(0.35rem, 1.2vw, 0.85rem);
+}
+
+.title::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        120deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 250, 230, 0.15) 35%,
+        rgba(255, 230, 160, 0.95) 48%,
+        rgba(255, 210, 120, 0.75) 52%,
+        rgba(255, 250, 230, 0.12) 65%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 220% 100%;
+    background-position: -130% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    opacity: 0.95;
+    filter: blur(0.2px);
+    mix-blend-mode: screen;
+    pointer-events: none;
+    text-shadow: 0 0 16px rgba(255, 220, 140, 0.6);
+    animation: titleGlint 4.8s ease-in-out infinite;
+}
+
+.title::before {
+    content: '';
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    bottom: -0.12em;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255, 214, 140, 0.9), transparent);
+    opacity: 0.8;
+    filter: drop-shadow(0 0 8px rgba(255, 200, 100, 0.35));
+}
+
+@keyframes titleGlint {
+    0% {
+        background-position: -140% 0;
+        opacity: 0.35;
+    }
+    45% {
+        opacity: 1;
+    }
+    60% {
+        background-position: 120% 0;
+        opacity: 0.65;
+    }
+    100% {
+        background-position: 140% 0;
+        opacity: 0.35;
+    }
 }
 
 .location {
@@ -322,5 +381,15 @@
 
     .sunbeam2 {
         display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .title {
+        animation: none;
+    }
+
+    .title::after {
+        animation: none;
     }
 }

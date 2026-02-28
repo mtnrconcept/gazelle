@@ -2,7 +2,7 @@
 .section {
     background:
         linear-gradient(180deg, rgba(22, 10, 4, 0.97), rgba(28, 13, 5, 0.97)),
-        url('/images/d%C3%A9cor2/d%C3%A9cor5.png') center/cover no-repeat;
+        url('/images/d%C3%A9cor2/d%C3%A9cor5.webp') center/cover no-repeat;
     border-top: 3px solid #7a3a0e;
     border-bottom: 3px solid #7a3a0e;
     overflow: hidden;
@@ -27,7 +27,7 @@
     padding: 2.5rem 1.5rem;
     background:
         linear-gradient(180deg, rgba(45, 20, 8, 0.93), rgba(30, 12, 4, 0.95)),
-        url('/images/d%C3%A9cor2/d%C3%A9cor2.png') center/contain repeat;
+        url('/images/d%C3%A9cor2/d%C3%A9cor2.webp') center/contain repeat;
     border: 2px solid #6a3010;
     box-shadow:
         0 0 0 1px rgba(200, 140, 50, 0.12),

@@ -1,7 +1,7 @@
 .page {
     background:
         linear-gradient(180deg, rgba(248, 236, 214, 0.92), rgba(242, 224, 194, 0.92)),
-        url('/images/d%C3%A9cor2/fond.png') center/cover no-repeat fixed;
+        url('/images/d%C3%A9cor2/fond.webp') center/cover no-repeat fixed;
     min-height: 100vh;
     color: var(--color-text);
 }
@@ -15,7 +15,7 @@
     background-image:
         radial-gradient(ellipse at center, transparent 0%, rgba(18, 8, 2, 0.3) 70%),
         linear-gradient(180deg, rgba(52, 28, 12, 0.5), rgba(52, 28, 12, 0.68)),
-        url('/images/2.jpg');
+        url('/images/2.webp');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

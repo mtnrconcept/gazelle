@@ -195,7 +195,7 @@ export const menuData: MenuSection[] = [
         ]
     },
     {
-        title: "MENU DEGUSTATION",
+        title: "MENU DÉGUSTATION",
         notes: ["Tous nos menus sont servis avec de l'injera fait maison. · All menus served with homemade injera."],
         subsections: [
             {

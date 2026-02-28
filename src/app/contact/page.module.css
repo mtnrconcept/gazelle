@@ -2,7 +2,7 @@
     min-height: 100vh;
     background:
         linear-gradient(180deg, rgba(248, 236, 214, 0.92), rgba(242, 224, 194, 0.92)),
-        url('/images/d%C3%A9cor2/fond.png') center/cover no-repeat fixed;
+        url('/images/d%C3%A9cor2/fond.webp') center/cover no-repeat fixed;
     padding-bottom: 5rem;
     color: var(--color-text);
 }
@@ -17,7 +17,7 @@
     background-image:
         radial-gradient(ellipse at center, transparent 0%, rgba(18, 8, 2, 0.3) 70%),
         linear-gradient(180deg, rgba(52, 28, 12, 0.55), rgba(52, 28, 12, 0.72)),
-        url('/images/7.jpg');
+        url('/images/7.webp');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -200,7 +200,7 @@
 .successCard {
     background:
         linear-gradient(180deg, rgba(255, 248, 235, 0.97), rgba(247, 235, 212, 0.97)),
-        url('/images/d%C3%A9cor2/d%C3%A9cor2.png') center/contain repeat;
+        url('/images/d%C3%A9cor2/d%C3%A9cor2.webp') center/contain repeat;
     border: 1px solid rgba(182, 106, 44, 0.4);
     border-radius: var(--border-radius);
     padding: 3rem 2rem;

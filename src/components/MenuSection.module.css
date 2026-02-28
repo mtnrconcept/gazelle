@@ -54,7 +54,7 @@
     padding: 1.5rem;
     background:
         linear-gradient(180deg, rgba(255, 248, 235, 0.95), rgba(247, 235, 212, 0.95)),
-        url('/images/d%C3%A9cor2/d%C3%A9cor2.png') center/contain repeat;
+        url('/images/d%C3%A9cor2/d%C3%A9cor2.webp') center/contain repeat;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-sm);
     transition:

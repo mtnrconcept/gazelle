@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from 'next/link';
 import { useState } from 'react';
@@ -45,7 +45,7 @@ export function Header() {
 
           <Link href="/" className={styles.brand}>
             <img
-              src="/images/logo.png"
+              src="/images/logo.webp"
               alt="Ornement"
               className={styles.brandMark}
             />
@@ -72,7 +72,7 @@ export function Header() {
         <div className={styles.mobileRow}>
           <Link href="/" className={styles.brand}>
             <img
-              src="/images/logo.png"
+              src="/images/logo.webp"
               alt="Ornement"
               className={styles.brandMark}
             />
