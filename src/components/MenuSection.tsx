@@ -3,7 +3,7 @@ import styles from './MenuSection.module.css';
 
 type MenuSectionProps = {
     section: MenuSectionType;
-    level: number;
+    level?: number;
 };
 
 export function MenuSection({ section, level = 1 }: MenuSectionProps) {
