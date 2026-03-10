@@ -49,7 +49,7 @@ export default function HistoirePage() {
                         <div className={styles.storyMedia}>
                             <div className={styles.storyImageWrapper}>
                                 <img
-                                    src="https://lagazelledorgeneva.com/assets/plat-histoire-Cl69Tczt.jpg"
+                                    src="/images/1.jpg"
                                     alt="Cuisine traditionnelle La Gazelle d'Or"
                                     loading="lazy"
                                 />
@@ -151,3 +151,4 @@ export default function HistoirePage() {
         </div>
     );
 }
+
