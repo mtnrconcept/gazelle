@@ -37,7 +37,7 @@ export function AboutSection() {
                 <div className={styles.media}>
                     <div className={styles.imageWrapper}>
                         <img
-                            src="https://lagazelledorgeneva.com/assets/plat-histoire-Cl69Tczt.jpg"
+                            src="public/images/1.jpg"
                             alt="Cuisine traditionnelle"
                             className={styles.image}
                             loading="lazy"
@@ -52,3 +52,4 @@ export function AboutSection() {
         </section>
     );
 }
+
