@@ -221,6 +221,30 @@ export function ContactPageClient() {
 
                             <div className={styles.divider}></div>
 
+                            <div className={styles.infoBlock}>
+                                <p className={styles.infoLabel}>Commander en livraison</p>
+                                <div className={styles.deliveryLinks}>
+                                    <a
+                                        href="https://www.ubereats.com/ch"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={styles.deliveryBtn}
+                                    >
+                                        Uber Eats
+                                    </a>
+                                    <a
+                                        href="https://www.smood.ch/fr"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={styles.deliveryBtn}
+                                    >
+                                        Smood
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div className={styles.divider}></div>
+
                             <div className={styles.callBox}>
                                 <p>Préférez-vous nous appeler directement ?</p>
                                 <a href="tel:+41223403350" className={styles.callBtn}>
