@@ -37,7 +37,7 @@ export function AboutSection() {
                 <div className={styles.media}>
                     <div className={styles.imageWrapper}>
                         <img
-                            src="public/images/1.jpg"
+                            src="https://lagazelledorgeneva.com/assets/1.jpg"
                             alt="Cuisine traditionnelle"
                             className={styles.image}
                             loading="lazy"
@@ -52,4 +52,5 @@ export function AboutSection() {
         </section>
     );
 }
+
 
