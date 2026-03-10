@@ -1,4 +1,5 @@
-﻿import Link from 'next/link';
+﻿import Image from 'next/image';
+import Link from 'next/link';
 import styles from './AboutSection.module.css';
 
 export function AboutSection() {
@@ -36,11 +37,13 @@ export function AboutSection() {
                 </div>
                 <div className={styles.media}>
                     <div className={styles.imageWrapper}>
-                        <img
+                        <Image
                             src="/images/1.jpg"
                             alt="Cuisine traditionnelle"
                             className={styles.image}
                             loading="lazy"
+                            width={900}
+                            height={620}
                         />
                     </div>
                     <div className={styles.highlightCard}>
