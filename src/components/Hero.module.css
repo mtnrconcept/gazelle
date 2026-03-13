@@ -10,14 +10,19 @@
     gap: clamp(2.5rem, 6vh, 5rem);
     text-align: center;
     overflow: hidden;
-    padding-bottom: clamp(8rem, 18vh, 14rem);
+    padding-bottom: 0;
 }
 
 /* ── Slideshow with Ken Burns ── */
 .slideshow {
     position: absolute;
-    inset: 0;
+    top: -5%;
+    left: 0;
+    width: 100%;
+    height: 110%;
     z-index: 0;
+    transform: translateY(calc(var(--scroll-y) * 0.2));
+    will-change: transform;
 }
 
 .slide {
@@ -48,7 +53,7 @@
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse at center, transparent 0%, rgba(18, 8, 2, 0.3) 60%, rgba(18, 8, 2, 0.7) 100%),
+        radial-gradient(ellipse at center, transparent 50%, rgba(18, 8, 2, 0.3) 60%, rgba(18, 8, 2, 0.7) 100%),
         linear-gradient(
             180deg,
             rgba(18, 8, 2, 0.65) 0%,
@@ -56,7 +61,7 @@
             rgba(40, 18, 6, 0.3) 60%,
             rgba(18, 8, 2, 0.75) 100%
         );
-    z-index: 1;
+    z-index: 3;
 }
 
 /* ── Dust motes in sunbeams ── */
@@ -66,6 +71,7 @@
     z-index: 2;
     pointer-events: none;
     overflow: hidden;
+    transform: translateY(calc(var(--scroll-y) * 0.25));
 }
 
 .sunbeam {
@@ -123,25 +129,39 @@
     }
 }
 
+/* ── Leaf behind text ── */
+.behindLeaf {
+    position: absolute;
+    top: 29vh;
+    left: -20;
+    width: clamp(280px, 40vw, 500px);
+    aspect-ratio: 1 / 1;
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0.6;
+    filter: blur(1px) saturate(0.6);
+    mix-blend-mode: normal;
+    transform-origin: left top;
+    will-change: transform;
+}
+
 /* ── Top brand block ── */
 .topContent {
     position: relative;
-    z-index: 3;
+    z-index: 1000;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
-    padding-top: clamp(4rem, 8vh, 6rem);
+    padding-top: 0;
     animation: fadeInUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+    transform: translateY(calc(var(--scroll-y) * -0.15));
+    will-change: transform;
 }
 
-.emblem {
-    width: clamp(300px, 44vw, 480px);
-    height: auto;
-    filter: drop-shadow(0 6px 24px rgba(0,0,0,0.8)) brightness(1.15);
-    margin-bottom: 0.8rem;
-    animation: floatSlow 6s ease-in-out 1.5s infinite;
-}
+
 
 .title {
     font-family: var(--font-display);
@@ -235,13 +255,15 @@
 /* ── Bottom tagline + CTA ── */
 .bottomContent {
     position: relative;
-    z-index: 3;
+    z-index: 10;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1.8rem;
-    padding-bottom: clamp(3rem, 6vh, 5rem);
+    padding-bottom: 0;
     animation: fadeInUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both;
+    transform: translateY(calc(var(--scroll-y) * -0.1));
+    will-change: transform;
 }
 
 .tagline {
@@ -332,7 +354,7 @@
     bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 3;
+    z-index: 10;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -391,5 +413,24 @@
 
     .title::after {
         animation: none;
+    }
+}
+
+/* ── Ken Burns Keyframes ── */
+@keyframes kenBurns {
+    0% {
+        transform: scale(1.05) translate(0, 0);
+    }
+    100% {
+        transform: scale(1.15) translate(-1%, -1%);
+    }
+}
+
+@keyframes kenBurns2 {
+    0% {
+        transform: scale(1.05) translate(0, 0);
+    }
+    100% {
+        transform: scale(1.15) translate(1%, 0.5%);
     }
 }

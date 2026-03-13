@@ -37,7 +37,7 @@ export function ReviewSection() {
             <div className={`container ${styles.container}`}>
                 <div className={styles.header}>
                     <span className={styles.kicker}>Avis & retours</span>
-                    <h2 className={styles.title}>Ce que disent nos clients</h2>
+                    <h2 className={styles.title} data-text="Ce que disent nos clients">Ce que disent nos clients</h2>
                     <p className={styles.subtitle}>
                         Des saveurs authentiques, un accueil chaleureux et une atmosphère intime qui font de chaque visite un souvenir.
                     </p>

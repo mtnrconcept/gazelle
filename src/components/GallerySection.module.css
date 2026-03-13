@@ -24,7 +24,29 @@
 
 .title {
     font-size: clamp(2rem, 4vw, 3rem);
-    color: var(--color-ink);
+    font-weight: 700;
+    color: #b87333;
+    letter-spacing: 3px;
+    line-height: 1.1;
+    background: linear-gradient(160deg, #e8a862, #c47a2a 30%, #8b4513 50%, #c47a2a 70%, #daa06d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    position: relative;
+    display: inline-block;
+    filter: drop-shadow(0 1px 0 rgba(255, 210, 160, 0.5)) drop-shadow(0 2px 3px rgba(80, 30, 5, 0.7));
+}
+
+.title::before {
+    content: '';
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    bottom: -0.12em;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(180, 110, 50, 0.8), transparent);
+    opacity: 0.8;
 }
 
 .carousel {
@@ -107,6 +129,12 @@
 
     .eyebrow {
         letter-spacing: 2px;
+    }
+    
+    .carousel {
+        grid-auto-columns: 75vw; /* Permet à la photo de presque remplir l'écran sans se couper, tout en laissant deviner la suivante */
+        scroll-snap-type: x mandatory;
+        padding: 0.5rem; /* Ajuster les paddings pour éviter les débordements */
     }
 }
 

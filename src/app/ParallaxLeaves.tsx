@@ -5,82 +5,49 @@ import styles from './page.module.css';
 
 export function ParallaxLeaves() {
   const layerRef = useRef<HTMLDivElement>(null);
-  const pseudoRandom = (seed: number) => {
-    const value = Math.sin(seed * 12.9898) * 43758.5453;
-    return value - Math.floor(value);
-  };
 
-  const leaves = useMemo(() => {
-    const positions = [
-      { side: 'left', x: -14, y: -12, speed: 1.45 },
-      { side: 'right', x: 58, y: 8, speed: 1.6 },
-      { side: 'left', x: -16, y: 52, speed: 1.5 },
-      { side: 'right', x: 60, y: 112, speed: 1.65, image: 'left' },
-      { side: 'right', x: 62, y: 168, speed: 1.8 },
-      { side: 'left', x: -16, y: 220, speed: 1.9 }
-    ];
-
-    return positions.map((leaf, index) => {
-      const centerX = 50;
-      const centerY = 50;
-      const angleRad = Math.atan2(centerY - leaf.y, centerX - leaf.x);
-      const angleDeg = (angleRad * 180) / Math.PI;
-      const rotateJitter = (pseudoRandom(index + 1) * 16) - 8;
-      const speedJitter = (pseudoRandom(index + 11) * 0.24) - 0.12;
-
-      return {
-        ...leaf,
-        image: leaf.image ?? leaf.side,
-        rotate: Math.round((angleDeg + rotateJitter) * 1e6) / 1e6,
-        speed: Math.round(Math.max(1.3, leaf.speed + speedJitter) * 1e6) / 1e6
-      };
-    });
-  }, []);
+  const leaves = useMemo(() => [
+    { image: 'left1', x: 0, y: 5, speed: 2.0, scale: 2.0, blur: 5, opacity: 0.5, zIndex: 1, side: 'left' as const },
+    { image: 'left1', x: 0, y: 35, speed: 11.2, scale: 1.8, blur: 2, opacity: 0.45, zIndex: 1, side: 'left' as const },
+    { image: 'left3', x: 100, y: 30, speed: 1.5, scale: 1.2, blur: 1, opacity: 0.2, zIndex: 1, side: 'right' as const },
+    { image: 'left2', x: 100, y: 50, speed: 5.5, scale: 1.2, blur: 3, opacity: 0.5, zIndex: 1, side: 'right' as const },
+  ], []);
 
   useEffect(() => {
     const layer = layerRef.current;
     if (!layer) return;
 
-    let frame = 0;
     const update = () => {
       const scrollY = window.scrollY || window.pageYOffset || 0;
-      const offset = scrollY * -0.55;
-      layer.style.setProperty('--parallax-y', `${offset}px`);
-      frame = 0;
-    };
-
-    const onScroll = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(update);
+      layer.style.setProperty('--scroll-y', `${scrollY}px`);
     };
 
     update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
 
     return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
     };
   }, []);
 
   return (
-    <div className={styles.parallaxLayer} aria-hidden="true" ref={layerRef}>
+    <div className={styles.parallaxLayerFront} aria-hidden="true" ref={layerRef}>
       {leaves.map((leaf, index) => (
         <span
           key={`leaf-${index}`}
-          className={`${styles.leaf} ${leaf.side === 'left' ? styles.leafLeft : styles.leafRight}`}
+          className={`${styles.leaf} ${leaf.side === 'right' ? styles.leafRight : ''}`}
           style={{
             top: `${leaf.y}vh`,
-            left: `${leaf.x}vw`,
-            ['--leaf-rotate' as string]: `${leaf.rotate}deg`,
-            ['--leaf-speed' as string]: `${leaf.speed}`,
-            backgroundImage:
-              leaf.image !== leaf.side
-                ? `url('/images/palm-leaf-${leaf.image}.png')`
-                : undefined
-          }}
+            left: `${leaf.x}%`,
+            '--leaf-speed': leaf.speed,
+            '--leaf-scale': leaf.scale,
+            '--leaf-blur': `${leaf.blur}px`,
+            '--leaf-opacity': leaf.opacity,
+            '--leaf-z': leaf.zIndex,
+            backgroundImage: `url('/images/palm-leaf-${leaf.image}.png')`
+          } as any}
         />
       ))}
     </div>

@@ -97,7 +97,7 @@
 
 @media (max-width: 600px) {
   .track {
-    font-size: 0.9rem;
+    font-size: 1.02rem;
     letter-spacing: 2px;
     gap: 2rem;
   }

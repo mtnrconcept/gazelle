@@ -3,7 +3,7 @@
   position: relative;
 }
 
-.parallaxLayer {
+.parallaxLayerFront {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -11,53 +11,49 @@
   overflow: hidden;
 }
 
-.main > :not(.parallaxLayer) {
+.main > :not(.parallaxLayerFront) {
   position: relative;
   z-index: 2;
 }
 
 .leaf {
   position: absolute;
-  width: min(70vw, 680px);
+  width: clamp(280px, 40vw, 680px);
   aspect-ratio: 1 / 1;
   background-size: contain;
   background-repeat: no-repeat;
-  opacity: 0.46;
-  filter: blur(6px) saturate(0.55);
+  pointer-events: none;
+  z-index: var(--leaf-z, 1);
+  opacity: var(--leaf-opacity, 0.5);
+  filter: blur(var(--leaf-blur, 0px)) saturate(0.8);
   mix-blend-mode: multiply;
-  transform: translate3d(
-      var(--leaf-offset-x, 0px),
-      calc(var(--parallax-y, 0px) * var(--leaf-speed, 1)),
+  transform-origin: left top;
+
+  transform:
+    translate3d(
+      calc(var(--scroll-y, 0px) * -0.05 * var(--leaf-speed, 1)),
+      calc(var(--scroll-y, 0px) * -0.1 * var(--leaf-speed, 1)),
       0
     )
-    rotate(var(--leaf-rotate, 0deg))
-    scaleX(var(--leaf-flip, 1));
+    scale(var(--leaf-scale, 1));
   will-change: transform;
 }
 
-.leafLeft {
-  background-image: url('/images/palm-leaf-left.png');
-  --leaf-offset-x: -1vw;
-  transform-origin: 0% 50%;
-}
-
 .leafRight {
-  background-image: url('/images/palm-leaf-right.png');
-  --leaf-flip: -1;
-  --leaf-offset-x: 12vw;
-  transform-origin: 100% 50%;
-}
+  transform-origin: left top;
 
-@media (max-width: 900px) {
-  .leaf {
-    width: min(80vw, 600px);
-    opacity: 0.12;
-    filter: blur(14px) saturate(0.7);
-  }
+  transform:
+    translate3d(
+      calc(var(--scroll-y, 0px) * 0.05 * var(--leaf-speed, 1)),
+      calc(var(--scroll-y, 0px) * -0.1 * var(--leaf-speed, 1)),
+      0
+    )
+    scale(var(--leaf-scale, 1))
+    scaleX(-1);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .parallaxLayer {
+  .parallaxLayerFront {
     position: absolute;
   }
 }

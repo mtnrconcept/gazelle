@@ -89,7 +89,7 @@
 
 .diamond {
     color: #c8882a;
-    font-size: 0.6rem;
+    font-size: 0.72rem;
     opacity: 0.8;
     transition: transform 0.5s var(--ease-spring);
 }
@@ -142,7 +142,7 @@
     border: 1px solid #b07030;
     color: #f0d898;
     font-family: var(--font-display);
-    font-size: 0.8rem;
+    font-size: 0.92rem;
     letter-spacing: 3px;
     text-transform: uppercase;
     box-shadow: 0 2px 8px rgba(0,0,0,0.5);
@@ -189,7 +189,7 @@
     }
 
     .cardTitle {
-        font-size: 0.95rem;
+        font-size: 1.07rem;
         letter-spacing: 1px;
     }
 
@@ -199,7 +199,7 @@
     }
 
     .cardButton {
-        font-size: 0.65rem;
+        font-size: 0.77rem;
         letter-spacing: 1.5px;
         padding: 0.5rem 1.2rem;
         white-space: normal;

@@ -1,8 +1,8 @@
-﻿import { MenuSection as MenuSectionType, MenuItem } from '@/data/menu';
+import type { MenuSectionData, MenuItemData } from '@/types/menu';
 import styles from './MenuSection.module.css';
 
 type MenuSectionProps = {
-    section: MenuSectionType;
+    section: MenuSectionData;
     level?: number;
 };
 
@@ -16,7 +16,7 @@ export function MenuSection({ section, level = 1 }: MenuSectionProps) {
                 {section.title}
             </TitleTag>
 
-            {section.notes && (
+            {section.notes && section.notes.length > 0 && (
                 <div className={styles.notes}>
                     {section.notes.map((note, idx) => (
                         <p key={idx}>{note}</p>
@@ -24,18 +24,18 @@ export function MenuSection({ section, level = 1 }: MenuSectionProps) {
                 </div>
             )}
 
-            {section.items && (
+            {section.items && section.items.length > 0 && (
                 <div className={styles.grid}>
-                    {section.items.map((item, idx) => (
-                        <MenuItemCard key={idx} item={item} />
+                    {section.items.map((item) => (
+                        <MenuItemCard key={item.name} item={item} />
                     ))}
                 </div>
             )}
 
-            {section.subsections && (
+            {section.subsections && section.subsections.length > 0 && (
                 <div className={styles.subsections}>
-                    {section.subsections.map((sub, idx) => (
-                        <MenuSection key={idx} section={sub} level={level + 1} />
+                    {section.subsections.map((sub) => (
+                        <MenuSection key={sub.title} section={sub} level={level + 1} />
                     ))}
                 </div>
             )}
@@ -43,15 +43,13 @@ export function MenuSection({ section, level = 1 }: MenuSectionProps) {
     );
 }
 
-function MenuItemCard({ item }: { item: MenuItem }) {
-    const imageUrl = item.image ?? null;
-
+function MenuItemCard({ item }: { item: MenuItemData }) {
     return (
         <div className={styles.card}>
-            {imageUrl && (
+            {item.image && (
                 <div className={styles.imageWrapper}>
                     <img
-                        src={imageUrl}
+                        src={item.image}
                         alt={item.name}
                         className={styles.image}
                         loading="lazy"

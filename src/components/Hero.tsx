@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from 'next/link';
 import { useState, useEffect, useMemo } from 'react';
@@ -67,6 +67,15 @@ function DustParticles() {
 
 export function Hero() {
     const [current, setCurrent] = useState(0);
+    const [scrollY, setScrollY] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrollY(window.scrollY);
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -76,7 +85,10 @@ export function Hero() {
     }, []);
 
     return (
-        <section className={`${styles.hero} panel heroFullBleed`}>
+        <section 
+            className={`${styles.hero} panel heroFullBleed`}
+            style={{ '--scroll-y': `${scrollY}px` } as React.CSSProperties}
+        >
             <div className={styles.slideshow}>
                 {slides.map((src, idx) => (
                     <img
@@ -92,13 +104,18 @@ export function Hero() {
             <div className={styles.overlay} />
             <DustParticles />
 
+            {/* Feuille derrière le texte */}
+            <span
+                className={styles.behindLeaf}
+                aria-hidden="true"
+                style={{
+                    backgroundImage: "url('/images/palm-leaf-left3.png')",
+                    transform: `translateX(${scrollY * -0.15}px) translateY(${scrollY * -0.03}px) scale(0.9)`,
+                }}
+            />
+
             {/* Brand — logo, title, location */}
             <div className={styles.topContent}>
-                <img
-                    src="/images/logo.webp"
-                    alt="La Gazelle d'Or"
-                    className={styles.emblem}
-                />
                 <h1 className={styles.title} data-text="La Gazelle d'Or">La Gazelle d&apos;Or</h1>
                 <p className={styles.location}>Geneva</p>
             </div>

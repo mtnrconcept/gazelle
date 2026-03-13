@@ -1,7 +1,7 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from 'react';
-import { menuData } from '@/data/menu';
+import type { MenuSectionData } from '@/types/menu';
 import { MenuSection } from '@/components/MenuSection';
 import { SignatureSection } from '@/components/SignatureSection';
 import { GallerySection } from '@/components/GallerySection';
@@ -25,7 +25,11 @@ const tabMap: Record<string, string> = {
     boissons: 'BOISSONS',
 };
 
-export function MenuPageClient() {
+type MenuPageClientProps = {
+    sections: MenuSectionData[];
+};
+
+export function MenuPageClient({ sections }: MenuPageClientProps) {
     const [activeTab, setActiveTab] = useState('all');
 
     useEffect(() => {
@@ -65,15 +69,15 @@ export function MenuPageClient() {
     }, [activeTab]);
 
     const visibleSections = activeTab === 'all'
-        ? menuData
-        : menuData.filter((s) => s.title === tabMap[activeTab]);
+        ? sections
+        : sections.filter((s) => s.title === tabMap[activeTab]);
 
     return (
         <div className={styles.page}>
             <div className={styles.hero}>
                 <div className={styles.heroContent}>
                     <p className={styles.heroEyebrow}>Restaurant éthiopien & érythréen</p>
-                    <h1 className={styles.heroTitle}>Menu éthiopien & érythréen</h1>
+                    <h1 className={styles.heroTitle} data-text="Menu éthiopien & érythréen">Menu éthiopien &amp; érythréen</h1>
                     <p className={styles.heroTagline}>Tous nos plats sont servis avec de l'injera fait maison</p>
                 </div>
             </div>

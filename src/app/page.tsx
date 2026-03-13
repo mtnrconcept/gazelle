@@ -6,6 +6,7 @@ import { AboutSection } from '@/components/AboutSection';
 import { SignatureSection } from '@/components/SignatureSection';
 import { ReviewSection } from '@/components/ReviewSection';
 import { GallerySection } from '@/components/GallerySection';
+import { OrderBanner } from '@/components/OrderBanner';
 import { ReserveSection } from '@/components/ReserveSection';
 import styles from './page.module.css';
 import { ParallaxLeaves } from './ParallaxLeaves';
@@ -26,6 +27,7 @@ export default function Home() {
       <SignatureSection />
       <ReviewSection />
       <GallerySection />
+      <OrderBanner />
       <ReserveSection />
     </div>
   );

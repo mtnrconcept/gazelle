@@ -7,7 +7,7 @@ export function ReserveSection() {
             <div className={`container ${styles.container}`}>
                 <div className={styles.card}>
                     <p className={styles.eyebrow}>Réservation</p>
-                    <h2 className={styles.title}>Une table vous attend</h2>
+                    <h2 className={styles.title} data-text="Une table vous attend">Une table vous attend</h2>
                     <p className={styles.subtitle}>
                         Offrez-vous un moment hors du temps. Service attentionné, atmosphère feutrée et cuisine traditionnelle.
                     </p>

@@ -1,7 +1,8 @@
 :root {
   --font-display: "Cinzel", serif;
   --font-body: "Cormorant Garamond", serif;
-  --header-h: 115px;
+  /* La hauteur réelle du header sera injectée dynamiquement par le script React */
+  --header-h: 126px; /* Fallback de sécurité */
 
   --color-primary: #b86a2c;
   --color-secondary: #d9a24f;
@@ -20,8 +21,8 @@
 
   --border-radius: 10px;
   --shadow-sm: 0 6px 16px rgba(0, 0, 0, 0.18);
-  --shadow-md: 0 16px 32px rgba(0, 0, 0, 0.22);
-  --shadow-lg: 0 26px 60px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.22);
+  --shadow-lg: 0 22px 60px rgba(0, 0, 0, 0.28);
 
   /* Animation tokens */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -36,7 +37,7 @@
 }
 
 html {
-  overflow-x: hidden;
+  overflow-x: clip;
   scroll-behavior: smooth;
 }
 
@@ -54,8 +55,8 @@ body {
   color: var(--color-text);
   line-height: 1.7;
   min-height: 100vh;
-  overflow-x: hidden;
-  padding-top: var(--header-h);
+  overflow-x: clip;
+  padding-top: var(--header-h, 126px);
 }
 
 .heroFullBleed {
@@ -141,8 +142,8 @@ body.snap-enabled .panel {
   background-size: 100% 100%;
   opacity: 1;
   pointer-events: none;
-  z-index: 1;
-  top: 0;
+  z-index: 10; /* Augmenté pour passer par-dessus la jointure */
+  top: -30px; /* Remonté pour cacher la jointure */
 }
 
 /* ══ SCROLL REVEAL SYSTEM ═══════════════════════════════════════════ */
@@ -237,7 +238,33 @@ body.snap-enabled .panel {
 
 @keyframes goldShimmer {
   0% { background-position: -100% 0; }
-  100% { background-position: 200% 0; }
+  50% { background-position: 200% 0; }
+  100% { background-position: -100% 0; }
+}
+
+@keyframes titleGlint {
+  0% {
+    background-position: -140% 0;
+    opacity: 0.35;
+  }
+  22% {
+    opacity: 1;
+  }
+  45% {
+    background-position: 140% 0;
+    opacity: 0.35;
+  }
+  55% {
+    background-position: 140% 0;
+    opacity: 0.35;
+  }
+  78% {
+    opacity: 1;
+  }
+  100% {
+    background-position: -140% 0;
+    opacity: 0.35;
+  }
 }
 
 @keyframes sparkle {
@@ -287,6 +314,10 @@ body.snap-enabled .panel {
     background-attachment: scroll;
   }
 
+  .hero {
+    background-attachment: scroll;
+  }
+
   body.snap-enabled .panel {
     min-height: auto;
     padding: 4rem 0;
@@ -294,6 +325,7 @@ body.snap-enabled .panel {
 
   .decoratedSection::before {
     height: 44px;
+    top: -20px;
   }
 }
 

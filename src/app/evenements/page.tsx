@@ -34,7 +34,7 @@ export default function EvenementsPage() {
             <div className={styles.hero}>
                 <div className={styles.heroContent}>
                     <p className={styles.heroEyebrow}>Vivez l'Afrique à Genève</p>
-                    <h1 className={styles.heroTitle}>Événements africains à Genève</h1>
+                    <h1 className={styles.heroTitle} data-text="Événements africains à Genève">Événements africains à Genève</h1>
                     <p className={styles.heroTagline}>Des expériences culturelles uniques au cœur du restaurant</p>
                 </div>
             </div>
@@ -45,7 +45,7 @@ export default function EvenementsPage() {
                         <article key={event.title} className={styles.eventCard}>
                             <div className={styles.eventBody}>
                                 <span className={styles.eyebrow}>{event.eyebrow}</span>
-                                <h2 className={styles.eventTitle}>{event.title}</h2>
+                                <h2 className={styles.eventTitle} data-text={event.title}>{event.title}</h2>
                                 <p className={styles.eventDesc}>{event.description}</p>
                             </div>
                         </article>
@@ -55,7 +55,7 @@ export default function EvenementsPage() {
                 <section className={styles.privatisationCta}>
                     <div className={styles.ctaInner}>
                         <span className={styles.eyebrow}>Votre événement sur mesure</span>
-                        <h2 className={styles.ctaTitle}>Privatisez la Gazelle d'Or</h2>
+                        <h2 className={styles.ctaTitle} data-text="Privatisez la Gazelle d'Or">Privatisez la Gazelle d&apos;Or</h2>
                         <p className={styles.ctaText}>
                             Pour tout événement privé — anniversaire, mariage, repas d'entreprise ou soirée à thème — notre équipe vous accompagne pour créer une expérience africaine mémorable.
                         </p>

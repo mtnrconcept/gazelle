@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import styles from './Footer.module.css';
 
 export function Footer() {
@@ -69,6 +69,14 @@ export function Footer() {
                     </div>
 
                     <div className={styles.col}>
+                        <h4 className={styles.colTitle}>Commander en ligne</h4>
+                        <nav className={styles.navLinks}>
+                            <a href="https://www.ubereats.com/store/la-gazelle-dor/ZyYBaGTYWA6WDQYUbQveaA?diningMode=DELIVERY" target="_blank" rel="noopener noreferrer" className={styles.navLink}>Uber Eats</a>
+                            <a href="https://www.smood.ch/fr/store/la-gazelle-dor" target="_blank" rel="noopener noreferrer" className={styles.navLink}>Smood</a>
+                        </nav>
+                    </div>
+
+                    <div className={styles.col}>
                         <h4 className={styles.colTitle}>Heures d'ouverture</h4>
                         <div className={styles.hoursList}>
                             <p className={styles.hourRow}>
@@ -89,6 +97,7 @@ export function Footer() {
 
                 <div className={styles.copyright}>
                     <p>&copy; {new Date().getFullYear()} La Gazelle d'Or. Tous droits réservés. · Village africain · Restaurant éthiopien & érythréen à Genève</p>
+                    <p className={styles.signature}>Site réalisé par Raphël Barman, +41 76 475 66 69</p>
                 </div>
             </div>
         </footer>

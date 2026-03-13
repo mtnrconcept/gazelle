@@ -1,4 +1,5 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
+import { menuData } from '@/data/menu';
 import { MenuPageClient } from './MenuPageClient';
 
 export const metadata: Metadata = {
@@ -7,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function MenuPage() {
-    return <MenuPageClient />;
+    return <MenuPageClient sections={menuData as any} />;
 }

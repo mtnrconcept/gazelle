@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, FormEvent } from 'react';
 import styles from './page.module.css';
@@ -14,25 +14,39 @@ export function ContactPageClient() {
         message: '',
     });
     const [sent, setSent] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
+    const [error, setError] = useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        const subject = encodeURIComponent(`Réservation – ${form.date} – ${form.personnes} pers.`);
-        const body = encodeURIComponent(
-            `Nom : ${form.nom}\n` +
-            `Email : ${form.email}\n` +
-            `Téléphone : ${form.telephone}\n` +
-            `Date souhaitée : ${form.date}\n` +
-            `Service : ${form.service === 'dejeuner' ? 'Déjeuner (11h30–14h30)' : 'Dîner (18h30–22h30)'}\n` +
-            `Nombre de personnes : ${form.personnes}\n\n` +
-            `Message :\n${form.message}`
-        );
-        window.location.href = `mailto:lagazelledorgeneva@gmail.com?subject=${subject}&body=${body}`;
-        setSent(true);
+        setSubmitting(true);
+        setError('');
+
+        try {
+            const res = await fetch('/api/reservations', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ...form,
+                    personnes: Number(form.personnes),
+                }),
+            });
+
+            if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.error || 'Erreur serveur');
+            }
+
+            setSent(true);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Une erreur est survenue. Veuillez réessayer.');
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     return (
@@ -40,7 +54,7 @@ export function ContactPageClient() {
             <div className={styles.hero}>
                 <div className={styles.heroContent}>
                     <p className={styles.heroEyebrow}>Réservation en ligne</p>
-                    <h1 className={styles.heroTitle}>Réserver une table à La Gazelle d'Or</h1>
+                    <h1 className={styles.heroTitle} data-text="Réserver une table à La Gazelle d'Or">Réserver une table à La Gazelle d&apos;Or</h1>
                     <p className={styles.heroTagline}>Offrez-vous un voyage culinaire au cœur de l'Afrique</p>
                 </div>
             </div>
@@ -50,19 +64,25 @@ export function ContactPageClient() {
                     {/* —— Form —— */}
                     <div className={styles.formCol}>
                         <span className={styles.eyebrow}>Votre demande</span>
-                        <h2 className={styles.sectionTitle}>Formulaire de réservation</h2>
+                        <h2 className={styles.sectionTitle} data-text="Formulaire de réservation">Formulaire de réservation</h2>
 
                         {sent ? (
                             <div className={styles.successCard}>
                                 <span className={styles.successIcon}>✓</span>
-                                <h3>Demande envoyée !</h3>
-                                <p>Votre messagerie s'est ouverte avec les détails pré-remplis. Nous vous confirmerons votre réservation dans les plus brefs délais.</p>
-                                <button className={styles.resetBtn} onClick={() => setSent(false)}>
+                                <h3>Réservation enregistrée !</h3>
+                                <p>Votre demande a bien été enregistrée. Nous vous confirmerons votre réservation dans les plus brefs délais.</p>
+                                <button className={styles.resetBtn} onClick={() => { setSent(false); setForm({ nom: '', email: '', telephone: '', date: '', service: 'diner', personnes: '2', message: '' }); }}>
                                     Nouvelle réservation
                                 </button>
                             </div>
                         ) : (
                             <form className={styles.form} onSubmit={handleSubmit}>
+                                {error && (
+                                    <div style={{ color: '#c0392b', background: '#fdecea', padding: '0.75rem 1rem', borderRadius: '0.5rem', marginBottom: '1rem' }}>
+                                        {error}
+                                    </div>
+                                )}
+
                                 <div className={styles.row}>
                                     <div className={styles.field}>
                                         <label className={styles.label} htmlFor="nom">Nom complet *</label>
@@ -162,8 +182,8 @@ export function ContactPageClient() {
                                     />
                                 </div>
 
-                                <button type="submit" className={styles.submitBtn}>
-                                    Envoyer ma demande
+                                <button type="submit" className={styles.submitBtn} disabled={submitting}>
+                                    {submitting ? 'Envoi en cours…' : 'Envoyer ma demande'}
                                 </button>
                             </form>
                         )}
@@ -173,7 +193,7 @@ export function ContactPageClient() {
                     <aside className={styles.infoCol}>
                         <div className={styles.infoCard}>
                             <span className={styles.eyebrow}>Contact direct</span>
-                            <h3 className={styles.infoTitle}>Informations</h3>
+                            <h3 className={styles.infoTitle} data-text="Informations">Informations</h3>
 
                             <div className={styles.infoBlock}>
                                 <p className={styles.infoLabel}>Téléphone</p>

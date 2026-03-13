@@ -1,13 +1,14 @@
 /* ══ MENU SECTION ══════════════════════════════════════════════════════ */
 .section {
-    margin-bottom: 4rem;
+    margin-bottom: 6rem;
 }
 
 .mainTitle {
     text-align: center;
     font-size: clamp(2rem, 4vw, 2.8rem);
     color: var(--color-ink);
-    margin-bottom: 2rem;
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
     position: relative;
     display: inline-block;
     width: 100%;
@@ -173,7 +174,7 @@
     }
 
     .price {
-        font-size: 0.9rem;
+        font-size: 1.02rem;
     }
 }
 

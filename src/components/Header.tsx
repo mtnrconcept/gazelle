@@ -1,26 +1,53 @@
-﻿"use client";
+"use client";
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
+import { ExternalLink } from 'lucide-react';
 import styles from './Header.module.css';
 
 const navLeft = [
   { href: '/', label: 'Accueil' },
   { href: '/histoire', label: 'À propos' },
   { href: '/menu', label: 'Menu' },
+  { href: '/evenements', label: 'Événements' },
 ];
 
 const navRight = [
-  { href: '/evenements', label: 'Événements' },
   { href: '/contact', label: 'Contact' },
 ];
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+
+  // Calcule et met à jour dynamiquement la hauteur du header dans une variable CSS globale
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      if (headerRef.current) {
+        // Obtenir la hauteur réelle incluant les bordures et les padding
+        const height = headerRef.current.getBoundingClientRect().height;
+        document.documentElement.style.setProperty('--header-h', `${Math.max(height, 80)}px`);
+      }
+    };
+
+    // Mise à jour initiale
+    updateHeaderHeight();
+
+    // Surveillance des changements de taille (redimensionnement de fenêtre, etc.)
+    const resizeObserver = new ResizeObserver(() => {
+        updateHeaderHeight();
+    });
+
+    if (headerRef.current) {
+      resizeObserver.observe(headerRef.current);
+    }
+
+    return () => resizeObserver.disconnect();
+  }, [pathname]); // Relancer si la page change (au cas où le header est différent)
 
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
@@ -28,7 +55,7 @@ export function Header() {
   };
 
   return (
-    <header className={styles.header}>
+    <header ref={headerRef} className={styles.header}>
       <div className={`container ${styles.container}`}>
         <nav className={styles.desktopNav}>
           <div className={styles.navGroup}>
@@ -63,6 +90,30 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
+            
+            <div className={styles.deliveryLinks}>
+              <a
+                href="https://www.ubereats.com/store/la-gazelle-dor/ZyYBaGTYWA6WDQYUbQveaA?diningMode=DELIVERY"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${styles.deliveryLink} ${styles.uberEats}`}
+                title="Commander sur Uber Eats"
+              >
+                <span>Uber Eats</span>
+                <ExternalLink size={12} className={styles.linkIcon} />
+              </a>
+              <a
+                href="https://www.smood.ch/fr/store/la-gazelle-dor"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${styles.deliveryLink} ${styles.smood}`}
+                title="Commander sur Smood"
+              >
+                <span>Smood</span>
+                <ExternalLink size={12} className={styles.linkIcon} />
+              </a>
+            </div>
+
             <a href="tel:+41223403350" className={styles.reserveButton}>
               Réserver
             </a>
@@ -97,6 +148,26 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+          <div className={styles.mobileDeliveryLinks}>
+            <a
+              href="https://www.ubereats.com/store/la-gazelle-dor/ZyYBaGTYWA6WDQYUbQveaA?diningMode=DELIVERY"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.mobileDeliveryBtn}
+            >
+              Uber Eats
+              <ExternalLink size={14} style={{ marginLeft: '4px' }} />
+            </a>
+            <a
+              href="https://www.smood.ch/fr/store/la-gazelle-dor"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.mobileDeliveryBtn}
+            >
+              Smood
+              <ExternalLink size={14} style={{ marginLeft: '4px' }} />
+            </a>
+          </div>
           <a href="tel:+41223403350" className={styles.mobileCtaButton} onClick={toggleMenu}>
             Réserver · +41 22 340 33 50
           </a>

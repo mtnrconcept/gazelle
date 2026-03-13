@@ -46,7 +46,7 @@ export function SignatureSection() {
                 <div className={styles.header}>
                     <p className={styles.eyebrow}>Escale au cœur de l'Éthiopie</p>
                     <div className={styles.titleRow}>
-                        <h2 className={styles.title}>Nos plats signatures</h2>
+                        <h2 className={styles.title} data-text="Nos plats signatures">Nos plats signatures</h2>
                     </div>
                 </div>
                 <div className={styles.grid}>

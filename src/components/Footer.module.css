@@ -49,7 +49,7 @@
 .tagline {
     opacity: 0.82;
     max-width: 280px;
-    font-size: 0.9rem;
+    font-size: 1.07rem; /* Anciennement 0.9rem */
     line-height: 1.65;
 }
 
@@ -62,7 +62,7 @@
 
 .socialLink {
     font-family: var(--font-display);
-    font-size: 0.8rem;
+    font-size: 0.98rem; /* Anciennement 0.8rem */
     letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--color-secondary);
@@ -89,7 +89,7 @@
 
 .colTitle {
     color: var(--color-secondary);
-    font-size: 0.88rem;
+    font-size: 1.07rem; /* Anciennement 0.88rem */
     margin-bottom: 1rem;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -117,7 +117,7 @@
 }
 
 .navLink {
-    font-size: 0.88rem;
+    font-size: 1.07rem; /* Anciennement 0.88rem */
     color: rgba(240, 223, 192, 0.82);
     transition: color 0.2s, padding-left 0.3s var(--ease-spring);
 }
@@ -132,7 +132,7 @@
 }
 
 .contactLink {
-    font-size: 0.88rem;
+    font-size: 1.07rem; /* Anciennement 0.88rem */
     color: rgba(240, 223, 192, 0.82);
     line-height: 1.65;
     transition: color 0.2s;
@@ -152,13 +152,13 @@
     display: flex;
     flex-direction: column;
     gap: 0.1rem;
-    font-size: 0.88rem;
+    font-size: 1.07rem; /* Anciennement 0.88rem */
     color: rgba(240, 223, 192, 0.82);
 }
 
 .dayLabel {
     font-family: var(--font-display);
-    font-size: 0.8rem;
+    font-size: 0.98rem; /* Anciennement 0.8rem */
     letter-spacing: 1px;
     text-transform: uppercase;
     color: rgba(217, 162, 79, 0.75);
@@ -177,9 +177,16 @@
     margin-top: var(--spacing-lg);
     padding-top: var(--spacing-md);
     text-align: center;
-    font-size: 0.82rem;
+    font-size: 1.00rem; /* Anciennement 0.82rem */
     opacity: 0.6;
     line-height: 1.6;
+}
+
+.signature {
+    margin-top: 0.4rem;
+    font-size: 0.88rem;
+    opacity: 0.7;
+    color: var(--color-secondary);
 }
 
 @media (max-width: 639px) {
@@ -220,7 +227,7 @@
     .copyright {
         margin-top: 2rem;
         padding-top: 1.5rem;
-        font-size: 0.78rem;
+        font-size: 0.96rem; /* Anciennement 0.78rem */
     }
 
     .colTitle::after {
@@ -238,6 +245,6 @@
 
 @media (min-width: 1000px) {
     .grid {
-        grid-template-columns: 2fr 1fr 1.5fr 1.2fr;
+        grid-template-columns: 2fr 1fr 1.5fr 1fr 1fr;
     }
 }

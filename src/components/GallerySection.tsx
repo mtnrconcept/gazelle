@@ -21,7 +21,7 @@ export function GallerySection() {
             <div className={`container ${styles.container}`}>
                 <div className={styles.header}>
                     <p className={styles.eyebrow}>Immersion culturelle</p>
-                    <h2 className={styles.title}>L'ambiance La Gazelle d'Or</h2>
+                    <h2 className={styles.title} data-text="L'ambiance La Gazelle d'Or">L&apos;ambiance La Gazelle d&apos;Or</h2>
                 </div>
                 <div className={styles.carousel}>
                     {gallery.map((item, idx) => (
