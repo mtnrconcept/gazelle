@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useRef } from 'react';
-import styles from './page.module.css';
 
 export function ParallaxLeaves() {
   const layerRef = useRef<HTMLDivElement>(null);
@@ -33,11 +32,11 @@ export function ParallaxLeaves() {
   }, []);
 
   return (
-    <div className={styles.parallaxLayerFront} aria-hidden="true" ref={layerRef}>
+    <div className="home-parallaxLayerFront" aria-hidden="true" ref={layerRef}>
       {leaves.map((leaf, index) => (
         <span
           key={`leaf-${index}`}
-          className={`${styles.leaf} ${leaf.side === 'right' ? styles.leafRight : ''}`}
+          className={`home-leaf ${leaf.side === 'right' ? 'home-leafRight' : ''}`}
           style={{
             top: `${leaf.y}vh`,
             left: `${leaf.x}%`,

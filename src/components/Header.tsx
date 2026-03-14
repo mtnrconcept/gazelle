@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { ExternalLink } from 'lucide-react';
-import styles from './Header.module.css';
 
 const navLeft = [
   { href: '/', label: 'Accueil' },
@@ -55,105 +54,105 @@ export function Header() {
   };
 
   return (
-    <header ref={headerRef} className={styles.header}>
-      <div className={`container ${styles.container}`}>
-        <nav className={styles.desktopNav}>
-          <div className={styles.navGroup}>
+    <header ref={headerRef} className="header-root">
+      <div className="container header-container">
+        <nav className="header-desktopNav">
+          <div className="header-navGroup">
             {navLeft.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`${styles.navLink} ${isActive(item.href) ? styles.navLinkActive : ''}`}
+                className={`header-navLink ${isActive(item.href) ? 'header-navLinkActive' : ''}`}
               >
                 {item.label}
               </Link>
             ))}
           </div>
 
-          <Link href="/" className={styles.brand}>
+          <Link href="/" className="header-brand">
             <img
               src="/images/logo.webp"
               alt="Ornement"
-              className={styles.brandMark}
+              className="header-brandMark"
             />
-            <span className={styles.brandTitle}>La Gazelle d'Or</span>
-            <span className={styles.brandSubtitle}>Geneva</span>
+            <span className="header-brandTitle">La Gazelle d'Or</span>
+            <span className="header-brandSubtitle">Geneva</span>
           </Link>
 
-          <div className={styles.navGroup}>
+          <div className="header-navGroup">
             {navRight.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`${styles.navLink} ${isActive(item.href) ? styles.navLinkActive : ''}`}
+                className={`header-navLink ${isActive(item.href) ? 'header-navLinkActive' : ''}`}
               >
                 {item.label}
               </Link>
             ))}
             
-            <div className={styles.deliveryLinks}>
+            <div className="header-deliveryLinks">
               <a
                 href="https://www.ubereats.com/store/la-gazelle-dor/ZyYBaGTYWA6WDQYUbQveaA?diningMode=DELIVERY"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${styles.deliveryLink} ${styles.uberEats}`}
+                className="header-deliveryLink header-uberEats"
                 title="Commander sur Uber Eats"
               >
                 <span>Uber Eats</span>
-                <ExternalLink size={12} className={styles.linkIcon} />
+                <ExternalLink size={12} className="header-linkIcon" />
               </a>
               <a
                 href="https://www.smood.ch/fr/store/la-gazelle-dor"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${styles.deliveryLink} ${styles.smood}`}
+                className="header-deliveryLink header-smood"
                 title="Commander sur Smood"
               >
                 <span>Smood</span>
-                <ExternalLink size={12} className={styles.linkIcon} />
+                <ExternalLink size={12} className="header-linkIcon" />
               </a>
             </div>
 
-            <a href="tel:+41223403350" className={styles.reserveButton}>
+            <a href="tel:+41223403350" className="header-reserveButton">
               Réserver
             </a>
           </div>
         </nav>
 
-        <div className={styles.mobileRow}>
-          <Link href="/" className={styles.brand}>
+        <div className="header-mobileRow">
+          <Link href="/" className="header-brand">
             <img
               src="/images/logo.webp"
               alt="Ornement"
-              className={styles.brandMark}
+              className="header-brandMark"
             />
-            <span className={styles.brandTitle}>La Gazelle d'Or</span>
+            <span className="header-brandTitle">La Gazelle d'Or</span>
           </Link>
-          <button className={styles.mobileMenuBtn} onClick={toggleMenu} aria-label="Toggle menu">
+          <button className="header-mobileMenuBtn" onClick={toggleMenu} aria-label="Toggle menu">
             {isMenuOpen ? '✕' : '☰ Menu'}
           </button>
         </div>
 
         {isMenuOpen && (
-          <div className={styles.backdrop} onClick={() => setIsMenuOpen(false)} aria-hidden="true" />
+          <div className="header-backdrop" onClick={() => setIsMenuOpen(false)} aria-hidden="true" />
         )}
-        <div className={`${styles.mobileNav} ${isMenuOpen ? styles.open : ''}`}>
+        <div className={`header-mobileNav ${isMenuOpen ? 'header-open' : ''}`}>
           {[...navLeft, ...navRight].map((item) => (
             <Link
               key={`${item.href}-${item.label}`}
               href={item.href}
-              className={`${styles.mobileNavLink} ${isActive(item.href) ? styles.mobileNavLinkActive : ''}`}
+              className={`header-mobileNavLink ${isActive(item.href) ? 'header-mobileNavLinkActive' : ''}`}
               onClick={toggleMenu}
             >
               {item.label}
             </Link>
           ))}
-          <div className={styles.mobileDeliveryLinks}>
+          <div className="header-mobileDeliveryLinks">
             <a
               href="https://www.ubereats.com/store/la-gazelle-dor/ZyYBaGTYWA6WDQYUbQveaA?diningMode=DELIVERY"
               target="_blank"
               rel="noopener noreferrer"
-              className={styles.mobileDeliveryBtn}
+              className="header-mobileDeliveryBtn"
             >
               Uber Eats
               <ExternalLink size={14} style={{ marginLeft: '4px' }} />
@@ -162,13 +161,13 @@ export function Header() {
               href="https://www.smood.ch/fr/store/la-gazelle-dor"
               target="_blank"
               rel="noopener noreferrer"
-              className={styles.mobileDeliveryBtn}
+              className="header-mobileDeliveryBtn"
             >
               Smood
               <ExternalLink size={14} style={{ marginLeft: '4px' }} />
             </a>
           </div>
-          <a href="tel:+41223403350" className={styles.mobileCtaButton} onClick={toggleMenu}>
+          <a href="tel:+41223403350" className="header-mobileCtaButton" onClick={toggleMenu}>
             Réserver · +41 22 340 33 50
           </a>
         </div>

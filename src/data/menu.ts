@@ -14,7 +14,7 @@ export type MenuSection = {
 
 export const menuData: MenuSection[] = [
     {
-        title: "ENTRÉES / STARTERS",
+        title: "ENTREES / STARTERS",
         items: [
             {
                 name: "SAMBUSA (fait maison)",
@@ -43,7 +43,7 @@ export const menuData: MenuSection[] = [
         ]
     },
     {
-        title: "PLATS VÉGÉTARIENS / VEGAN",
+        title: "PLATS VEGETARIENS / VEGAN",
         items: [
             {
                 name: "Shiro (ሽሮ)",
@@ -77,7 +77,7 @@ export const menuData: MenuSection[] = [
             },
             {
                 name: "Dégustation de légumes",
-                description: "Une combinaison des plats shiro, épinards, lentilles (Jaune et rouge), chou et laitue.",
+                description: "Une combinaison des plats shiro, épinards, lentilles (jaune et rouge), chou et laitue.",
                 price: "25.00 CHF (1p) · 45.00 CHF (2p) · 65.00 CHF (3p)",
                 image: "https://lagazelledorgeneva.com/assets/D%C3%A9gustation%20de%20L%C3%A9gumes-BHGAtiLV.png"
             }
@@ -110,7 +110,7 @@ export const menuData: MenuSection[] = [
                 ]
             },
             {
-                title: "BŒUF / BEEF",
+                title: "BOEUF / BEEF",
                 items: [
                     {
                         name: "Zighni / Key Wet",
@@ -143,7 +143,7 @@ export const menuData: MenuSection[] = [
                         image: "https://lagazelledorgeneva.com/assets/ZILZIL%20WET-BD7lLkQ-.png"
                     },
                     {
-                        name: "ZilzilTibs",
+                        name: "Zilzil Tibs",
                         description: "Viande bien cuite coupée en lanières avec poivrons, oignons, ail, épinards, laitue et injera.",
                         price: "30.00 CHF"
                     },
@@ -195,11 +195,11 @@ export const menuData: MenuSection[] = [
         ]
     },
     {
-        title: "MENU DÉGUSTATION",
+        title: "MENU DEGUSTATION",
         notes: ["Tous nos menus sont servis avec de l'injera fait maison. · All menus served with homemade injera."],
         subsections: [
             {
-                title: "LA GAZELLE VÉGANE",
+                title: "LA GAZELLE VEGANE",
                 items: [
                     {
                         name: "Menu Végane",

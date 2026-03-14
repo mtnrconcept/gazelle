@@ -1,5 +1,3 @@
-﻿import styles from './Marquee.module.css';
-
 const items = [
     'Injera maison',
     'Rituel du café',
@@ -13,10 +11,10 @@ export function Marquee() {
     const text = items.join(' · ');
 
     return (
-        <section className={`${styles.section} reveal`} data-reveal="up">
-            <div className={`container ${styles.container}`}>
-                <div className={styles.marquee} aria-hidden="true">
-                    <div className={styles.track}>
+        <section className="marquee-section reveal" data-reveal="up">
+            <div className="container marquee-container">
+                <div className="marquee-root" aria-hidden="true">
+                    <div className="marquee-track">
                         <span>{text}</span>
                         <span>{text}</span>
                     </div>

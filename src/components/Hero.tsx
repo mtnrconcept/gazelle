@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useState, useEffect, useMemo } from 'react';
-import styles from './Hero.module.css';
 
 const slides = [
     '/images/5.webp',
@@ -42,14 +41,14 @@ function DustParticles() {
     if (!mounted) return null;
 
     return (
-        <div className={styles.dustLayer} aria-hidden="true">
-            <div className={styles.sunbeam} />
-            <div className={styles.sunbeam2} />
+        <div className="hero-dustLayer" aria-hidden="true">
+            <div className="hero-sunbeam" />
+            <div className="hero-sunbeam2" />
 
             {motes.map((m) => (
                 <span
                     key={m.id}
-                    className={styles.dustMote}
+                    className="hero-dustMote"
                     style={{
                         left: `${m.left}%`,
                         top: `${m.top}%`,
@@ -86,27 +85,27 @@ export function Hero() {
 
     return (
         <section 
-            className={`${styles.hero} panel heroFullBleed`}
+            className="hero-section panel heroFullBleed"
             style={{ '--scroll-y': `${scrollY}px` } as React.CSSProperties}
         >
-            <div className={styles.slideshow}>
+            <div className="hero-slideshow">
                 {slides.map((src, idx) => (
                     <img
                         key={src}
                         src={src}
                         alt=""
                         aria-hidden="true"
-                        className={`${styles.slide} ${idx === current ? styles.slideActive : ''}`}
+                        className={`hero-slide ${idx === current ? 'hero-slideActive' : ''}`}
                     />
                 ))}
             </div>
 
-            <div className={styles.overlay} />
+            <div className="hero-overlay" />
             <DustParticles />
 
             {/* Feuille derrière le texte */}
             <span
-                className={styles.behindLeaf}
+                className="hero-behindLeaf"
                 aria-hidden="true"
                 style={{
                     backgroundImage: "url('/images/palm-leaf-left3.png')",
@@ -115,22 +114,22 @@ export function Hero() {
             />
 
             {/* Brand — logo, title, location */}
-            <div className={styles.topContent}>
-                <h1 className={styles.title} data-text="La Gazelle d'Or">La Gazelle d&apos;Or</h1>
-                <p className={styles.location}>Geneva</p>
+            <div className="hero-topContent">
+                <h1 className="hero-title" data-text="La Gazelle d'Or">La Gazelle d&apos;Or</h1>
+                <p className="hero-location">Genève</p>
             </div>
 
             {/* Tagline + CTA */}
-            <div className={styles.bottomContent}>
-                <p className={styles.tagline}>Voyage culinaire au cœur de l&apos;Afrique</p>
-                <Link href="/menu" className={styles.ctaButton}>
-                    <span className={styles.ctaText}>Découvrir</span>
+            <div className="hero-bottomContent">
+                <p className="hero-tagline">Voyage culinaire au cœur de l&apos;Afrique</p>
+                <Link href="/menu" className="hero-ctaButton">
+                    <span className="hero-ctaText">Découvrir</span>
                 </Link>
             </div>
 
             {/* Scroll indicator */}
-            <div className={styles.scrollIndicator}>
-                <div className={styles.scrollLine} />
+            <div className="hero-scrollIndicator">
+                <div className="hero-scrollLine" />
             </div>
         </section>
     );

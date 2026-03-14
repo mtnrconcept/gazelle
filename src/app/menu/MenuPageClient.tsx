@@ -6,7 +6,6 @@ import { MenuSection } from '@/components/MenuSection';
 import { SignatureSection } from '@/components/SignatureSection';
 import { GallerySection } from '@/components/GallerySection';
 import { ReserveSection } from '@/components/ReserveSection';
-import styles from './page.module.css';
 
 const tabs = [
     { id: 'all', label: '✦ Tout' },
@@ -18,10 +17,10 @@ const tabs = [
 ];
 
 const tabMap: Record<string, string> = {
-    entrees: 'ENTRÉES / STARTERS',
-    vegetarien: 'PLATS VÉGÉTARIENS / VEGAN',
+    entrees: 'ENTREES / STARTERS',
+    vegetarien: 'PLATS VEGETARIENS / VEGAN',
     plats: 'PLATS PRINCIPAUX',
-    degustations: 'MENU DÉGUSTATION',
+    degustations: 'MENU DEGUSTATION',
     boissons: 'BOISSONS',
 };
 
@@ -73,22 +72,22 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
         : sections.filter((s) => s.title === tabMap[activeTab]);
 
     return (
-        <div className={styles.page}>
-            <div className={styles.hero}>
-                <div className={styles.heroContent}>
-                    <p className={styles.heroEyebrow}>Restaurant éthiopien & érythréen</p>
-                    <h1 className={styles.heroTitle} data-text="Menu éthiopien & érythréen">Menu éthiopien &amp; érythréen</h1>
-                    <p className={styles.heroTagline}>Tous nos plats sont servis avec de l'injera fait maison</p>
+        <div className="menu-page">
+            <div className="menu-hero">
+                <div className="menu-heroContent">
+                    <p className="menu-heroEyebrow">Restaurant érythréen & éthiopien</p>
+                    <h1 className="heroPageTitle menu-heroTitle" data-text="Menu erythreen & ethiopien">Menu erythreen &amp; ethiopien</h1>
+                    <p className="menu-heroTagline">Tous nos plats sont servis avec de l'injera fait maison</p>
                 </div>
             </div>
 
-            <div className={styles.tabsRow}>
-                <div className={`container ${styles.tabsInner}`}>
+            <div className="menu-tabsRow">
+                <div className="container menu-tabsInner">
                     {tabs.map((tab) => (
                         <button
                             key={tab.id}
                             type="button"
-                            className={`${styles.tab} ${activeTab === tab.id ? styles.tabActive : ''}`}
+                            className={`menu-tab ${activeTab === tab.id ? 'menu-tabActive' : ''}`}
                             onClick={(e) => {
                                 setActiveTab(tab.id);
                                 (e.currentTarget as HTMLButtonElement).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
@@ -100,7 +99,7 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
                 </div>
             </div>
 
-            <div className={`container ${styles.menuContainer}`}>
+            <div className="container menu-menuContainer">
                 {visibleSections.map((section) => (
                     <MenuSection key={section.title} section={section} />
                 ))}

@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { Cinzel, Cormorant_Garamond } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/Header';
@@ -23,30 +23,30 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL('https://lagazelledorgeneva.com'),
   title: {
-    default: "La Gazelle d'Or | Restaurant éthiopien & érythréen à Genève",
+    default: "La Gazelle d'Or | Restaurant érythréen & éthiopien à Genève",
     template: "%s | La Gazelle d'Or",
   },
-  description: "Restaurant éthiopien & érythréen à Genève. Injera maison, plats traditionnels et ambiance africaine chaleureuse.",
+  description: "Restaurant érythréen & éthiopien à Genève. Injera maison, plats traditionnels et ambiance africaine chaleureuse.",
   keywords: [
-    "restaurant éthiopien",
-    "restaurant érythréen",
-    "Genève",
-    "injera",
-    "cuisine africaine",
+    'restaurant éthiopien',
+    'restaurant érythréen',
+    'Genève',
+    'injera',
+    'cuisine africaine',
     "La Gazelle d'Or",
   ],
   openGraph: {
-    title: "La Gazelle d'Or | Restaurant éthiopien & érythréen à Genève",
-    description: "Restaurant éthiopien & érythréen à Genève. Injera maison, plats traditionnels et ambiance africaine chaleureuse.",
-    url: "https://lagazelledorgeneva.com",
+    title: "La Gazelle d'Or | Restaurant érythréen & éthiopien à Genève",
+    description: "Restaurant érythréen & éthiopien à Genève. Injera maison, plats traditionnels et ambiance africaine chaleureuse.",
+    url: 'https://lagazelledorgeneva.com',
     siteName: "La Gazelle d'Or",
-    locale: "fr_CH",
-    type: "website",
+    locale: 'fr_CH',
+    type: 'website',
   },
   twitter: {
-    card: "summary_large_image",
-    title: "La Gazelle d'Or | Restaurant éthiopien & érythréen à Genève",
-    description: "Restaurant éthiopien & érythréen à Genève. Injera maison, plats traditionnels et ambiance africaine chaleureuse.",
+    card: 'summary_large_image',
+    title: "La Gazelle d'Or | Restaurant érythréen & éthiopien à Genève",
+    description: "Restaurant érythréen & éthiopien à Genève. Injera maison, plats traditionnels et ambiance africaine chaleureuse.",
   },
 };
 

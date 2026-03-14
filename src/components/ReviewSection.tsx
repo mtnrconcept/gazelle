@@ -1,5 +1,3 @@
-﻿import styles from './ReviewSection.module.css';
-
 const reviews = [
     {
         author: "Amal T.",
@@ -33,21 +31,21 @@ const reviews = [
 
 export function ReviewSection() {
     return (
-        <section className={`${styles.section} reveal`} data-reveal="right">
-            <div className={`container ${styles.container}`}>
-                <div className={styles.header}>
-                    <span className={styles.kicker}>Avis & retours</span>
-                    <h2 className={styles.title} data-text="Ce que disent nos clients">Ce que disent nos clients</h2>
-                    <p className={styles.subtitle}>
+        <section className="review-section reveal" data-reveal="right">
+            <div className="container review-container">
+                <div className="review-header">
+                    <span className="review-kicker">Avis & retours</span>
+                    <h2 className="gold-sectionTitle review-title" data-text="Ce que disent nos clients">Ce que disent nos clients</h2>
+                    <p className="review-subtitle">
                         Des saveurs authentiques, un accueil chaleureux et une atmosphère intime qui font de chaque visite un souvenir.
                     </p>
-                    <div className={styles.summaryCard}>
-                        <div className={styles.summaryScore}>4.3</div>
-                        <div className={styles.summaryMeta}>
+                    <div className="review-summaryCard">
+                        <div className="review-summaryScore">4.3</div>
+                        <div className="review-summaryMeta">
                             <span>Note moyenne Google</span>
                             <span>+500 avis</span>
                         </div>
-                        <div className={styles.summaryTags}>
+                        <div className="review-summaryTags">
                             <span>Ambiance</span>
                             <span>Service</span>
                             <span>Saveurs</span>
@@ -55,26 +53,26 @@ export function ReviewSection() {
                     </div>
                 </div>
 
-                <div className={styles.grid}>
+                <div className="review-grid">
                     {reviews.map((review, idx) => (
                         <div
                             key={`${review.author}-${idx}`}
-                            className={styles.card}
+                            className="review-card"
                         >
-                            <div className={styles.headerRow}>
-                                <div className={styles.avatar}>{review.author.charAt(0)}</div>
+                            <div className="review-headerRow">
+                                <div className="review-avatar">{review.author.charAt(0)}</div>
                                 <div>
-                                    <div className={styles.author}>{review.author}</div>
-                                    <div className={styles.stars}>
+                                    <div className="review-author">{review.author}</div>
+                                    <div className="review-stars">
                                         {[...Array(5)].map((_, i) => (
                                             <span key={i} style={{ color: i < review.rating ? "#DAA520" : "#ccc" }}>★</span>
                                         ))}
                                     </div>
                                 </div>
-                                <span className={styles.source}>{review.source}</span>
+                                <span className="review-source">{review.source}</span>
                             </div>
-                            <p className={styles.text}>"{review.text}"</p>
-                            <span className={styles.time}>{review.time}</span>
+                            <p className="review-text">"{review.text}"</p>
+                            <span className="review-time">{review.time}</span>
                         </div>
                     ))}
                 </div>
