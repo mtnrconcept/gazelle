@@ -1,53 +1,49 @@
-﻿import Image from 'next/image';
-import Link from 'next/link';
-import styles from './AboutSection.module.css';
+﻿import Link from 'next/link';
 
 export function AboutSection() {
     return (
-        <section className={`${styles.section} reveal`} data-reveal="right">
-            <div className={`container ${styles.container}`}>
-                <div className={styles.content}>
-                    <span className={styles.kicker}>Notre héritage</span>
-                    <h2 className={styles.title}>Une Passion Familiale</h2>
-                    <p className={styles.text}>
+        <section className="about-section reveal" data-reveal="right">
+            <div className="container about-container">
+                <div className="about-content">
+                    <span className="about-kicker">Notre héritage</span>
+                    <h2 className="gold-sectionTitle about-title" data-text="Une Passion Familiale">Une Passion Familiale</h2>
+                    <p className="about-text">
                         Notre maison est née de la passion pour la cuisine érythréenne et éthiopienne authentique.
                         Nous avons ramené à Genève les recettes traditionnelles de notre famille, transmises de génération en génération.
                     </p>
-                    <p className={styles.text}>
+                    <p className="about-text">
                         Chaque plat raconte une histoire, chaque saveur évoque un souvenir d'enfance.
                         Nous utilisons des ingrédients importés directement d'Érythrée et d'Éthiopie.
                     </p>
-                    <div className={styles.stats}>
-                        <div className={styles.stat}>
-                            <span className={styles.statValue}>15+</span>
-                            <span className={styles.statLabel}>Années de savoir-faire</span>
+                    <div className="about-stats">
+                        <div className="about-stat">
+                            <span className="about-statValue">34+</span>
+                            <span className="about-statLabel">Années de savoir-faire</span>
                         </div>
-                        <div className={styles.stat}>
-                            <span className={styles.statValue}>40</span>
-                            <span className={styles.statLabel}>Places intimes</span>
+                        <div className="about-stat">
+                            <span className="about-statValue">40</span>
+                            <span className="about-statLabel">Places intimes</span>
                         </div>
-                        <div className={styles.stat}>
-                            <span className={styles.statValue}>100%</span>
-                            <span className={styles.statLabel}>Injera maison</span>
+                        <div className="about-stat">
+                            <span className="about-statValue">100%</span>
+                            <span className="about-statLabel">Injera maison</span>
                         </div>
                     </div>
-                    <Link href="/histoire" className={styles.link}>
+                    <Link href="/histoire" className="about-link">
                         Lire notre histoire →
                     </Link>
                 </div>
-                <div className={styles.media}>
-                    <div className={styles.imageWrapper}>
-                        <Image
+                <div className="about-media">
+                    <div className="about-imageWrapper">
+                        <img
                             src="/images/1.jpg"
                             alt="Cuisine traditionnelle"
-                            className={styles.image}
+                            className="about-image"
                             loading="lazy"
-                            width={900}
-                            height={620}
                         />
                     </div>
-                    <div className={styles.highlightCard}>
-                        <span className={styles.highlightTitle}>Cérémonie du café</span>
+                    <div className="about-highlightCard">
+                        <span className="about-highlightTitle">Ceremonie du cafe</span>
                         <p>Un rituel sensoriel où les grains sont torréfiés sur place, accompagné d'encens traditionnel.</p>
                     </div>
                 </div>
@@ -55,5 +51,3 @@ export function AboutSection() {
         </section>
     );
 }
-
-
