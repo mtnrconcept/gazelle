@@ -1,10 +1,10 @@
 const items = [
     'Injera maison',
-    'Rituel du café',
-    'Épices traditionnelles',
+    'Rituel du cafe',
+    'Epices traditionnelles',
     'Partage convivial',
-    'Cuisine érythréenne',
-    'Saveurs éthiopiennes'
+    'Cuisine erythreenne',
+    'Saveurs ethiopiennes'
 ];
 
 export function Marquee() {

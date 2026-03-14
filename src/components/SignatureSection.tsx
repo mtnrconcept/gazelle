@@ -24,7 +24,7 @@ const dishes = [
         image: 'https://lagazelledorgeneva.com/assets/KITEFO-D2dNuOak.png'
     },
     {
-        name: 'Dégustation Végétarienne',
+        name: 'Degustation Vegetarienne',
         description: 'Un assortiment généreux de Shiro, épinards, lentilles rouges et jaunes, chou et laitue sur injera.',
         price: '25 CHF',
         image: 'https://lagazelledorgeneva.com/assets/D%C3%A9gustation%20de%20L%C3%A9gumes-BHGAtiLV.png'

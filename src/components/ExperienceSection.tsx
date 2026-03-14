@@ -16,7 +16,7 @@ const features = [
         href: '/histoire'
     },
     {
-        title: 'Soirées & Événements',
+        title: 'Soirees & Evenements',
         button: 'Galerie',
         image: '/assets/SAMBUSA FAIT MAISON-D_wwG_sv.jpeg',
         href: '/histoire'
