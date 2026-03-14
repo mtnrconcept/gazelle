@@ -29,7 +29,7 @@ export function Header() {
       if (headerRef.current) {
         // Obtenir la hauteur réelle incluant les bordures et les padding
         const height = headerRef.current.getBoundingClientRect().height;
-        document.documentElement.style.setProperty('--header-h', `${Math.max(height, 80)}px`);
+        document.documentElement.style.setProperty('--header-h', `${Math.max(height, 180)}px`);
       }
     };
 
