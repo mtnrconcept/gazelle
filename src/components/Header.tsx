@@ -73,10 +73,8 @@ export function Header() {
             <img
               src="/images/logo.webp"
               alt="Ornement"
-              className="header-brandMark"
+              className="header-brandMark header-brandMark--large"
             />
-            <span className="header-brandTitle">La Gazelle d'Or</span>
-            <span className="header-brandSubtitle">Geneva</span>
           </Link>
 
           <div className="header-navGroup">
@@ -124,9 +122,8 @@ export function Header() {
             <img
               src="/images/logo.webp"
               alt="Ornement"
-              className="header-brandMark"
+              className="header-brandMark header-brandMark--large"
             />
-            <span className="header-brandTitle">La Gazelle d'Or</span>
           </Link>
           <button className="header-mobileMenuBtn" onClick={toggleMenu} aria-label="Toggle menu">
             {isMenuOpen ? '✕' : '☰ Menu'}
