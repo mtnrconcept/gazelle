@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model MenuSection {
+  id          Int           @id @default(autoincrement())
+  title       String        @db.VarChar(255)
+  notes       Json?
+  sortOrder   Int           @default(0)
+  parentId    Int?
+  parent      MenuSection?  @relation("SubSections", fields: [parentId], references: [id], onDelete: Cascade)
+  subsections MenuSection[] @relation("SubSections")
+  items       MenuItem[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@map("menu_sections")
+}
+
+model MenuItem {
+  id          Int         @id @default(autoincrement())
+  name        String      @db.VarChar(255)
+  description String?     @db.Text
+  price       String?     @db.VarChar(100)
+  image       String?     @db.VarChar(500)
+  sortOrder   Int         @default(0)
+  sectionId   Int
+  section     MenuSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@map("menu_items")
+}
+
+model Reservation {
+  id        Int      @id @default(autoincrement())
+  nom       String   @db.VarChar(255)
+  email     String   @db.VarChar(255)
+  telephone String?  @db.VarChar(50)
+  date      DateTime @db.Date
+  service   String   @db.VarChar(20)
+  personnes Int
+  message   String?  @db.Text
+  status    String   @default("pending") @db.VarChar(20)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("reservations")
+}
+
+model AdminUser {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique @db.VarChar(100)
+  passwordHash String   @db.VarChar(255)
+  createdAt    DateTime @default(now())
+
+  @@map("admin_users")
+}

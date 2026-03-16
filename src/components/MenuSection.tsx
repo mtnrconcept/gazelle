@@ -1,8 +1,7 @@
-﻿import { MenuSection as MenuSectionType, MenuItem } from '@/data/menu';
-import styles from './MenuSection.module.css';
+import type { MenuSectionData, MenuItemData } from '@/types/menu';
 
 type MenuSectionProps = {
-    section: MenuSectionType;
+    section: MenuSectionData;
     level?: number;
 };
 
@@ -11,31 +10,34 @@ export function MenuSection({ section, level = 1 }: MenuSectionProps) {
     const revealDirection = level % 2 === 0 ? 'right' : 'up';
 
     return (
-        <section className={`${styles.section} reveal`} data-reveal={revealDirection}>
-            <TitleTag className={level === 1 ? styles.mainTitle : styles.subTitle}>
+        <section className="menu-section reveal" data-reveal={revealDirection}>
+            <TitleTag
+                className={level === 1 ? "gold-sectionTitle menu-mainTitle" : "gold-sectionTitleSmall menu-subTitle"}
+                data-text={section.title}
+            >
                 {section.title}
             </TitleTag>
 
-            {section.notes && (
-                <div className={styles.notes}>
+            {section.notes && section.notes.length > 0 && (
+                <div className="menu-notes">
                     {section.notes.map((note, idx) => (
                         <p key={idx}>{note}</p>
                     ))}
                 </div>
             )}
 
-            {section.items && (
-                <div className={styles.grid}>
-                    {section.items.map((item, idx) => (
-                        <MenuItemCard key={idx} item={item} />
+            {section.items && section.items.length > 0 && (
+                <div className="menu-grid">
+                    {section.items.map((item) => (
+                        <MenuItemCard key={item.name} item={item} />
                     ))}
                 </div>
             )}
 
-            {section.subsections && (
-                <div className={styles.subsections}>
-                    {section.subsections.map((sub, idx) => (
-                        <MenuSection key={idx} section={sub} level={level + 1} />
+            {section.subsections && section.subsections.length > 0 && (
+                <div className="menu-subsections">
+                    {section.subsections.map((sub) => (
+                        <MenuSection key={sub.title} section={sub} level={level + 1} />
                     ))}
                 </div>
             )}
@@ -43,27 +45,25 @@ export function MenuSection({ section, level = 1 }: MenuSectionProps) {
     );
 }
 
-function MenuItemCard({ item }: { item: MenuItem }) {
-    const imageUrl = item.image ?? null;
-
+function MenuItemCard({ item }: { item: MenuItemData }) {
     return (
-        <div className={styles.card}>
-            {imageUrl && (
-                <div className={styles.imageWrapper}>
+        <div className="menu-card">
+            {item.image && (
+                <div className="menu-imageWrapper">
                     <img
-                        src={imageUrl}
+                        src={item.image}
                         alt={item.name}
-                        className={styles.image}
+                        className="menu-image"
                         loading="lazy"
                     />
                 </div>
             )}
-            <div className={styles.cardContent}>
-                <div className={styles.header}>
-                    <h4 className={styles.itemName}>{item.name}</h4>
-                    {item.price && <span className={styles.price}>{item.price}</span>}
+            <div className="menu-cardContent">
+                <div className="menu-header">
+                    <h4 className="menu-itemName">{item.name}</h4>
+                    {item.price && <span className="menu-price">{item.price}</span>}
                 </div>
-                {item.description && <p className={styles.description}>{item.description}</p>}
+                {item.description && <p className="menu-description">{item.description}</p>}
             </div>
         </div>
     );

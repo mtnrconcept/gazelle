@@ -1,8 +1,7 @@
-﻿"use client";
+"use client";
 
 import Link from 'next/link';
 import { useState, useEffect, useMemo } from 'react';
-import styles from './Hero.module.css';
 
 const slides = [
     '/images/5.webp',
@@ -42,14 +41,14 @@ function DustParticles() {
     if (!mounted) return null;
 
     return (
-        <div className={styles.dustLayer} aria-hidden="true">
-            <div className={styles.sunbeam} />
-            <div className={styles.sunbeam2} />
+        <div className="hero-dustLayer" aria-hidden="true">
+            <div className="hero-sunbeam" />
+            <div className="hero-sunbeam2" />
 
             {motes.map((m) => (
                 <span
                     key={m.id}
-                    className={styles.dustMote}
+                    className="hero-dustMote"
                     style={{
                         left: `${m.left}%`,
                         top: `${m.top}%`,
@@ -67,6 +66,15 @@ function DustParticles() {
 
 export function Hero() {
     const [current, setCurrent] = useState(0);
+    const [scrollY, setScrollY] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrollY(window.scrollY);
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -76,44 +84,52 @@ export function Hero() {
     }, []);
 
     return (
-        <section className={`${styles.hero} panel heroFullBleed`}>
-            <div className={styles.slideshow}>
+        <section 
+            className="hero-section panel heroFullBleed"
+            style={{ '--scroll-y': `${scrollY}px` } as React.CSSProperties}
+        >
+            <div className="hero-slideshow">
                 {slides.map((src, idx) => (
                     <img
                         key={src}
                         src={src}
                         alt=""
                         aria-hidden="true"
-                        className={`${styles.slide} ${idx === current ? styles.slideActive : ''}`}
+                        className={`hero-slide ${idx === current ? 'hero-slideActive' : ''}`}
                     />
                 ))}
             </div>
 
-            <div className={styles.overlay} />
+            <div className="hero-overlay" />
             <DustParticles />
 
+            {/* Feuille derrière le texte */}
+            <span
+                className="hero-behindLeaf"
+                aria-hidden="true"
+                style={{
+                    backgroundImage: "url('/images/palm-leaf-left3.png')",
+                    transform: `translateX(${scrollY * -0.15}px) translateY(${scrollY * -0.03}px) scale(0.9)`,
+                }}
+            />
+
             {/* Brand — logo, title, location */}
-            <div className={styles.topContent}>
-                <img
-                    src="/images/logo.webp"
-                    alt="La Gazelle d'Or"
-                    className={styles.emblem}
-                />
-                <h1 className={styles.title} data-text="La Gazelle d'Or">La Gazelle d&apos;Or</h1>
-                <p className={styles.location}>Geneva</p>
+            <div className="hero-topContent">
+                <h1 className="hero-title" data-text="La Gazelle d'Or">La Gazelle d&apos;Or</h1>
+                <p className="hero-location">Genève</p>
             </div>
 
             {/* Tagline + CTA */}
-            <div className={styles.bottomContent}>
-                <p className={styles.tagline}>Voyage culinaire au cœur de l&apos;Afrique</p>
-                <Link href="/menu" className={styles.ctaButton}>
-                    <span className={styles.ctaText}>Découvrir</span>
+            <div className="hero-bottomContent">
+                <p className="hero-tagline">Voyage culinaire au cœur de l&apos;Afrique</p>
+                <Link href="/menu" className="hero-ctaButton">
+                    <span className="hero-ctaText">Découvrir</span>
                 </Link>
             </div>
 
             {/* Scroll indicator */}
-            <div className={styles.scrollIndicator}>
-                <div className={styles.scrollLine} />
+            <div className="hero-scrollIndicator">
+                <div className="hero-scrollLine" />
             </div>
         </section>
     );

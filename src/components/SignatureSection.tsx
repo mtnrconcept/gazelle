@@ -1,5 +1,3 @@
-import styles from './SignatureSection.module.css';
-
 const dishes = [
     {
         name: 'La Gazelle Royale',
@@ -26,7 +24,7 @@ const dishes = [
         image: 'https://lagazelledorgeneva.com/assets/KITEFO-D2dNuOak.png'
     },
     {
-        name: 'Dégustation Végétarienne',
+        name: 'Degustation Vegetarienne',
         description: 'Un assortiment généreux de Shiro, épinards, lentilles rouges et jaunes, chou et laitue sur injera.',
         price: '25 CHF',
         image: 'https://lagazelledorgeneva.com/assets/D%C3%A9gustation%20de%20L%C3%A9gumes-BHGAtiLV.png'
@@ -41,30 +39,30 @@ const dishes = [
 
 export function SignatureSection() {
     return (
-        <section className={`${styles.section} panel decoratedSection reveal`} data-reveal="right">
-            <div className={`container ${styles.container}`}>
-                <div className={styles.header}>
-                    <p className={styles.eyebrow}>Escale au cœur de l'Éthiopie</p>
-                    <div className={styles.titleRow}>
-                        <h2 className={styles.title}>Nos plats signatures</h2>
+        <section className="signature-section panel decoratedSection reveal" data-reveal="right">
+            <div className="container signature-container">
+                <div className="signature-header">
+                    <p className="signature-eyebrow">Escale au cœur de l'Éthiopie</p>
+                    <div className="signature-titleRow">
+                        <h2 className="gold-sectionTitleMedium signature-title" data-text="Nos plats signatures">Nos plats signatures</h2>
                     </div>
                 </div>
-                <div className={styles.grid}>
+                <div className="signature-grid">
                     {dishes.map((dish) => (
-                        <article key={dish.name} className={styles.card}>
-                            <div className={styles.imageWrapper}>
+                        <article key={dish.name} className="signature-card">
+                            <div className="signature-imageWrapper">
                                 <img src={dish.image} alt={dish.name} loading="lazy" />
                             </div>
-                            <div className={styles.cardInfo}>
+                            <div className="signature-cardInfo">
                                 <h3>{dish.name}</h3>
                                 <p>{dish.description}</p>
-                                <span className={styles.price}>{dish.price}</span>
+                                <span className="signature-price">{dish.price}</span>
                             </div>
                         </article>
                     ))}
                 </div>
-                <div className={styles.ctaRow}>
-                    <a href="tel:+41223403350" className={styles.ctaButton}>
+                <div className="signature-ctaRow">
+                    <a href="tel:+41223403350" className="signature-ctaButton">
                         Réserver une table
                     </a>
                 </div>
