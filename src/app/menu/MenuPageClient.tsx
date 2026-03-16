@@ -77,7 +77,7 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
                 <div className="menu-heroContent">
                     <p className="menu-heroEyebrow">Restaurant érythréen & éthiopien</p>
                     <h1 className="heroPageTitle menu-heroTitle" data-text="Menu erythreen & ethiopien">Menu erythreen &amp; ethiopien</h1>
-                    <p className="menu-heroTagline">Tous nos plats sont servis avec de l'injera fait maison</p>
+                    <p className="menu-heroTagline">Tous nos plats sont servis avec de l'injera fait maison (Sans gluten disponible)</p>
                 </div>
             </div>
 
@@ -91,6 +91,21 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
                             onClick={(e) => {
                                 setActiveTab(tab.id);
                                 (e.currentTarget as HTMLButtonElement).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                                
+                                // Scroll to the top of the menu container with an offset for the sticky tabs
+                                const menuContainer = document.querySelector('.menu-menuContainer');
+                                if (menuContainer) {
+                                    const offset = 220; // sticky header + tabs height approximation
+                                    const bodyRect = document.body.getBoundingClientRect().top;
+                                    const elementRect = menuContainer.getBoundingClientRect().top;
+                                    const elementPosition = elementRect - bodyRect;
+                                    const offsetPosition = elementPosition - offset;
+
+                                    window.scrollTo({
+                                        top: offsetPosition,
+                                        behavior: 'smooth'
+                                    });
+                                }
                             }}
                         >
                             {tab.label}
@@ -106,6 +121,20 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
             </div>
 
             <SignatureSection />
+            <section className="menu-traiteurSection reveal" data-reveal="up">
+                <div className="container">
+                    <div className="menu-traiteurBox">
+                        <div className="menu-traiteurContent">
+                            <h2 className="gold-sectionTitleSmall" data-text="Service Traiteur & Entreprise">Service Traiteur & Entreprise</h2>
+                            <p>Organisez vos événements avec les saveurs de La Gazelle d'Or. Buffets, réceptions et repas d'entreprise, sur devis.</p>
+                        </div>
+                        <a href="mailto:lagazelledorgeneva@gmail.com?subject=Demande de devis traiteur" className="menu-traiteurButton">
+                            Demander un devis
+                        </a>
+                    </div>
+                </div>
+            </section>
+
             <GallerySection />
             <ReserveSection />
         </div>

@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 
 export function AboutSection() {
     return (
@@ -43,8 +43,8 @@ export function AboutSection() {
                         />
                     </div>
                     <div className="about-highlightCard">
-                        <span className="about-highlightTitle">Ceremonie du cafe</span>
-                        <p>Un rituel sensoriel où les grains sont torréfiés sur place, accompagné d'encens traditionnel.</p>
+                        <span className="about-highlightTitle">Cafe et The traditionnel</span>
+                        <p>Découvrez la richesse des arômes du café et du thé traditionnels et laissez-vous transporter par leur goût authentique.</p>
                     </div>
                 </div>
             </div>

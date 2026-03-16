@@ -5,6 +5,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { BodySnapManager } from '@/components/BodySnapManager';
+import { PromoPopup } from '@/components/PromoPopup';
 
 const cinzel = Cinzel({
   subsets: ['latin'],
@@ -63,6 +64,7 @@ export default function RootLayout({
         <Footer />
         <ScrollReveal />
         <BodySnapManager />
+        <PromoPopup />
       </body>
     </html>
   );

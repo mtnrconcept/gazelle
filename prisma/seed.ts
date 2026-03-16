@@ -103,7 +103,7 @@ const menuData = [
       { name: "Cocktail avec alcool", price: "12.00 CHF" },
       { name: "Cocktail sans alcool", price: "8.00 CHF" },
       { name: "Thé et café traditionnel", description: "Thé ou café servi à la manière traditionnelle.", price: "4.50 CHF" },
-      { name: "Cérémonie du café éthiopien", description: "Café torréfié sur place, servi traditionnellement avec encens.", price: "7.50 CHF" },
+      { name: "Café et Thé traditionnel", description: "Découvrez la richesse des arômes du café et du thé traditionnels et laissez-vous transporter par leur goût authentique.", price: "7.50 CHF" },
       { name: "Café simple", price: "3.50 CHF" },
     ],
   },

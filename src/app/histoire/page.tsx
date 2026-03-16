@@ -87,8 +87,8 @@ export default function HistoirePage() {
                             <div className="history-iconWrapper">
                                 <Coffee size={44} className="history-icon" strokeWidth={1.5} />
                             </div>
-                            <h3>Cermonie du Cafe</h3>
-                            <p>Le café est originaire d'Éthiopie. Nous célébrons ce rituel ancestral avec une torréfaction sur place et de l'encens traditionnel, un moment sensoriel unique.</p>
+                            <h3>Cafe et The traditionnel</h3>
+                            <p>Découvrez la richesse des arômes du café et du thé traditionnels et laissez-vous transporter par leur goût authentique.</p>
                         </div>
                         <div className="history-card">
                             <div className="history-iconWrapper">
@@ -145,7 +145,7 @@ export default function HistoirePage() {
                             <span className="history-statLabel">Années d'expérience</span>
                         </div>
                         <div className="history-statCard">
-                            <span className="history-statValue">4.3 / 5</span>
+                            <span className="history-statValue">4.5 / 5</span>
                             <span className="history-statLabel">Note Google</span>
                         </div>
                         <div className="history-statCard">

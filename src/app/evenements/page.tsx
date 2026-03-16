@@ -3,28 +3,34 @@ import { ReserveSection } from '@/components/ReserveSection';
 
 export const metadata: Metadata = {
     title: "Événements africains à Genève",
-    description: "Soirées africaines, événements privés et privatisations à La Gazelle d'Or à Genève. Musique, cérémonie du café et expériences culturelles.",
+    description: "Soirées africaines, événements privés et privatisations à La Gazelle d'Or à Genève. Musique, café et thé traditionnel et expériences culturelles.",
 };
 
 const events = [
     {
         title: 'Soirees Culturelles',
-        eyebrow: 'Chaque semaine',
-        description: "Plongez dans la culture érythréenne et éthiopienne avec nos soirées musicales. Musiques traditionnelles, danses et cérémonie du café pour une immersion totale.",
-        image: 'https://lagazelledorgeneva.com/assets/TIMATUM%20SALADE-B7XlvVoD.jpg',
+        eyebrow: 'Tradition',
+        description: 'Plongez au cœur de la culture érythréenne et éthiopienne avec nos soirées thématiques. Musique traditionnelle, démonstrations culinaires et moments de partage inoubliables.',
+        image: '/images/0.webp'
     },
     {
-        title: 'Ceremonies du Cafe',
-        eyebrow: 'Sur réservation',
-        description: "Le café est originaire d'Éthiopie. Vivez le rituel ancestral de torréfaction sur place, accompagné d'encens traditionnel. Une expérience sensorielle unique.",
-        image: 'https://lagazelledorgeneva.com/assets/SALADE%20DU%20CHEF-DwkqqRvX.jpg',
+        title: 'Cafe et The traditionnel',
+        eyebrow: 'Authenticité',
+        description: 'Découvrez la richesse des arômes du café et du thé traditionnels et laissez-vous transporter par leur goût authentique. Une expérience sensorielle unique qui honore nos racines.',
+        image: '/images/6.webp'
     },
     {
         title: 'Privatisation',
-        eyebrow: 'Événements privés',
-        description: "Mariages, anniversaires, repas d'affaires… Privatisez notre espace aux décors africains authentiques pour un événement inoubliable. Menus personnalisés sur demande.",
-        image: 'https://lagazelledorgeneva.com/assets/SAMBUSA%20FAIT%20MAISON-D_wwG_sv.jpeg',
+        eyebrow: 'Exclusivité',
+        description: 'Pour vos anniversaires, mariages ou événements privés, privatisez notre espace. Nous créons pour vous une ambiance sur mesure et un menu adapté à vos envies.',
+        image: '/images/3.webp'
     },
+    {
+        title: 'Service traiteur',
+        eyebrow: 'Entreprise & Privé',
+        description: 'La Gazelle d\'Or s\'invite à vos événements. Buffets traditionnels, plateaux de samboussas ou repas complets, nous assurons un service traiteur d\'exception pour vos réceptions.',
+        image: '/images/4.webp'
+    }
 ];
 
 export default function EvenementsPage() {
@@ -41,7 +47,14 @@ export default function EvenementsPage() {
             <div className="container events-content">
                 <section className="events-eventsGrid">
                     {events.map((event) => (
-                        <article key={event.title} className="events-eventCard">
+                        <article 
+                            key={event.title} 
+                            className="events-eventCard"
+                            id={event.title === 'Service traiteur' ? 'traiteur' : undefined}
+                        >
+                            <div className="events-eventImage">
+                                <img src={event.image} alt={event.title} />
+                            </div>
                             <div className="events-eventBody">
                                 <span className="events-eyebrow">{event.eyebrow}</span>
                                 <h2 className="gold-sectionTitleMedium events-eventTitle" data-text={event.title}>{event.title}</h2>

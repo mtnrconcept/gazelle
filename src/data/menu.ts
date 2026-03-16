@@ -196,7 +196,10 @@ export const menuData: MenuSection[] = [
     },
     {
         title: "MENU DEGUSTATION",
-        notes: ["Tous nos menus sont servis avec de l'injera fait maison. · All menus served with homemade injera."],
+        notes: [
+            "Tous nos menus sont servis avec de l'injera fait maison. (Option sans gluten disponible sur demande).",
+            "All menus served with homemade injera. (Gluten-free option available on request)."
+        ],
         subsections: [
             {
                 title: "LA GAZELLE VEGANE",
@@ -286,8 +289,8 @@ export const menuData: MenuSection[] = [
                 price: "4.50 CHF"
             },
             {
-                name: "Cérémonie du café éthiopien",
-                description: "Café torréfié sur place, servi traditionnellement avec encens.",
+                name: "Café et Thé traditionnel",
+                description: "Découvrez la richesse des arômes du café et du thé traditionnels et laissez-vous transporter par leur goût authentique.",
                 price: "7.50 CHF"
             },
             {

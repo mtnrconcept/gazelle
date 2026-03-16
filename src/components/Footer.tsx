@@ -39,6 +39,7 @@ export function Footer() {
                             <Link href="/menu" className="footer-navLink">Notre Carte</Link>
                             <Link href="/histoire" className="footer-navLink">Notre Histoire</Link>
                             <Link href="/evenements" className="footer-navLink">Événements</Link>
+                            <Link href="/evenements#traiteur" className="footer-navLink">Service Traiteur</Link>
                             <Link href="/contact" className="footer-navLink">Contact & Réservation</Link>
                         </nav>
                     </div>
@@ -72,6 +73,7 @@ export function Footer() {
                         <nav className="footer-navLinks">
                             <a href="https://www.ubereats.com/store/la-gazelle-dor/ZyYBaGTYWA6WDQYUbQveaA?diningMode=DELIVERY" target="_blank" rel="noopener noreferrer" className="footer-navLink">Uber Eats</a>
                             <a href="https://www.smood.ch/fr/store/la-gazelle-dor" target="_blank" rel="noopener noreferrer" className="footer-navLink">Smood</a>
+                            <a href="https://www.just-eat.ch/fr/menu/gazelle-dor-african-village#pre-order" target="_blank" rel="noopener noreferrer" className="footer-navLink">Just Eat</a>
                         </nav>
                     </div>
 

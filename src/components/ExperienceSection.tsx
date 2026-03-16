@@ -6,20 +6,26 @@ const features = [
     {
         title: 'Cuisine Authentique',
         button: 'Voir le menu',
-        image: '/assets/SALADE DU CHEF-DwkqqRvX.jpg',
+        image: '/images/5.webp',
         href: '/menu'
     },
     {
         title: 'Ambiance Africaine',
-        button: 'Immersion culturelle',
-        image: '/assets/TIMATUM SALADE-B7XlvVoD.jpg',
+        button: 'Immersion Culturelle',
+        image: '/images/2.webp',
         href: '/histoire'
     },
     {
         title: 'Soirees & Evenements',
         button: 'Galerie',
-        image: '/assets/SAMBUSA FAIT MAISON-D_wwG_sv.jpeg',
-        href: '/histoire'
+        image: '/images/7.webp',
+        href: '/evenements'
+    },
+    {
+        title: 'Service Traiteur',
+        button: 'Sur devis',
+        image: '/images/8.webp',
+        href: '/evenements#traiteur'
     }
 ];
 
@@ -38,7 +44,7 @@ export function ExperienceSection() {
 
                             {/* Circular image */}
                             <div className="experience-imageWrapper">
-                                <img src={`${baseUrl}${encodeURI(item.image)}`} alt={item.title} loading="lazy" />
+                                <img src={item.image} alt={item.title} loading="lazy" />
                             </div>
 
                             {/* Button at bottom */}

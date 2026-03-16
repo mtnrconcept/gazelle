@@ -3,40 +3,68 @@
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, ChevronDown, Phone, UtensilsCrossed } from 'lucide-react';
 
 const navLeft = [
   { href: '/', label: 'Accueil' },
   { href: '/histoire', label: 'À propos' },
   { href: '/menu', label: 'Menu' },
-  { href: '/evenements', label: 'Événements' },
 ];
 
 const navRight = [
+  { href: '/evenements', label: 'Événements' },
   { href: '/contact', label: 'Contact' },
+];
+
+const deliveryLinks = [
+  {
+    href: 'https://www.ubereats.com/store/la-gazelle-dor/ZyYBaGTYWA6WDQYUbQveaA?diningMode=DELIVERY',
+    label: 'Uber Eats',
+    className: 'header-dropdownLink--uberEats',
+  },
+  {
+    href: 'https://www.smood.ch/fr/store/la-gazelle-dor',
+    label: 'Smood',
+    className: 'header-dropdownLink--smood',
+  },
+  {
+    href: 'https://www.just-eat.ch/fr/menu/gazelle-dor-african-village',
+    label: 'Just Eat',
+    className: 'header-dropdownLink--justEat',
+  },
 ];
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
 
   // Calcule et met à jour dynamiquement la hauteur du header dans une variable CSS globale
   useEffect(() => {
     const updateHeaderHeight = () => {
       if (headerRef.current) {
-        // Obtenir la hauteur réelle incluant les bordures et les padding
         const height = headerRef.current.getBoundingClientRect().height;
         document.documentElement.style.setProperty('--header-h', `${Math.max(height, 80)}px`);
       }
     };
 
-    // Mise à jour initiale
     updateHeaderHeight();
 
-    // Surveillance des changements de taille (redimensionnement de fenêtre, etc.)
     const resizeObserver = new ResizeObserver(() => {
         updateHeaderHeight();
     });
@@ -46,7 +74,7 @@ export function Header() {
     }
 
     return () => resizeObserver.disconnect();
-  }, [pathname]); // Relancer si la page change (au cas où le header est différent)
+  }, [pathname]);
 
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
@@ -72,11 +100,9 @@ export function Header() {
           <Link href="/" className="header-brand">
             <img
               src="/images/logo.webp"
-              alt="Ornement"
+              alt="La Gazelle d'Or"
               className="header-brandMark"
             />
-            <span className="header-brandTitle">La Gazelle d'Or</span>
-            <span className="header-brandSubtitle">Geneva</span>
           </Link>
 
           <div className="header-navGroup">
@@ -89,33 +115,44 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
-            
-            <div className="header-deliveryLinks">
-              <a
-                href="https://www.ubereats.com/store/la-gazelle-dor/ZyYBaGTYWA6WDQYUbQveaA?diningMode=DELIVERY"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="header-deliveryLink header-uberEats"
-                title="Commander sur Uber Eats"
-              >
-                <span>Uber Eats</span>
-                <ExternalLink size={12} className="header-linkIcon" />
-              </a>
-              <a
-                href="https://www.smood.ch/fr/store/la-gazelle-dor"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="header-deliveryLink header-smood"
-                title="Commander sur Smood"
-              >
-                <span>Smood</span>
-                <ExternalLink size={12} className="header-linkIcon" />
-              </a>
-            </div>
 
-            <a href="tel:+41223403350" className="header-reserveButton">
-              Réserver
-            </a>
+            {/* Dropdown Commander */}
+            <div className="header-dropdown" ref={dropdownRef}>
+              <button
+                className="header-reserveButton"
+                onClick={() => setIsDropdownOpen((prev) => !prev)}
+                aria-expanded={isDropdownOpen}
+              >
+                Commander
+                <ChevronDown size={14} className={`header-dropdownChevron ${isDropdownOpen ? 'header-dropdownChevronOpen' : ''}`} />
+              </button>
+              <div className={`header-dropdownMenu ${isDropdownOpen ? 'header-dropdownMenuOpen' : ''}`}>
+                <span className="header-dropdownLabel">Livraison</span>
+                {deliveryLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`header-dropdownLink ${link.className}`}
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    <span>{link.label}</span>
+                    <ExternalLink size={12} />
+                  </a>
+                ))}
+                <span className="header-dropdownDivider" />
+                <span className="header-dropdownLabel">Sur place</span>
+                <a href="tel:+41223403350" className="header-dropdownLink header-dropdownLink--phone" onClick={() => setIsDropdownOpen(false)}>
+                  <Phone size={14} />
+                  <span>Réserver par téléphone</span>
+                </a>
+                <Link href="/contact" className="header-dropdownLink header-dropdownLink--form" onClick={() => setIsDropdownOpen(false)}>
+                  <UtensilsCrossed size={14} />
+                  <span>Réserver en ligne</span>
+                </Link>
+              </div>
+            </div>
           </div>
         </nav>
 
@@ -123,10 +160,9 @@ export function Header() {
           <Link href="/" className="header-brand">
             <img
               src="/images/logo.webp"
-              alt="Ornement"
+              alt="La Gazelle d'Or"
               className="header-brandMark"
             />
-            <span className="header-brandTitle">La Gazelle d'Or</span>
           </Link>
           <button className="header-mobileMenuBtn" onClick={toggleMenu} aria-label="Toggle menu">
             {isMenuOpen ? '✕' : '☰ Menu'}
@@ -147,25 +183,21 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+          <span className="header-mobileSectionLabel">Commander en livraison</span>
           <div className="header-mobileDeliveryLinks">
-            <a
-              href="https://www.ubereats.com/store/la-gazelle-dor/ZyYBaGTYWA6WDQYUbQveaA?diningMode=DELIVERY"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="header-mobileDeliveryBtn"
-            >
-              Uber Eats
-              <ExternalLink size={14} style={{ marginLeft: '4px' }} />
-            </a>
-            <a
-              href="https://www.smood.ch/fr/store/la-gazelle-dor"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="header-mobileDeliveryBtn"
-            >
-              Smood
-              <ExternalLink size={14} style={{ marginLeft: '4px' }} />
-            </a>
+            {deliveryLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="header-mobileDeliveryBtn"
+                onClick={toggleMenu}
+              >
+                {link.label}
+                <ExternalLink size={14} style={{ marginLeft: '4px' }} />
+              </a>
+            ))}
           </div>
           <a href="tel:+41223403350" className="header-mobileCtaButton" onClick={toggleMenu}>
             Réserver · +41 22 340 33 50

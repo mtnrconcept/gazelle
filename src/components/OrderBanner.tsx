@@ -24,6 +24,14 @@ export function OrderBanner() {
                     >
                         Smood
                     </a>
+                    <a
+                        href="https://www.just-eat.ch/fr/menu/gazelle-dor-african-village#pre-order"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="order-platformBtn"
+                    >
+                        Just Eat
+                    </a>
                 </div>
             </div>
         </section>

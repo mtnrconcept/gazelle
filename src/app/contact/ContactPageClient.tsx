@@ -62,6 +62,29 @@ export function ContactPageClient() {
                 <div className="contact-grid">
                     {/* —— Form —— */}
                     <div className="contact-formCol">
+                        <div className="contact-promoBanner">
+                            <div className="contact-promoGlow" />
+                            <span className="contact-promoBadge">Offre Exclusive</span>
+                            <h3 className="contact-promoTitle">Du vin genevois offert avec votre commande à emporter</h3>
+                            <p className="contact-promoIntro">
+                                Pour toute commande à emporter passée directement sur notre site, nous vous offrons une bouteille de vin genevois en cadeau.
+                            </p>
+                            <div className="contact-promoTiers">
+                                <div className="contact-promoTier">
+                                    <span className="contact-promoTierAmount">Dès CHF 50.–</span>
+                                    <span className="contact-promoTierReward">Bouteille <strong>50cl</strong> offerte</span>
+                                </div>
+                                <div className="contact-promoTierDivider" />
+                                <div className="contact-promoTier contact-promoTier--premium">
+                                    <span className="contact-promoTierAmount">Dès CHF 80.–</span>
+                                    <span className="contact-promoTierReward">Bouteille <strong>75cl</strong> offerte</span>
+                                </div>
+                            </div>
+                            <p className="contact-promoFooter">
+                                Valable uniquement pour les commandes à emporter via notre site
+                            </p>
+                        </div>
+
                         <span className="contact-eyebrow">Votre demande</span>
                         <h2 className="gold-sectionTitle contact-sectionTitle" data-text="Formulaire de reservation">Formulaire de reservation</h2>
 
