@@ -29,6 +29,15 @@ export function Footer() {
                             >
                                 Instagram
                             </a>
+                            <a
+                                href="https://www.tiktok.com/@la.gazelle.dor.ge"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="TikTok"
+                                className="footer-socialLink"
+                            >
+                                TikTok
+                            </a>
                         </div>
                     </div>
 
