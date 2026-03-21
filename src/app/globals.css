@@ -1436,6 +1436,7 @@ body.snap-enabled .panel {
     transition:
         transform 0.6s var(--ease-out-expo),
         box-shadow 0.6s var(--ease-out-expo);
+    max-height: 680px;
 }
 
 .about-imageWrapper:hover {
