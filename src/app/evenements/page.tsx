@@ -23,7 +23,7 @@ const events = [
         title: 'Privatisation',
         eyebrow: 'Exclusivité',
         description: 'Pour vos anniversaires, mariages ou événements privés, privatisez notre espace. Nous créons pour vous une ambiance sur mesure et un menu adapté à vos envies.',
-        image: '/images/6.webp'
+        image: '/images/2.webp'
     },
     {
         title: 'Service traiteur',
