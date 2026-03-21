@@ -17,7 +17,7 @@ const events = [
         title: 'Cafe et The traditionnel',
         eyebrow: 'Authenticité',
         description: 'Découvrez la richesse des arômes du café et du thé traditionnels et laissez-vous transporter par leur goût authentique. Une expérience sensorielle unique qui honore nos racines.',
-        image: '/images/café.PNG'
+        image: '/images/café.png'
     },
     {
         title: 'Privatisation',
