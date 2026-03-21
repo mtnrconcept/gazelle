@@ -11,8 +11,9 @@ const tabs = [
     { id: 'all', label: '✦ Tout' },
     { id: 'entrees', label: 'Entrées' },
     { id: 'vegetarien', label: 'Végétarien' },
-    { id: 'plats', label: 'Plats' },
+    { id: 'plats', label: 'Plats + Plats du jour' },
     { id: 'degustations', label: 'Menus' },
+    { id: 'streetfood', label: 'African Streetfood' },
     { id: 'boissons', label: 'Boissons' },
 ];
 
@@ -21,6 +22,7 @@ const tabMap: Record<string, string> = {
     vegetarien: 'PLATS VEGETARIENS / VEGAN',
     plats: 'PLATS PRINCIPAUX',
     degustations: 'MENU DEGUSTATION',
+    streetfood: 'AFRICAN STREETFOOD',
     boissons: 'BOISSONS',
 };
 

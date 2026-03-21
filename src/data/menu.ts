@@ -181,7 +181,7 @@ export const menuData: MenuSection[] = [
                         image: "https://lagazelledorgeneva.com/assets/ASSA%20WET-BxtpBUC_.png"
                     },
                     {
-                        name: "ASSA ALECHA WET",
+                        name: "ASSA ALECHA",
                         description: "Poisson mijoté dans une sauce aux oignons, ail, gingembre et épices douces.",
                         price: "30.00 CHF"
                     },
@@ -259,6 +259,146 @@ export const menuData: MenuSection[] = [
                     {
                         name: "Menu 5 personnes",
                         price: "150.00 CHF"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        title: "AFRICAN STREETFOOD",
+        notes: [
+            "Sélection street food : pizzas Habesha, wraps à l'injera, paninis, empanadas et frites."
+        ],
+        subsections: [
+            {
+                title: "PIZZAS HABESHA / ABYSINIA",
+                items: [
+                    {
+                        name: "ABYSINIE",
+                        description: "Tomates, mozzarella, zegni de bœuf pimenté et injera (galette)."
+                    },
+                    {
+                        name: "ASMARA",
+                        description: "Tomates, mozzarella, alecha sans piment (poulet) et injera (galette)."
+                    },
+                    {
+                        name: "ADDIS ABEBA",
+                        description: "Tomates, mozzarella, wet pimenté (poulet) et injera (galette)."
+                    }
+                ]
+            },
+            {
+                title: "PIZZAS ITALIAN",
+                items: [
+                    {
+                        name: "MARGHERITA",
+                        description: "Tomates, mozzarella, origan."
+                    },
+                    {
+                        name: "VEGETARIANA",
+                        description: "Tomates, mozzarella, courgettes, aubergines et poivrons."
+                    },
+                    {
+                        name: "PROSCIUTTO",
+                        description: "Tomate, mozzarella, jambon cuit ou volaille halal."
+                    },
+                    {
+                        name: "ORIENTAL",
+                        description: "Tomate, mozzarella, merguez et champignon."
+                    },
+                    {
+                        name: "4 FROMAGES",
+                        description: "Tomate, mozzarella, gorgonzola, chèvre et ricotta."
+                    }
+                ]
+            },
+            {
+                title: "WRAP HABESHA - VIANDE",
+                notes: [
+                    "Adapté à la texture spongieuse de l'injera. Avec bœuf ou poulet."
+                ],
+                items: [
+                    {
+                        name: "ZEGNI WET / TSEBHI",
+                        description: "Ragoût de bœuf épicé, pimenté et riche en saveurs."
+                    },
+                    {
+                        name: "DORO WET",
+                        description: "Ragoût de poulet mijoté dans une sauce berbère (pimentée) et riche en saveurs."
+                    },
+                    {
+                        name: "DORO ALECHA",
+                        description: "Ragoût de poulet mijoté dans une sauce au curcuma, sans piment."
+                    },
+                    {
+                        name: "KITFO",
+                        description: "Steak tartare éthiopien assaisonné avec un beurre aux herbes, des piments rouges finement hachés, du gingembre et du poivre."
+                    }
+                ]
+            },
+            {
+                title: "WRAP HABESHA - VÉGÉTARIEN / VEGAN",
+                notes: [
+                    "Adapté à la texture spongieuse de l'injera."
+                ],
+                items: [
+                    {
+                        name: "MESER WET / TSEBHI",
+                        description: "Délicate purée de lentilles au soja, assaisonnée d'oignons, de poivre vert et d'ail."
+                    },
+                    {
+                        name: "SHURO",
+                        description: "Purée de pois chiche jaunes marinés et cuits dans une sauce au paprika, assaisonnés d'épices savoureuses."
+                    },
+                    {
+                        name: "ALECHA",
+                        description: "Casserole de pommes de terre, carottes et haricots verts assaisonnés de curry, d'oignons, de poivre vert et d'ail."
+                    },
+                    {
+                        name: "GOMEN / ATKELTI EPINARD",
+                        description: "Légumes épicés et hachés, cuits dans un beurre clarifié aux herbes avec des oignons et divers poivres exotiques."
+                    }
+                ]
+            },
+            {
+                title: "PANINI",
+                items: [
+                    {
+                        name: "PANINI ROUGE",
+                        description: "Jambon et mozzarella."
+                    },
+                    {
+                        name: "PANINI POULET",
+                        description: "Curry, crème et mozzarella."
+                    },
+                    {
+                        name: "PANINI PESTO",
+                        description: "Tomate et mozzarella."
+                    }
+                ]
+            },
+            {
+                title: "EMPANADAS",
+                items: [
+                    {
+                        name: "BOEUF"
+                    },
+                    {
+                        name: "THON"
+                    },
+                    {
+                        name: "JAMBON FROMAGE"
+                    },
+                    {
+                        name: "EPINARDS"
+                    }
+                ]
+            },
+            {
+                title: "FRITES",
+                items: [
+                    {
+                        name: "FRITES"
                     }
                 ]
             }
