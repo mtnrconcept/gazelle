@@ -100,6 +100,7 @@ h2, h3, h4, h5, h6 {
   margin-bottom: var(--spacing-sm);
   text-transform: uppercase;
   letter-spacing: 2px;
+  word-spacing: -0.15em;
 }
 
 a {
@@ -3127,7 +3128,7 @@ body.snap-enabled .panel {
         box-shadow 0.5s var(--ease-out-expo),
         border-color 0.3s;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .review-card::after {
@@ -3137,6 +3138,7 @@ body.snap-enabled .panel {
     left: 0;
     right: 0;
     height: 3px;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
     background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-primary));
     transform: scaleX(0);
     transform-origin: left;
