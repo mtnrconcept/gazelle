@@ -11,13 +11,15 @@ type PingPongVideoProps = {
 export function PingPongVideo({ src, className, poster }: PingPongVideoProps) {
     const videoRef = useRef<HTMLVideoElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const wrapperRef = useRef<HTMLDivElement>(null);
     const framesRef = useRef<ImageBitmap[]>([]);
     const capturedRef = useRef(false);
 
     useEffect(() => {
         const video = videoRef.current;
         const canvas = canvasRef.current;
-        if (!video || !canvas) return;
+        const wrapper = wrapperRef.current;
+        if (!video || !canvas || !wrapper) return;
 
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
@@ -25,9 +27,10 @@ export function PingPongVideo({ src, className, poster }: PingPongVideoProps) {
         let cancelled = false;
         let pendingCaptures = 0;
         let captureId = 0;
+        let isVisible = false;
 
         function captureFrame() {
-            if (!video || !ctx || cancelled || video.paused || video.ended) return;
+            if (!video || !canvas || !ctx || cancelled || video.paused || video.ended) return;
 
             if (canvas.width !== video.videoWidth) {
                 canvas.width = video.videoWidth;
@@ -49,7 +52,6 @@ export function PingPongVideo({ src, className, poster }: PingPongVideoProps) {
         function startReverse() {
             if (!video || !canvas || !ctx || cancelled) return;
 
-            // Wait until all async bitmap captures have resolved
             if (pendingCaptures > 0) {
                 setTimeout(startReverse, 30);
                 return;
@@ -62,19 +64,16 @@ export function PingPongVideo({ src, className, poster }: PingPongVideoProps) {
                 return;
             }
 
-            // Match the original playback FPS
             const fps = frames.length / (video.duration || 1);
             const interval = 1000 / fps;
             let idx = frames.length - 1;
 
-            // Swap: show canvas, hide video
             canvas.style.display = 'block';
             video.style.display = 'none';
 
             function drawNext() {
                 if (cancelled || !ctx) return;
                 if (idx < 0) {
-                    // Reverse done → swap back to video, play forward
                     canvas.style.display = 'none';
                     video!.style.display = 'block';
                     video!.currentTime = 0;
@@ -104,11 +103,29 @@ export function PingPongVideo({ src, className, poster }: PingPongVideoProps) {
         video.addEventListener('play', onPlay);
         video.addEventListener('ended', onEnded);
 
+        // IntersectionObserver to trigger play when visible (needed for mobile)
+        const observer = new IntersectionObserver(
+            (entries) => {
+                for (const entry of entries) {
+                    if (entry.isIntersecting && !isVisible) {
+                        isVisible = true;
+                        video.play().catch(() => {});
+                    } else if (!entry.isIntersecting && isVisible) {
+                        isVisible = false;
+                        video.pause();
+                    }
+                }
+            },
+            { threshold: 0.3 }
+        );
+        observer.observe(wrapper);
+
         return () => {
             cancelled = true;
             cancelAnimationFrame(captureId);
             video.removeEventListener('play', onPlay);
             video.removeEventListener('ended', onEnded);
+            observer.disconnect();
             framesRef.current.forEach(b => b.close());
             framesRef.current = [];
         };
@@ -123,7 +140,7 @@ export function PingPongVideo({ src, className, poster }: PingPongVideoProps) {
     };
 
     return (
-        <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
+        <div ref={wrapperRef} style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
             <video
                 ref={videoRef}
                 autoPlay
