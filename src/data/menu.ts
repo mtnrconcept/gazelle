@@ -409,33 +409,34 @@ export const menuData: MenuSection[] = [
         items: [
             {
                 name: "Vin rouge / blanc / rosé (50cl)",
-                price: "24.00 CHF"
+                price: "24.00 CHF",
+                image: "/images/carte-menu/vins%20petit.png"
             },
             {
                 name: "Vin rouge / blanc / rosé (75cl)",
-                price: "35.00 CHF"
+                price: "35.00 CHF",
+                image: "/images/carte-menu/vins.png"
             },
             {
                 name: "Cocktail avec alcool",
-                price: "12.00 CHF"
+                price: "12.00 CHF",
+                image: "/images/carte-menu/cocktail%20avec%20alcool.png"
             },
             {
                 name: "Cocktail sans alcool",
-                price: "8.00 CHF"
-            },
-            {
-                name: "Thé et café traditionnel",
-                description: "Thé ou café servi à la manière traditionnelle.",
-                price: "4.50 CHF"
+                price: "8.00 CHF",
+                image: "/images/carte-menu/cocktail%20sans%20alcool.png"
             },
             {
                 name: "Café et Thé traditionnel",
                 description: "Découvrez la richesse des arômes du café et du thé traditionnels et laissez-vous transporter par leur goût authentique.",
-                price: "7.50 CHF"
+                price: "4.50 CHF",
+                image: "/images/carte-menu/caf%C3%A9.png"
             },
             {
                 name: "Café simple",
-                price: "3.50 CHF"
+                price: "3.50 CHF",
+                image: "/images/carte-menu/caf%C3%A92.png"
             }
         ]
     }
