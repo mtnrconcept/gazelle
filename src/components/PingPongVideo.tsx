@@ -72,12 +72,12 @@ export function PingPongVideo({ src, className, poster }: PingPongVideoProps) {
             video.style.display = 'none';
 
             function drawNext() {
-                if (cancelled || !ctx) return;
+                if (cancelled || !ctx || !canvas || !video) return;
                 if (idx < 0) {
                     canvas.style.display = 'none';
-                    video!.style.display = 'block';
-                    video!.currentTime = 0;
-                    video!.play();
+                    video.style.display = 'block';
+                    video.currentTime = 0;
+                    video.play();
                     return;
                 }
                 ctx.drawImage(frames[idx], 0, 0);
