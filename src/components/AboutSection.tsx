@@ -36,7 +36,7 @@ export function AboutSection() {
                 <div className="about-media">
                     <div className="about-imageWrapper">
                         <img
-                            src="/images/1.jpg"
+                            src="/images/café.png"
                             alt="Cuisine traditionnelle"
                             className="about-image"
                             loading="lazy"
