@@ -1,4 +1,5 @@
 ﻿import Link from 'next/link';
+import { PingPongVideo } from './PingPongVideo';
 
 export function AboutSection() {
     return (
@@ -35,11 +36,10 @@ export function AboutSection() {
                 </div>
                 <div className="about-media">
                     <div className="about-imageWrapper">
-                        <img
-                            src="/images/café.png"
-                            alt="Cuisine traditionnelle"
+                        <PingPongVideo
+                            src="/images/caf%C3%A9.mp4"
+                            poster="/images/caf%C3%A9.png"
                             className="about-image"
-                            loading="lazy"
                         />
                     </div>
                     <div className="about-highlightCard">

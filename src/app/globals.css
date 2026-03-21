@@ -3562,18 +3562,26 @@ body.snap-enabled .panel {
     margin-top: calc(-1 * var(--header-h));
     padding-top: var(--header-h);
     overflow: hidden;
-    background-image:
-        radial-gradient(ellipse at center, transparent 0%, rgba(18, 8, 2, 0.3) 70%),
-        linear-gradient(180deg, rgba(52, 28, 12, 0.55), rgba(52, 28, 12, 0.72)),
-        url('/images/7.webp');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     margin-bottom: 4rem;
+}
+
+.contact-heroVideoBg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.contact-heroOverlay {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at center, transparent 0%, rgba(18, 8, 2, 0.3) 70%),
+        linear-gradient(180deg, rgba(52, 28, 12, 0.55), rgba(52, 28, 12, 0.72));
+    z-index: 1;
 }
 
 .contact-heroContent {
@@ -4059,11 +4067,6 @@ body.snap-enabled .panel {
     }
 }
 
-@media (max-width: 900px) {
-    .contact-hero {
-        background-attachment: scroll;
-    }
-}
 
 @media (min-width: 768px) {
     .contact-row {
