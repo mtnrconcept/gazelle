@@ -216,6 +216,26 @@ body.snap-enabled .panel {
   to { opacity: 1; transform: scale(1); }
 }
 
+@keyframes heroTextReveal {
+  0%   { opacity: 0; transform: translateY(30px); filter: blur(6px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+@keyframes heroTextFadeOut {
+  0%   { opacity: 1; transform: translateY(0); filter: blur(0); }
+  100% { opacity: 0; transform: translateY(-20px); filter: blur(4px); }
+}
+
+@keyframes heroVideoUnblur {
+  0%   { filter: blur(18px) brightness(0.4); }
+  100% { filter: blur(0) brightness(1); }
+}
+
+@keyframes heroOverlayFade {
+  0%   { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+
 @keyframes shimmer {
   0% { background-position: -200% center; }
   100% { background-position: 200% center; }
@@ -4370,6 +4390,17 @@ body.snap-enabled .panel {
     object-position: center;
     pointer-events: none;
     z-index: 0;
+    filter: blur(18px) brightness(0.4);
+    animation: heroVideoUnblur 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2.8s forwards;
+}
+
+.history-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    animation: heroOverlayFade 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2.8s forwards;
 }
 
 .history-heroContent {
@@ -4380,7 +4411,22 @@ body.snap-enabled .panel {
     align-items: center;
     gap: 0.8rem;
     padding: 0 1.5rem;
-    animation: fadeInUp 1s var(--ease-out-expo) 0.2s backwards;
+    animation: heroTextFadeOut 1.2s cubic-bezier(0.55, 0, 1, 0.45) 4s forwards;
+}
+
+.history-heroContent .history-heroEyebrow {
+    opacity: 0;
+    animation: heroTextReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+}
+
+.history-heroContent .history-heroTitle {
+    opacity: 0;
+    animation: heroTextReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+}
+
+.history-heroContent .history-heroTagline {
+    opacity: 0;
+    animation: heroTextReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 1.5s forwards;
 }
 
 .history-heroEyebrow {
