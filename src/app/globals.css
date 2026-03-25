@@ -11,13 +11,13 @@
   --font-section-display: "African", serif;
   --font-body: "Cormorant Garamond", serif;
 
-  --color-primary: #b86a2c;
+  --color-primary: #7a2808;
   --color-secondary: #d9a24f;
   --color-background: #f4e5c8;
   --color-surface: #f9f0db;
-  --color-text: #3a2819;
-  --color-text-muted: #51311d;
-  --color-accent: #8c4a1e;
+  --color-text: #31150b;
+  --color-text-muted: #4a2415;
+  --color-accent: #5c1c04;
   --color-ink: #1e120b;
 
   --spacing-xs: 0.5rem;
