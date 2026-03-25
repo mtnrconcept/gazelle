@@ -9,6 +9,7 @@ import { ReserveSection } from '@/components/ReserveSection';
 
 const tabs = [
     { id: 'all', label: '✦ Tout' },
+    { id: 'signature', label: 'Nos plats signatures' },
     { id: 'entrees', label: 'Entrées' },
     { id: 'vegetarien', label: 'Végétarien' },
     { id: 'plats', label: 'Plats + Plats du jour' },
@@ -32,6 +33,7 @@ type MenuPageClientProps = {
 
 export function MenuPageClient({ sections }: MenuPageClientProps) {
     const [activeTab, setActiveTab] = useState('all');
+    const isSignatureTab = activeTab === 'signature';
 
     useEffect(() => {
         // When switching tabs, immediately reveal all menu items so they
@@ -46,7 +48,9 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
 
     const visibleSections = activeTab === 'all'
         ? sections
-        : sections.filter((s) => s.title === tabMap[activeTab]);
+        : isSignatureTab
+            ? []
+            : sections.filter((s) => s.title === tabMap[activeTab]);
 
     return (
         <div className="menu-page">
@@ -92,12 +96,15 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
             </div>
 
             <div className="container menu-menuContainer">
-                {visibleSections.map((section) => (
-                    <MenuSection key={section.title} section={section} />
-                ))}
+                {isSignatureTab ? (
+                    <SignatureSection />
+                ) : (
+                    visibleSections.map((section) => (
+                        <MenuSection key={section.title} section={section} />
+                    ))
+                )}
             </div>
 
-            <SignatureSection />
             <section className="menu-traiteurSection reveal" data-reveal="up">
                 <div className="container">
                     <div className="menu-traiteurBox">
