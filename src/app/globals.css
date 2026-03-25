@@ -2664,8 +2664,10 @@ body.snap-enabled .panel {
 }
 
 .menu-itemName {
-    font-family: var(--font-display);
-    font-size: 1.18rem;
+    font-family: var(--font-body);
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
     color: var(--color-ink);
     transition: color 0.3s;
 }
@@ -2675,10 +2677,13 @@ body.snap-enabled .panel {
 }
 
 .menu-price {
-    font-size: 1.08rem;
+    font-family: var(--font-body);
+    font-size: 1.28rem;
     font-weight: 700;
     color: var(--color-accent);
     white-space: normal;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
     transition: color 0.3s;
 }
 
@@ -2724,7 +2729,7 @@ body.snap-enabled .panel {
     }
 
     .menu-price {
-        font-size: 1.02rem;
+        font-size: 1.14rem;
     }
 }
 
