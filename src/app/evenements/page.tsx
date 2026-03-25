@@ -17,13 +17,13 @@ const events = [
         title: 'Cafe et The traditionnel',
         eyebrow: 'Authenticité',
         description: 'Découvrez la richesse des arômes du café et du thé traditionnels et laissez-vous transporter par leur goût authentique. Une expérience sensorielle unique qui honore nos racines.',
-        image: '/images/6.webp'
+        image: '/images/café.png'
     },
     {
         title: 'Privatisation',
         eyebrow: 'Exclusivité',
         description: 'Pour vos anniversaires, mariages ou événements privés, privatisez notre espace. Nous créons pour vous une ambiance sur mesure et un menu adapté à vos envies.',
-        image: '/images/3.webp'
+        image: '/images/2.webp'
     },
     {
         title: 'Service traiteur',

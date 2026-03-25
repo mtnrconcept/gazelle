@@ -9,10 +9,12 @@ import { ReserveSection } from '@/components/ReserveSection';
 
 const tabs = [
     { id: 'all', label: '✦ Tout' },
+    { id: 'signature', label: 'Nos plats signatures' },
     { id: 'entrees', label: 'Entrées' },
     { id: 'vegetarien', label: 'Végétarien' },
-    { id: 'plats', label: 'Plats' },
+    { id: 'plats', label: 'Plats + Plats du jour' },
     { id: 'degustations', label: 'Menus' },
+    { id: 'streetfood', label: 'African Streetfood' },
     { id: 'boissons', label: 'Boissons' },
 ];
 
@@ -21,6 +23,7 @@ const tabMap: Record<string, string> = {
     vegetarien: 'PLATS VEGETARIENS / VEGAN',
     plats: 'PLATS PRINCIPAUX',
     degustations: 'MENU DEGUSTATION',
+    streetfood: 'AFRICAN STREETFOOD',
     boissons: 'BOISSONS',
 };
 
@@ -30,46 +33,24 @@ type MenuPageClientProps = {
 
 export function MenuPageClient({ sections }: MenuPageClientProps) {
     const [activeTab, setActiveTab] = useState('all');
+    const isSignatureTab = activeTab === 'signature';
 
     useEffect(() => {
-        requestAnimationFrame(() => {
-            const nodes = document.querySelectorAll<HTMLElement>('.reveal:not(.is-visible), [data-reveal]:not(.is-visible)');
-            if (nodes.length === 0) return;
-
-            // Immediately reveal elements already in view
-            nodes.forEach((node) => {
-                const rect = node.getBoundingClientRect();
-                if (rect.top < window.innerHeight && rect.bottom > 0) {
-                    node.classList.add('is-visible');
-                }
+        // When switching tabs, immediately reveal all menu items so they
+        // don't stay hidden while the smooth scroll is still in progress.
+        const container = document.querySelector('.menu-menuContainer');
+        if (container) {
+            container.querySelectorAll<HTMLElement>('.reveal:not(.is-visible), [data-reveal]:not(.is-visible)').forEach((node) => {
+                node.classList.add('is-visible');
             });
-
-            // Observe elements below the fold so they animate on scroll
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            (entry.target as HTMLElement).classList.add('is-visible');
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                },
-                { rootMargin: '0px 0px -2% 0px', threshold: 0.05 }
-            );
-
-            nodes.forEach((node) => {
-                if (!node.classList.contains('is-visible')) {
-                    observer.observe(node);
-                }
-            });
-
-            return () => observer.disconnect();
-        });
+        }
     }, [activeTab]);
 
     const visibleSections = activeTab === 'all'
         ? sections
-        : sections.filter((s) => s.title === tabMap[activeTab]);
+        : isSignatureTab
+            ? []
+            : sections.filter((s) => s.title === tabMap[activeTab]);
 
     return (
         <div className="menu-page">
@@ -115,12 +96,15 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
             </div>
 
             <div className="container menu-menuContainer">
-                {visibleSections.map((section) => (
-                    <MenuSection key={section.title} section={section} />
-                ))}
+                {isSignatureTab ? (
+                    <SignatureSection />
+                ) : (
+                    visibleSections.map((section) => (
+                        <MenuSection key={section.title} section={section} />
+                    ))
+                )}
             </div>
 
-            <SignatureSection />
             <section className="menu-traiteurSection reveal" data-reveal="up">
                 <div className="container">
                     <div className="menu-traiteurBox">

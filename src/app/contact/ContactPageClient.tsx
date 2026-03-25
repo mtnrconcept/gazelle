@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from 'react';
+import { PingPongVideo } from '@/components/PingPongVideo';
 
 export function ContactPageClient() {
     const [form, setForm] = useState({
@@ -51,6 +52,10 @@ export function ContactPageClient() {
     return (
         <div className="contact-page">
             <div className="contact-hero">
+                <div className="contact-heroVideoBg">
+                    <PingPongVideo src="/images/Caf%C3%A9interior.mp4" />
+                    <div className="contact-heroOverlay" />
+                </div>
                 <div className="contact-heroContent">
                     <p className="contact-heroEyebrow">Réservation en ligne</p>
                     <h1 className="heroPageTitle contact-heroTitle" data-text="Reserver une table a La Gazelle d'Or">Reserver une table a La Gazelle d&apos;Or</h1>

@@ -109,7 +109,7 @@ export default function HistoirePage() {
                             <div className="history-photoFrame photo-frame-reversed">
                                 <div className="history-injeraImageWrapper">
                                     <img
-                                        src="https://lagazelledorgeneva.com/assets/SPECIALITES%20DE%20LA%20MAISON-CNPs4Yvd.png"
+                                        src="/images/injera.png"
                                         alt="Injera et spécialités de la maison"
                                         loading="lazy"
                                     />
@@ -120,7 +120,7 @@ export default function HistoirePage() {
                         </div>
                         <div className="history-injeraText">
                             <span className="history-eyebrow">Le cœur de notre cuisine</span>
-                            <h2 className="gold-sectionTitle history-sectionTitle" data-text="L'Injera — notre galette signature">L&apos;Injera — notre galette signature</h2>
+                            <h2 className="gold-sectionTitle history-sectionTitle" data-text="L'Injera,notre galette signature">L&apos;Injera — notre galette signature</h2>
                             
                             <div className="history-storyBody">
                                 <p>

@@ -42,7 +42,7 @@ export function SignatureSection() {
         <section className="signature-section panel decoratedSection reveal" data-reveal="right">
             <div className="container signature-container">
                 <div className="signature-header">
-                    <p className="signature-eyebrow">Escale au cœur de l'Éthiopie</p>
+                    <p className="signature-eyebrow">Escale au cœur de l'Afrique</p>
                     <div className="signature-titleRow">
                         <h2 className="gold-sectionTitleMedium signature-title" data-text="Nos plats signatures">Nos plats signatures</h2>
                     </div>

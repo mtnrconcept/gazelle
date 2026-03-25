@@ -11,13 +11,13 @@
   --font-section-display: "African", serif;
   --font-body: "Cormorant Garamond", serif;
 
-  --color-primary: #b86a2c;
+  --color-primary: #7a2808;
   --color-secondary: #d9a24f;
   --color-background: #f4e5c8;
   --color-surface: #f9f0db;
-  --color-text: #3a2819;
-  --color-text-muted: #6a4a2f;
-  --color-accent: #8c4a1e;
+  --color-text: #31150b;
+  --color-text-muted: #4a2415;
+  --color-accent: #5c1c04;
   --color-ink: #1e120b;
 
   --spacing-xs: 0.5rem;
@@ -100,6 +100,7 @@ h2, h3, h4, h5, h6 {
   margin-bottom: var(--spacing-sm);
   text-transform: uppercase;
   letter-spacing: 2px;
+  word-spacing: -0.15em;
 }
 
 a {
@@ -213,6 +214,26 @@ body.snap-enabled .panel {
 @keyframes fadeInScale {
   from { opacity: 0; transform: scale(0.92); }
   to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes heroTextReveal {
+  0%   { opacity: 0; transform: translateY(30px); filter: blur(6px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+@keyframes heroTextFadeOut {
+  0%   { opacity: 1; transform: translateY(0); filter: blur(0); }
+  100% { opacity: 0; transform: translateY(-20px); filter: blur(4px); }
+}
+
+@keyframes heroVideoUnblur {
+  0%   { filter: blur(18px) brightness(0.4); }
+  100% { filter: blur(0) brightness(1); }
+}
+
+@keyframes heroOverlayFade {
+  0%   { opacity: 1; }
+  100% { opacity: 0.3; }
 }
 
 @keyframes shimmer {
@@ -434,7 +455,7 @@ body.snap-enabled .panel {
     font-family: var(--font-display);
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    font-size: 0.94rem;
+    font-size: 1rem;
     font-weight: 600;
     color: #f2d28a;
     position: relative;
@@ -509,7 +530,7 @@ body.snap-enabled .panel {
 }
 
 .header-brandSubtitle {
-    font-size: 1rem;
+    font-size: 1.05rem;
     text-transform: uppercase;
     letter-spacing: 4px;
     color: rgba(245, 230, 200, 0.8);
@@ -523,7 +544,7 @@ body.snap-enabled .panel {
     border: 1px solid #c8882a;
     color: #f5e2b0;
     font-family: var(--font-display);
-    font-size: 0.90rem;
+    font-size: 0.98rem;
     letter-spacing: 1px;
     text-transform: uppercase;
     transition:
@@ -611,10 +632,10 @@ body.snap-enabled .panel {
     display: block;
     padding: 0.4rem 1rem 0.25rem;
     font-family: var(--font-display);
-    font-size: 0.78rem;
+    font-size: 0.88rem;
     text-transform: uppercase;
     letter-spacing: 2.5px;
-    color: rgba(217, 162, 79, 0.55);
+    color: rgba(242, 210, 138, 0.78);
 }
 
 .header-dropdownDivider {
@@ -663,10 +684,10 @@ body.snap-enabled .panel {
 .header-mobileSectionLabel {
     display: block;
     font-family: var(--font-display);
-    font-size: 0.83rem;
+    font-size: 0.92rem;
     text-transform: uppercase;
     letter-spacing: 2.5px;
-    color: rgba(217, 162, 79, 0.5);
+    color: rgba(242, 210, 138, 0.72);
     margin-top: 0.5rem;
 }
 
@@ -691,7 +712,7 @@ body.snap-enabled .panel {
     border-radius: 6px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    font-size: 0.92rem;
+    font-size: 0.98rem;
     background: rgba(20, 12, 7, 0.6);
     transition: background 0.3s, border-color 0.3s;
 }
@@ -1070,10 +1091,10 @@ body.snap-enabled .panel {
 .history-heroEyebrow,
 .contact-heroEyebrow {
     font-family: var(--font-display);
-    font-size: clamp(0.75rem, 2vw, 1rem);
+    font-size: clamp(0.9rem, 2vw, 1.08rem);
     letter-spacing: 10px;
     text-transform: uppercase;
-    color: rgba(230, 200, 140, 0.85);
+    color: rgba(248, 226, 176, 0.98);
     text-shadow: 0 1px 4px rgba(0,0,0,0.8);
     text-align: center;
 }
@@ -1097,8 +1118,8 @@ body.snap-enabled .panel {
 .history-heroTagline,
 .contact-heroTagline {
     font-family: var(--font-display);
-    font-size: clamp(0.85rem, 1.8vw, 1.05rem);
-    color: rgba(255, 245, 218, 0.92);
+    font-size: clamp(0.98rem, 1.9vw, 1.16rem);
+    color: rgba(255, 245, 218, 0.98);
     text-transform: uppercase;
     letter-spacing: 5px;
     text-shadow: 0 1px 6px rgba(0,0,0,0.9);
@@ -1306,10 +1327,10 @@ body.snap-enabled .panel {
 }
 
 .about-kicker {
-    font-size: 0.97rem;
+    font-size: 1.04rem;
     text-transform: uppercase;
     letter-spacing: 3px;
-    color: var(--color-secondary);
+    color: #b86a2c;
     margin-bottom: 1rem;
     display: block;
     text-align: center;
@@ -1337,7 +1358,7 @@ body.snap-enabled .panel {
 }
 
 .about-text {
-    font-size: 1.1rem;
+    font-size: 1.16rem;
     color: var(--color-text-muted);
     margin-bottom: var(--spacing-sm);
 }
@@ -1365,7 +1386,7 @@ body.snap-enabled .panel {
 }
 
 .about-statLabel {
-    font-size: 1.00rem;
+    font-size: 1.08rem;
     letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--color-text-muted);
@@ -1374,7 +1395,8 @@ body.snap-enabled .panel {
 .about-link {
     display: inline-block;
     margin-top: var(--spacing-sm);
-    color: var(--color-secondary);
+    color: var(--color-accent);
+    font-size: 1.04rem;
     font-weight: 600;
     position: relative;
     transition: color 0.3s;
@@ -1414,6 +1436,7 @@ body.snap-enabled .panel {
     transition:
         transform 0.6s var(--ease-out-expo),
         box-shadow 0.6s var(--ease-out-expo);
+    max-height: 680px;
 }
 
 .about-imageWrapper:hover {
@@ -1454,10 +1477,16 @@ body.snap-enabled .panel {
 
 .about-highlightTitle {
     font-family: var(--font-section-display);
-    font-size: 1.2rem;
+    font-size: 1.32rem;
     color: var(--color-primary);
     display: block;
     margin-bottom: 0.75rem;
+}
+
+.about-highlightCard p {
+    font-size: 1.08rem;
+    line-height: 1.7;
+    color: var(--color-text);
 }
 
 @media (min-width: 900px) {
@@ -1541,8 +1570,8 @@ body.snap-enabled .panel {
 
 .experience-cardTitle {
     font-family: var(--font-section-display);
-    font-size: clamp(1rem, 2.2vw, 1.2rem);
-    color: #e8c472;
+    font-size: clamp(1.1rem, 2.2vw, 1.3rem);
+    color: #f1d38d;
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 400;
@@ -1555,9 +1584,9 @@ body.snap-enabled .panel {
 }
 
 .experience-diamond {
-    color: #c8882a;
-    font-size: 0.85rem;
-    opacity: 0.8;
+    color: #e0ad4d;
+    font-size: 0.95rem;
+    opacity: 0.95;
     transition: transform 0.5s var(--ease-spring);
 }
 
@@ -1609,7 +1638,7 @@ body.snap-enabled .panel {
     border: 1px solid #b07030;
     color: #f0d898;
     font-family: var(--font-display);
-    font-size: 0.92rem;
+    font-size: 1rem;
     letter-spacing: 3px;
     text-transform: uppercase;
     box-shadow: 0 2px 8px rgba(0,0,0,0.5);
@@ -1935,7 +1964,7 @@ body.snap-enabled .panel {
 }
 
 .footer-tagline {
-    opacity: 0.82;
+    opacity: 0.95;
     max-width: 280px;
     font-size: 1.07rem;
     line-height: 1.65;
@@ -1950,7 +1979,7 @@ body.snap-enabled .panel {
 
 .footer-socialLink {
     font-family: var(--font-display);
-    font-size: 0.98rem;
+    font-size: 1.02rem;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--color-secondary);
@@ -2007,7 +2036,7 @@ body.snap-enabled .panel {
 
 .footer-navLink {
     font-size: 1.07rem;
-    color: rgba(240, 223, 192, 0.82);
+    color: rgba(245, 232, 208, 0.95);
     transition: color 0.2s, padding-left 0.3s var(--ease-spring);
 }
 
@@ -2022,7 +2051,7 @@ body.snap-enabled .panel {
 
 .footer-contactLink {
     font-size: 1.07rem;
-    color: rgba(240, 223, 192, 0.82);
+    color: rgba(245, 232, 208, 0.95);
     line-height: 1.65;
     transition: color 0.2s;
 }
@@ -2042,15 +2071,15 @@ body.snap-enabled .panel {
     flex-direction: column;
     gap: 0.1rem;
     font-size: 1.07rem;
-    color: rgba(240, 223, 192, 0.82);
+    color: rgba(245, 232, 208, 0.95);
 }
 
 .footer-dayLabel {
     font-family: var(--font-display);
-    font-size: 0.98rem;
+    font-size: 1.02rem;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: rgba(217, 162, 79, 0.75);
+    color: rgba(232, 196, 114, 0.92);
 }
 
 .footer-closed {
@@ -2219,7 +2248,7 @@ body.snap-enabled .panel {
 }
 
 .gold-sectionTitleSmall {
-    font-size: clamp(1.25rem, 2.2vw, 1.68rem);
+    font-size: clamp(1.34rem, 2.3vw, 1.8rem);
     letter-spacing: 0.8px;
     margin-bottom: 0.85rem;
 }
@@ -2475,6 +2504,8 @@ body.snap-enabled .panel {
     font-style: italic;
     opacity: 0.9;
     color: var(--color-text-muted);
+    font-size: 1.04rem;
+    line-height: 1.7;
 }
 
 .menu-grid {
@@ -2532,6 +2563,46 @@ body.snap-enabled .panel {
     background: #f7eedc;
 }
 
+.menu-imageWrapper--focusPaniniRouge .menu-image {
+    transform: scale(2.35);
+    object-position: 14% 20%;
+}
+
+.menu-imageWrapper--focusPaniniPoulet .menu-image {
+    transform: scale(2.35);
+    object-position: 36% 41%;
+}
+
+.menu-imageWrapper--focusPaniniPesto .menu-image {
+    transform: scale(2.35);
+    object-position: 56% 56%;
+}
+
+.menu-imageWrapper--focusEmpanadaBoeuf .menu-image {
+    transform: scale(2.45);
+    object-position: 12% 83%;
+}
+
+.menu-imageWrapper--focusEmpanadaThon .menu-image {
+    transform: scale(2.45);
+    object-position: 39% 83%;
+}
+
+.menu-imageWrapper--focusEmpanadaJambonFromage .menu-image {
+    transform: scale(2.45);
+    object-position: 74% 67%;
+}
+
+.menu-imageWrapper--focusEmpanadaEpinards .menu-image {
+    transform: scale(2.45);
+    object-position: 67% 88%;
+}
+
+.menu-imageWrapper--focusFrites .menu-image {
+    transform: scale(2.4);
+    object-position: 82% 22%;
+}
+
 .menu-image {
     width: 100%;
     height: 100%;
@@ -2541,6 +2612,38 @@ body.snap-enabled .panel {
 
 .menu-card:hover .menu-image {
     transform: scale(1.1);
+}
+
+.menu-card:hover .menu-imageWrapper--focusPaniniRouge .menu-image {
+    transform: scale(2.48);
+}
+
+.menu-card:hover .menu-imageWrapper--focusPaniniPoulet .menu-image {
+    transform: scale(2.48);
+}
+
+.menu-card:hover .menu-imageWrapper--focusPaniniPesto .menu-image {
+    transform: scale(2.48);
+}
+
+.menu-card:hover .menu-imageWrapper--focusEmpanadaBoeuf .menu-image {
+    transform: scale(2.58);
+}
+
+.menu-card:hover .menu-imageWrapper--focusEmpanadaThon .menu-image {
+    transform: scale(2.58);
+}
+
+.menu-card:hover .menu-imageWrapper--focusEmpanadaJambonFromage .menu-image {
+    transform: scale(2.58);
+}
+
+.menu-card:hover .menu-imageWrapper--focusEmpanadaEpinards .menu-image {
+    transform: scale(2.58);
+}
+
+.menu-card:hover .menu-imageWrapper--focusFrites .menu-image {
+    transform: scale(2.52);
 }
 
 .menu-cardContent {
@@ -2561,8 +2664,10 @@ body.snap-enabled .panel {
 }
 
 .menu-itemName {
-    font-family: var(--font-display);
-    font-size: 1.1rem;
+    font-family: var(--font-body);
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
     color: var(--color-ink);
     transition: color 0.3s;
 }
@@ -2572,10 +2677,13 @@ body.snap-enabled .panel {
 }
 
 .menu-price {
-    font-size: 1rem;
+    font-family: var(--font-body);
+    font-size: 1.28rem;
     font-weight: 700;
     color: var(--color-accent);
     white-space: normal;
+    line-height: 1.25;
+    letter-spacing: 0.01em;
     transition: color 0.3s;
 }
 
@@ -2584,23 +2692,30 @@ body.snap-enabled .panel {
 }
 
 .menu-description {
-    font-size: 1rem;
-    color: var(--color-text-muted);
-    line-height: 1.5;
+    font-size: 1.08rem;
+    color: #5a381f;
+    line-height: 1.6;
 }
 
 @media (max-width: 480px) {
     .menu-card {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 1.2rem;
-        gap: 1rem;
+        flex-direction: row;
+        align-items: stretch;
+        padding: 1rem;
+        gap: 0.9rem;
     }
 
     .menu-imageWrapper {
-        width: 100%;
-        height: 160px;
-        border-radius: var(--border-radius) var(--border-radius) 0 0;
+        width: 42%;
+        min-width: 132px;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        border-radius: calc(var(--border-radius) - 4px);
+    }
+
+    .menu-image {
+        object-fit: cover;
+        object-position: center;
     }
 
     .menu-header {
@@ -2609,8 +2724,12 @@ body.snap-enabled .panel {
         gap: 0.25rem;
     }
 
+    .menu-cardContent {
+        min-width: 0;
+    }
+
     .menu-price {
-        font-size: 1.02rem;
+        font-size: 1.14rem;
     }
 }
 
@@ -2836,6 +2955,7 @@ body.snap-enabled .panel {
     text-transform: uppercase;
     color: var(--color-accent);
     margin-bottom: 0.8rem;
+    font-size: 1.02rem;
 }
 
 .reserve-title {
@@ -2947,10 +3067,10 @@ body.snap-enabled .panel {
 }
 
 .review-kicker {
-    font-size: 0.97rem;
+    font-size: 1.04rem;
     text-transform: uppercase;
     letter-spacing: 3px;
-    color: var(--color-secondary);
+    color: #b86a2c;
     margin-bottom: 0.5rem;
     display: inline-block;
 }
@@ -2960,8 +3080,10 @@ body.snap-enabled .panel {
 }
 
 .review-subtitle {
-    color: var(--color-text-muted);
+    color: var(--color-text);
     max-width: 600px;
+    font-size: 1.08rem;
+    line-height: 1.75;
 }
 
 .review-summaryCard {
@@ -2997,9 +3119,9 @@ body.snap-enabled .panel {
     display: flex;
     flex-direction: column;
     gap: 0.15rem;
-    color: var(--color-text-muted);
+    color: var(--color-text);
     align-items: center;
-    font-size: 1.02rem;
+    font-size: 1.08rem;
 }
 
 .review-summaryTags {
@@ -3013,8 +3135,8 @@ body.snap-enabled .panel {
     padding: 0.25rem 0.7rem;
     border-radius: 999px;
     background: rgba(218, 165, 32, 0.15);
-    color: var(--color-primary);
-    font-size: 0.94rem;
+    color: #8c4a1e;
+    font-size: 1rem;
     font-weight: 600;
     transition: background 0.3s, transform 0.3s var(--ease-spring);
 }
@@ -3043,7 +3165,7 @@ body.snap-enabled .panel {
         box-shadow 0.5s var(--ease-out-expo),
         border-color 0.3s;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .review-card::after {
@@ -3053,6 +3175,7 @@ body.snap-enabled .panel {
     left: 0;
     right: 0;
     height: 3px;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
     background: linear-gradient(90deg, var(--color-primary), var(--color-secondary), var(--color-primary));
     transform: scaleX(0);
     transform-origin: left;
@@ -3098,31 +3221,34 @@ body.snap-enabled .panel {
 .review-author {
     font-weight: 600;
     color: var(--color-text);
+    font-size: 1.08rem;
 }
 
 .review-stars {
     display: flex;
     gap: 2px;
+    font-size: 1.05rem;
 }
 
 .review-source {
     margin-left: auto;
-    font-size: 0.94rem;
+    font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    color: var(--color-text-muted);
+    color: #6a3d1c;
 }
 
 .review-text {
     font-style: italic;
-    color: var(--color-text-muted);
-    line-height: 1.6;
+    color: #5a381f;
+    line-height: 1.72;
     margin-bottom: 1rem;
+    font-size: 1.08rem;
 }
 
 .review-time {
-    font-size: 0.92rem;
-    color: #999;
+    font-size: 0.99rem;
+    color: #7a5a44;
 }
 
 @media (min-width: 900px) {
@@ -3201,8 +3327,8 @@ body.snap-enabled .panel {
     font-family: var(--font-display);
     letter-spacing: 4px;
     text-transform: uppercase;
-    font-size: 0.97rem;
-    color: #7c3a10;
+    font-size: 1.04rem;
+    color: #6e2f0c;
 }
 
 .signature-grid {
@@ -3267,7 +3393,7 @@ body.snap-enabled .panel {
 .signature-cardInfo h3 {
     font-family: var(--font-display);
     color: #2a1004;
-    font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+    font-size: clamp(1.02rem, 1.9vw, 1.2rem);
     letter-spacing: 1px;
     margin: 0;
     transition: color 0.3s;
@@ -3278,15 +3404,16 @@ body.snap-enabled .panel {
 }
 
 .signature-cardInfo p {
-    color: #5a3010;
-    font-size: 1.00rem;
+    color: #4c2509;
+    font-size: 1.08rem;
     font-style: italic;
+    line-height: 1.7;
 }
 
 .signature-price {
     font-family: var(--font-display);
-    font-size: 0.92rem;
-    color: #7a3010;
+    font-size: 1.02rem;
+    color: #6b290c;
     letter-spacing: 1px;
     transition: color 0.3s;
 }
@@ -3308,7 +3435,7 @@ body.snap-enabled .panel {
     border: 2px solid #c8882a;
     color: #f5e2b0;
     font-family: var(--font-display);
-    font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+    font-size: clamp(0.92rem, 1.6vw, 1rem);
     letter-spacing: 5px;
     text-transform: uppercase;
     box-shadow:
@@ -3452,18 +3579,26 @@ body.snap-enabled .panel {
     margin-top: calc(-1 * var(--header-h));
     padding-top: var(--header-h);
     overflow: hidden;
-    background-image:
-        radial-gradient(ellipse at center, transparent 0%, rgba(18, 8, 2, 0.3) 70%),
-        linear-gradient(180deg, rgba(52, 28, 12, 0.55), rgba(52, 28, 12, 0.72)),
-        url('/images/7.webp');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     margin-bottom: 4rem;
+}
+
+.contact-heroVideoBg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.contact-heroOverlay {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at center, transparent 0%, rgba(18, 8, 2, 0.3) 70%),
+        linear-gradient(180deg, rgba(52, 28, 12, 0.55), rgba(52, 28, 12, 0.72));
+    z-index: 1;
 }
 
 .contact-heroContent {
@@ -3949,11 +4084,6 @@ body.snap-enabled .panel {
     }
 }
 
-@media (max-width: 900px) {
-    .contact-hero {
-        background-attachment: scroll;
-    }
-}
 
 @media (min-width: 768px) {
     .contact-row {
@@ -4037,10 +4167,10 @@ body.snap-enabled .panel {
 .events-eyebrow {
     display: block;
     font-family: var(--font-display);
-    font-size: 0.97rem;
+    font-size: 1.04rem;
     letter-spacing: 4px;
     text-transform: uppercase;
-    color: var(--color-accent);
+    color: #7a3d17;
     margin-bottom: 0.5rem;
 }
 
@@ -4152,9 +4282,9 @@ body.snap-enabled .panel {
 }
 
 .events-ctaText {
-    font-size: 1.05rem;
+    font-size: 1.14rem;
     line-height: 1.8;
-    color: rgba(245, 235, 210, 0.85);
+    color: rgba(245, 235, 210, 0.95);
     max-width: 560px;
 }
 
@@ -4280,6 +4410,17 @@ body.snap-enabled .panel {
     object-position: center;
     pointer-events: none;
     z-index: 0;
+    filter: blur(18px) brightness(0.4);
+    animation: heroVideoUnblur 4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 4.8s forwards;
+}
+
+.history-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    animation: heroOverlayFade 4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 4.8s forwards;
 }
 
 .history-heroContent {
@@ -4290,7 +4431,22 @@ body.snap-enabled .panel {
     align-items: center;
     gap: 0.8rem;
     padding: 0 1.5rem;
-    animation: fadeInUp 1s var(--ease-out-expo) 0.2s backwards;
+    animation: heroTextFadeOut 1.2s cubic-bezier(0.55, 0, 1, 0.45) 4s forwards;
+}
+
+.history-heroContent .history-heroEyebrow {
+    opacity: 0;
+    animation: heroTextReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+}
+
+.history-heroContent .history-heroTitle {
+    opacity: 0;
+    animation: heroTextReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+}
+
+.history-heroContent .history-heroTagline {
+    opacity: 0;
+    animation: heroTextReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 1.5s forwards;
 }
 
 .history-heroEyebrow {
@@ -4803,11 +4959,15 @@ body.snap-enabled .panel {
     gap: 0;
     overflow-x: auto;
     scrollbar-width: none;
+    width: min(100%, 1500px);
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 1rem;
 }
 
 @media (min-width: 900px) {
     .menu-tabsInner {
-        justify-content: center;
+        justify-content: space-between;
     }
 }
 
@@ -4817,12 +4977,12 @@ body.snap-enabled .panel {
 
 .menu-tab {
     flex-shrink: 0;
-    padding: 1rem 1.6rem;
+    padding: 1rem 1.3rem;
     font-family: var(--font-display);
-    font-size: 0.97rem;
+    font-size: 1.04rem;
     letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: rgba(245, 226, 183, 0.6);
+    color: rgba(245, 226, 183, 0.82);
     background: none;
     border: none;
     border-bottom: 3px solid transparent;
@@ -4832,6 +4992,7 @@ body.snap-enabled .panel {
         border-color 0.3s var(--ease-smooth),
         background 0.3s var(--ease-smooth);
     position: relative;
+    white-space: nowrap;
 }
 
 .menu-tab:hover {
@@ -4942,12 +5103,12 @@ body.snap-enabled .panel {
 
 .events-eyebrow {
     font-family: var(--font-display);
-    font-size: 0.85rem;
+    font-size: 0.96rem;
     letter-spacing: 4px;
     text-transform: uppercase;
-    color: var(--color-accent);
+    color: #7a3d17;
     margin-bottom: 2rem;
-    opacity: 0.8;
+    opacity: 0.95;
 }
 
 .events-eventTitle {
@@ -4995,8 +5156,8 @@ body.snap-enabled .panel {
 }
 
 .events-ctaText {
-    font-size: 1.2rem;
-    color: rgba(245, 230, 200, 0.8);
+    font-size: 1.28rem;
+    color: rgba(245, 230, 200, 0.94);
     margin-bottom: 3rem;
     line-height: 1.8;
 }
