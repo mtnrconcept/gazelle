@@ -19,14 +19,20 @@ const ZOOM_DEFAULT = 1.25;
 const HANDLE_CX = 0.15;
 const HANDLE_CY = 0.90;
 export function PresseSection() {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+    const zoomMultiplier = isMobile ? 2 : 1;
+    const effectiveZoomMin = ZOOM_MIN * zoomMultiplier;
+    const effectiveZoomMax = ZOOM_MAX * zoomMultiplier;
+    const effectiveZoomDefault = ZOOM_DEFAULT * zoomMultiplier;
+
     const [loupeActive, setLoupeActive] = useState(false);
     const [pos, setPos] = useState({ x: 0, y: 0 });
-    const [zoom, setZoom] = useState(ZOOM_DEFAULT);
+    const [zoom, setZoom] = useState(effectiveZoomDefault);
     const [frameSize, setFrameSize] = useState({ w: 0, h: 0 });
     const [hintVisible, setHintVisible] = useState(true);
     const [draggingWheel, setDraggingWheel] = useState(false);
     const [dragStartY, setDragStartY] = useState(0);
-    const [dragStartZoom, setDragStartZoom] = useState(ZOOM_DEFAULT);
+    const [dragStartZoom, setDragStartZoom] = useState(effectiveZoomDefault);
     const [isPanning, setIsPanning] = useState(false);
     const lastClientY = useRef(0);
     const frameRef = useRef<HTMLDivElement>(null);
@@ -43,7 +49,7 @@ export function PresseSection() {
     const handleOffsetY = (LENS_CY - HANDLE_CY) * loupeH;
 
     // Pourcentage de zoom pour l'affichage
-    const zoomPct = Math.round(((zoom - ZOOM_MIN) / (ZOOM_MAX - ZOOM_MIN)) * 100);
+    const zoomPct = Math.round(((zoom - effectiveZoomMin) / (effectiveZoomMax - effectiveZoomMin)) * 100);
 
     // Sync frameSize from ref via effect
     useEffect(() => {
@@ -94,7 +100,7 @@ export function PresseSection() {
         if (isPanning) return;
         if (loupeActive) {
             setLoupeActive(false);
-            setZoom(ZOOM_DEFAULT);
+            setZoom(effectiveZoomDefault);
             return;
         }
         if (!frameRef.current) return;
@@ -102,7 +108,7 @@ export function PresseSection() {
         setLoupeActive(true);
         setHintVisible(false);
         setPos({ x: e.clientX - r.left, y: e.clientY - r.top });
-    }, [loupeActive, isPanning]);
+    }, [loupeActive, isPanning, effectiveZoomDefault]);
 
     // ── Desktop: molette de la souris pour zoomer ──
     useEffect(() => {
@@ -110,11 +116,11 @@ export function PresseSection() {
         const el = frameRef.current;
         const onWheel = (e: WheelEvent) => {
             e.preventDefault();
-            setZoom(z => Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, z - e.deltaY * 0.003)));
+            setZoom(z => Math.min(effectiveZoomMax, Math.max(effectiveZoomMin, z - e.deltaY * 0.003)));
         };
         el.addEventListener('wheel', onWheel, { passive: false });
         return () => el.removeEventListener('wheel', onWheel);
-    }, [loupeActive]);
+    }, [loupeActive, effectiveZoomMin, effectiveZoomMax]);
 
     // ── Mobile: touch move pour déplacer la loupe (par le manche) ──
     useEffect(() => {
@@ -156,11 +162,11 @@ export function PresseSection() {
     useEffect(() => {
         if (!loupeActive) return;
         const onKey = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') { setLoupeActive(false); setZoom(ZOOM_DEFAULT); }
+            if (e.key === 'Escape') { setLoupeActive(false); setZoom(effectiveZoomDefault); }
         };
         window.addEventListener('keydown', onKey);
         return () => window.removeEventListener('keydown', onKey);
-    }, [loupeActive]);
+    }, [loupeActive, effectiveZoomDefault]);
 
     // ── Drag de la molette graphique (mobile + desktop) ──
     const onWheelGripDown = useCallback((e: React.MouseEvent | React.TouchEvent) => {
@@ -177,7 +183,7 @@ export function PresseSection() {
         const onMoveGlobal = (e: MouseEvent | TouchEvent) => {
             const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
             const delta = dragStartY - clientY; // monter = zoom+
-            const newZoom = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, dragStartZoom + delta * 0.01));
+            const newZoom = Math.min(effectiveZoomMax, Math.max(effectiveZoomMin, dragStartZoom + delta * 0.01));
             setZoom(newZoom);
         };
         const onUp = () => setDraggingWheel(false);
@@ -191,7 +197,7 @@ export function PresseSection() {
             window.removeEventListener('touchmove', onMoveGlobal);
             window.removeEventListener('touchend', onUp);
         };
-    }, [draggingWheel, dragStartY, dragStartZoom]);
+    }, [draggingWheel, dragStartY, dragStartZoom, effectiveZoomMin, effectiveZoomMax]);
 
     // Calcul du background zoom
     const bgW = frameSize.w * zoom;
