@@ -1,22 +1,67 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const gallery = Array.from({ length: 10 }, (_, index) => ({
     src: `/images/galerie/retouche/${index + 1}.png`,
     alt: `Photo ${index + 1}`,
 }));
 
+const infiniteGallery = Array.from({ length: 3 }, (_, copyIndex) =>
+    gallery.map((item, imageIndex) => ({
+        ...item,
+        originalIndex: imageIndex,
+        key: `${copyIndex}-${imageIndex}`,
+    }))
+).flat();
+
 export function GallerySection() {
     const carouselRef = useRef<HTMLDivElement | null>(null);
+    const recenterTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const isRecenteringRef = useRef(false);
+
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-    const selectedImage = useMemo(() => {
-        if (selectedIndex === null) return null;
-        return gallery[selectedIndex];
-    }, [selectedIndex]);
-
+    const selectedImage = selectedIndex !== null ? gallery[selectedIndex] : null;
     const currentImageNumber = selectedIndex !== null ? selectedIndex + 1 : 0;
+
+    useEffect(() => {
+        const node = carouselRef.current;
+        if (!node) return;
+
+        const setInitialPosition = () => {
+            const singleSetWidth = node.scrollWidth / 3;
+            if (singleSetWidth <= 0) return;
+
+            const previousBehavior = node.style.scrollBehavior;
+            node.style.scrollBehavior = "auto";
+            node.scrollLeft = singleSetWidth;
+            requestAnimationFrame(() => {
+                node.style.scrollBehavior = previousBehavior || "smooth";
+            });
+        };
+
+        requestAnimationFrame(setInitialPosition);
+
+        const handleResize = () => {
+            const singleSetWidth = node.scrollWidth / 3;
+            if (singleSetWidth <= 0) return;
+
+            const relativeOffset = node.scrollLeft % singleSetWidth;
+            const previousBehavior = node.style.scrollBehavior;
+            node.style.scrollBehavior = "auto";
+            node.scrollLeft = singleSetWidth + relativeOffset;
+            requestAnimationFrame(() => {
+                node.style.scrollBehavior = previousBehavior || "smooth";
+            });
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
 
     useEffect(() => {
         if (selectedIndex === null) {
@@ -55,6 +100,55 @@ export function GallerySection() {
             window.removeEventListener("keydown", handleKeyDown);
         };
     }, [selectedIndex]);
+
+    useEffect(() => {
+        return () => {
+            if (recenterTimeoutRef.current) {
+                clearTimeout(recenterTimeoutRef.current);
+            }
+        };
+    }, []);
+
+    const recenterCarouselIfNeeded = () => {
+        const node = carouselRef.current;
+        if (!node || isRecenteringRef.current) return;
+
+        const singleSetWidth = node.scrollWidth / 3;
+        if (singleSetWidth <= 0) return;
+
+        let nextScrollLeft: number | null = null;
+
+        if (node.scrollLeft < singleSetWidth * 0.5) {
+            nextScrollLeft = node.scrollLeft + singleSetWidth;
+        } else if (node.scrollLeft > singleSetWidth * 1.5) {
+            nextScrollLeft = node.scrollLeft - singleSetWidth;
+        }
+
+        if (nextScrollLeft === null) return;
+
+        isRecenteringRef.current = true;
+
+        const previousBehavior = node.style.scrollBehavior;
+        node.style.scrollBehavior = "auto";
+        node.scrollLeft = nextScrollLeft;
+
+        requestAnimationFrame(() => {
+            node.style.scrollBehavior = previousBehavior || "smooth";
+            isRecenteringRef.current = false;
+        });
+    };
+
+    const handleCarouselScroll = () => {
+        if (isRecenteringRef.current) return;
+
+        if (recenterTimeoutRef.current) {
+            clearTimeout(recenterTimeoutRef.current);
+        }
+
+        recenterTimeoutRef.current = setTimeout(() => {
+            recenterCarouselIfNeeded();
+        }, 140);
+    };
 
     const scrollCarousel = (direction: 1 | -1) => {
         const node = carouselRef.current;
@@ -120,6 +214,7 @@ export function GallerySection() {
                         <div
                             ref={carouselRef}
                             className="gallery-carousel"
+                            onScroll={handleCarouselScroll}
                             style={{
                                 display: "flex",
                                 gap: "24px",
@@ -128,9 +223,9 @@ export function GallerySection() {
                                 padding: "8px 4px",
                             }}
                         >
-                            {gallery.map((item, idx) => (
+                            {infiniteGallery.map((item, idx) => (
                                 <div
-                                    key={`${item.src}-${idx}`}
+                                    key={`${item.key}-${idx}`}
                                     className="gallery-slide"
                                     style={{
                                         flex: "0 0 min(320px, 80vw)",
@@ -143,7 +238,7 @@ export function GallerySection() {
                                 >
                                     <button
                                         type="button"
-                                        onClick={() => setSelectedIndex(idx)}
+                                        onClick={() => setSelectedIndex(item.originalIndex)}
                                         aria-label={`Agrandir ${item.alt}`}
                                         style={{
                                             display: "block",
