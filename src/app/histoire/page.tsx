@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { GallerySection } from '@/components/GallerySection';
 import { ReserveSection } from '@/components/ReserveSection';
+import { PresseSection } from '@/components/PresseSection';
 import { Flame, Coffee, HeartHandshake } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -170,6 +171,9 @@ export default function HistoirePage() {
                         Les sons doux de musiques érythréennes et éthiopiennes accompagnent votre repas, complétant une immersion culturelle totale. Chaque détail a été pensé pour vous faire voyager, l'espace d'un repas, jusqu'à la Corne de l'Afrique.
                     </p>
                 </section>
+
+                {/* Presse Section */}
+                <PresseSection />
             </div>
 
             <GallerySection />

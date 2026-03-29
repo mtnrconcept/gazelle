@@ -4827,6 +4827,216 @@ body.snap-enabled .panel {
     color: var(--color-text-muted);
 }
 
+/* Presse Section */
+.history-presseSection {
+    margin-bottom: 5rem;
+}
+
+.history-presseHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.history-presseFrame {
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    overflow: hidden;
+}
+
+.history-presseImage {
+    display: block;
+    width: 100%;
+    height: auto;
+    transform-origin: center center;
+    animation: presseKenBurns 40s ease-in-out infinite;
+    will-change: transform;
+}
+
+.history-presseFrame.loupe-active .history-presseImage {
+    animation-play-state: paused;
+}
+
+@keyframes presseKenBurns {
+    /* Vue d'ensemble */
+    0%   { transform: scale(1.0); }
+    15%  { transform: scale(1.0); }
+    /* Léger zoom haut-gauche */
+    25%  { transform: scale(1.06) translate(2%, 2%); }
+    /* Vue d'ensemble */
+    35%  { transform: scale(1.0); }
+    /* Léger zoom haut-droite */
+    50%  { transform: scale(1.06) translate(-2%, 2%); }
+    /* Vue d'ensemble */
+    60%  { transform: scale(1.0); }
+    /* Léger zoom bas-gauche */
+    70%  { transform: scale(1.06) translate(2%, -2%); }
+    /* Vue d'ensemble */
+    80%  { transform: scale(1.0); }
+    /* Léger zoom bas-droite */
+    90%  { transform: scale(1.06) translate(-2%, -2%); }
+    /* Vue d'ensemble */
+    100% { transform: scale(1.0); }
+}
+
+.history-presseOverlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(to right,  rgba(244, 228, 198, 0.9) 0%, transparent 12%, transparent 88%, rgba(244, 228, 198, 0.9) 100%),
+        linear-gradient(to bottom, rgba(244, 228, 198, 0.6) 0%, transparent 8%, transparent 92%, rgba(244, 228, 198, 0.6) 100%);
+    pointer-events: none;
+}
+
+/* Curseur pointer sur le bloc pour inviter au clic */
+.history-presseFrame {
+    cursor: pointer;
+}
+
+/* Loupe active — cacher le curseur */
+.history-presseFrame.loupe-active {
+    cursor: none;
+}
+
+/* ── Spotlight vignettage sur la loupe ── */
+.presse-spotlightOverlay {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    background: radial-gradient(
+        circle 18% at 12% 78%,
+        transparent 0%,
+        transparent 55%,
+        rgba(0, 0, 0, 0.35) 75%,
+        rgba(0, 0, 0, 0.7) 100%
+    );
+    animation: spotlightPulse 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes spotlightPulse {
+    0%   { opacity: 0.85; }
+    100% { opacity: 1; }
+}
+
+/* ── Hint animé "Cliquez sur la loupe" ── */
+.presse-loupeHint {
+    position: absolute;
+    bottom: 28%;
+    left: 8%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    animation: hintBounce 2s ease-in-out infinite;
+    z-index: 5;
+}
+
+.presse-loupeHintText {
+    font-family: var(--font-heading);
+    font-size: clamp(0.7rem, 1.2vw, 0.95rem);
+    color: var(--color-secondary);
+    background: rgba(30, 18, 8, 0.85);
+    padding: 0.4rem 0.9rem;
+    border-radius: 20px;
+    border: 1px solid rgba(217, 162, 79, 0.4);
+    white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.presse-loupeHintArrow {
+    margin-top: -2px;
+}
+
+@keyframes hintBounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-10px); }
+}
+
+/* ── Lentille de la loupe ── */
+.presse-loupeLens {
+    position: absolute;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.presse-loupeLensZoom {
+    position: absolute;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
+    z-index: 1;
+}
+
+.presse-loupeImage {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    filter: drop-shadow(0 6px 18px rgba(0,0,0,0.5));
+    z-index: 2;
+    transform: scaleX(-1);
+}
+
+/* ── Molette de zoom ── */
+.presse-zoomWheel {
+    position: absolute;
+    z-index: 5;
+    cursor: ns-resize;
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    touch-action: none;
+    user-select: none;
+}
+
+.presse-zoomWheelSvg {
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+}
+
+.presse-zoomLabel {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(30, 18, 8, 0.85);
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    border: 1px solid rgba(217, 162, 79, 0.5);
+    font-family: var(--font-heading);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.7);
+    white-space: nowrap;
+    margin-bottom: 4px;
+    letter-spacing: 0.02em;
+}
+
+/* ── Message exit ── */
+.presse-loupeExit {
+    text-align: center;
+    margin-top: 0.8rem;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    opacity: 0.7;
+}
+
+.presse-reactivateCenter {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-secondary);
+    font-size: 32px;
+    font-weight: 900;
+    text-align: center;
+    pointer-events: none;
+    z-index: 5;
+}
 @media (max-width: 900px) {
     .history-page {
         background-attachment: scroll;
