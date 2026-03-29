@@ -1,67 +1,89 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const gallery = Array.from({ length: 10 }, (_, index) => ({
     src: `/images/galerie/retouche/${index + 1}.png`,
     alt: `Photo ${index + 1}`,
 }));
 
-const infiniteGallery = Array.from({ length: 3 }, (_, copyIndex) =>
-    gallery.map((item, imageIndex) => ({
-        ...item,
-        originalIndex: imageIndex,
-        key: `${copyIndex}-${imageIndex}`,
-    }))
-).flat();
+type InfiniteSlide = {
+    src: string;
+    alt: string;
+    originalIndex: number;
+    key: string;
+};
 
 export function GallerySection() {
-    const carouselRef = useRef<HTMLDivElement | null>(null);
-    const recenterTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const isRecenteringRef = useRef(false);
-
+    const [slidesPerView, setSlidesPerView] = useState(3);
+    const [currentIndex, setCurrentIndex] = useState(3);
+    const [isTransitionEnabled, setIsTransitionEnabled] = useState(true);
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+    useEffect(() => {
+        const updateSlidesPerView = () => {
+            if (window.innerWidth < 768) {
+                setSlidesPerView(1);
+                return;
+            }
+
+            if (window.innerWidth < 1100) {
+                setSlidesPerView(2);
+                return;
+            }
+
+            setSlidesPerView(3);
+        };
+
+        updateSlidesPerView();
+        window.addEventListener("resize", updateSlidesPerView);
+
+        return () => {
+            window.removeEventListener("resize", updateSlidesPerView);
+        };
+    }, []);
+
+    useEffect(() => {
+        setIsTransitionEnabled(false);
+        setCurrentIndex(slidesPerView);
+
+        const frame = requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                setIsTransitionEnabled(true);
+            });
+        });
+
+        return () => {
+            cancelAnimationFrame(frame);
+        };
+    }, [slidesPerView]);
+
+    const infiniteSlides = useMemo<InfiniteSlide[]>(() => {
+        const cloneCount = slidesPerView;
+
+        const slidesBefore = gallery.slice(-cloneCount).map((item, index) => ({
+            ...item,
+            originalIndex: gallery.length - cloneCount + index,
+            key: `before-${gallery.length - cloneCount + index}`,
+        }));
+
+        const slidesMain = gallery.map((item, index) => ({
+            ...item,
+            originalIndex: index,
+            key: `main-${index}`,
+        }));
+
+        const slidesAfter = gallery.slice(0, cloneCount).map((item, index) => ({
+            ...item,
+            originalIndex: index,
+            key: `after-${index}`,
+        }));
+
+        return [...slidesBefore, ...slidesMain, ...slidesAfter];
+    }, [slidesPerView]);
 
     const selectedImage = selectedIndex !== null ? gallery[selectedIndex] : null;
     const currentImageNumber = selectedIndex !== null ? selectedIndex + 1 : 0;
-
-    useEffect(() => {
-        const node = carouselRef.current;
-        if (!node) return;
-
-        const setInitialPosition = () => {
-            const singleSetWidth = node.scrollWidth / 3;
-            if (singleSetWidth <= 0) return;
-
-            const previousBehavior = node.style.scrollBehavior;
-            node.style.scrollBehavior = "auto";
-            node.scrollLeft = singleSetWidth;
-            requestAnimationFrame(() => {
-                node.style.scrollBehavior = previousBehavior || "smooth";
-            });
-        };
-
-        requestAnimationFrame(setInitialPosition);
-
-        const handleResize = () => {
-            const singleSetWidth = node.scrollWidth / 3;
-            if (singleSetWidth <= 0) return;
-
-            const relativeOffset = node.scrollLeft % singleSetWidth;
-            const previousBehavior = node.style.scrollBehavior;
-            node.style.scrollBehavior = "auto";
-            node.scrollLeft = singleSetWidth + relativeOffset;
-            requestAnimationFrame(() => {
-                node.style.scrollBehavior = previousBehavior || "smooth";
-            });
-        };
-
-        window.addEventListener("resize", handleResize);
-
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
 
     useEffect(() => {
         if (selectedIndex === null) {
@@ -101,63 +123,42 @@ export function GallerySection() {
         };
     }, [selectedIndex]);
 
-    useEffect(() => {
-        return () => {
-            if (recenterTimeoutRef.current) {
-                clearTimeout(recenterTimeoutRef.current);
-            }
-        };
-    }, []);
-
-    const recenterCarouselIfNeeded = () => {
-        const node = carouselRef.current;
-        if (!node || isRecenteringRef.current) return;
-
-        const singleSetWidth = node.scrollWidth / 3;
-        if (singleSetWidth <= 0) return;
-
-        let nextScrollLeft: number | null = null;
-
-        if (node.scrollLeft < singleSetWidth * 0.5) {
-            nextScrollLeft = node.scrollLeft + singleSetWidth;
-        } else if (node.scrollLeft > singleSetWidth * 1.5) {
-            nextScrollLeft = node.scrollLeft - singleSetWidth;
-        }
-
-        if (nextScrollLeft === null) return;
-
-        isRecenteringRef.current = true;
-
-        const previousBehavior = node.style.scrollBehavior;
-        node.style.scrollBehavior = "auto";
-        node.scrollLeft = nextScrollLeft;
-
-        requestAnimationFrame(() => {
-            node.style.scrollBehavior = previousBehavior || "smooth";
-            isRecenteringRef.current = false;
-        });
+    const goToNextSlide = () => {
+        setIsTransitionEnabled(true);
+        setCurrentIndex((prev) => prev + 1);
     };
 
-    const handleCarouselScroll = () => {
-        if (isRecenteringRef.current) return;
-
-        if (recenterTimeoutRef.current) {
-            clearTimeout(recenterTimeoutRef.current);
-        }
-
-        recenterTimeoutRef.current = setTimeout(() => {
-            recenterCarouselIfNeeded();
-        }, 140);
+    const goToPreviousSlide = () => {
+        setIsTransitionEnabled(true);
+        setCurrentIndex((prev) => prev - 1);
     };
 
-    const scrollCarousel = (direction: 1 | -1) => {
-        const node = carouselRef.current;
-        if (!node) return;
+    const handleTrackTransitionEnd = () => {
+        const cloneCount = slidesPerView;
 
-        node.scrollBy({
-            left: direction * Math.min(node.clientWidth * 0.9, 420),
-            behavior: "smooth",
-        });
+        if (currentIndex < cloneCount) {
+            setIsTransitionEnabled(false);
+            setCurrentIndex(currentIndex + gallery.length);
+
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    setIsTransitionEnabled(true);
+                });
+            });
+
+            return;
+        }
+
+        if (currentIndex >= gallery.length + cloneCount) {
+            setIsTransitionEnabled(false);
+            setCurrentIndex(currentIndex - gallery.length);
+
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    setIsTransitionEnabled(true);
+                });
+            });
+        }
     };
 
     const showPreviousImage = () => {
@@ -201,84 +202,110 @@ export function GallerySection() {
                         </h2>
                     </div>
 
-                    <div className="gallery-carouselShell">
+                    <div
+                        className="gallery-carouselShell"
+                        style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "16px",
+                        }}
+                    >
                         <button
                             type="button"
                             className="gallery-carouselArrow gallery-carouselArrowLeft"
-                            onClick={() => scrollCarousel(-1)}
+                            onClick={goToPreviousSlide}
                             aria-label="Voir les images précédentes"
                         >
                             <span aria-hidden="true">‹</span>
                         </button>
 
                         <div
-                            ref={carouselRef}
                             className="gallery-carousel"
-                            onScroll={handleCarouselScroll}
                             style={{
-                                display: "flex",
-                                gap: "24px",
-                                overflowX: "auto",
-                                scrollBehavior: "smooth",
-                                padding: "8px 4px",
+                                overflow: "hidden",
+                                width: "100%",
                             }}
                         >
-                            {infiniteGallery.map((item, idx) => (
-                                <div
-                                    key={`${item.key}-${idx}`}
-                                    className="gallery-slide"
-                                    style={{
-                                        flex: "0 0 min(320px, 80vw)",
-                                        width: "min(320px, 80vw)",
-                                        background: "#efe3cf",
-                                        border: "1px solid rgba(186, 140, 80, 0.35)",
-                                        boxShadow: "0 10px 24px rgba(0, 0, 0, 0.10)",
-                                        overflow: "hidden",
-                                    }}
-                                >
-                                    <button
-                                        type="button"
-                                        onClick={() => setSelectedIndex(item.originalIndex)}
-                                        aria-label={`Agrandir ${item.alt}`}
+                            <div
+                                onTransitionEnd={handleTrackTransitionEnd}
+                                style={{
+                                    display: "flex",
+                                    transform: `translateX(-${(100 / slidesPerView) * currentIndex}%)`,
+                                    transition: isTransitionEnabled ? "transform 0.5s ease" : "none",
+                                }}
+                            >
+                                {infiniteSlides.map((item, idx) => (
+                                    <div
+                                        key={`${item.key}-${idx}`}
+                                        className="gallery-slide"
                                         style={{
-                                            display: "block",
-                                            width: "100%",
-                                            padding: 0,
-                                            border: "none",
-                                            background: "transparent",
-                                            cursor: "zoom-in",
+                                            flex: `0 0 ${100 / slidesPerView}%`,
+                                            maxWidth: `${100 / slidesPerView}%`,
+                                            boxSizing: "border-box",
+                                            padding: "0 12px",
                                         }}
                                     >
                                         <div
                                             style={{
-                                                width: "100%",
-                                                aspectRatio: "4 / 3",
+                                                background: "#efe3cf",
+                                                border: "1px solid rgba(186, 140, 80, 0.35)",
+                                                boxShadow: "0 10px 24px rgba(0, 0, 0, 0.10)",
                                                 overflow: "hidden",
-                                                background: "#1a1a1a",
+                                                height: "100%",
                                             }}
                                         >
-                                            <img
-                                                src={item.src}
-                                                alt={item.alt}
-                                                loading="lazy"
+                                            <button
+                                                type="button"
+                                                onClick={() => setSelectedIndex(item.originalIndex)}
+                                                aria-label={`Agrandir ${item.alt}`}
                                                 style={{
                                                     display: "block",
                                                     width: "100%",
-                                                    height: "100%",
-                                                    objectFit: "cover",
-                                                    objectPosition: "center",
+                                                    padding: 0,
+                                                    border: "none",
+                                                    background: "transparent",
+                                                    cursor: "zoom-in",
                                                 }}
-                                            />
+                                            >
+                                                <div
+                                                    style={{
+                                                        width: "100%",
+                                                        aspectRatio: "4 / 3",
+                                                        overflow: "hidden",
+                                                        background: "#1a1a1a",
+                                                    }}
+                                                >
+                                                    <img
+                                                        src={item.src}
+                                                        alt={item.alt}
+                                                        loading="lazy"
+                                                        style={{
+                                                            display: "block",
+                                                            width: "100%",
+                                                            height: "100%",
+                                                            objectFit: "cover",
+                                                            objectPosition: "center",
+                                                        }}
+                                                    />
+                                                </div>
+
+                                                <div
+                                                    style={{
+                                                        height: "56px",
+                                                        background: "#efe3cf",
+                                                    }}
+                                                />
+                                            </button>
                                         </div>
-                                    </button>
-                                </div>
-                            ))}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
 
                         <button
                             type="button"
                             className="gallery-carouselArrow gallery-carouselArrowRight"
-                            onClick={() => scrollCarousel(1)}
+                            onClick={goToNextSlide}
                             aria-label="Voir les images suivantes"
                         >
                             <span aria-hidden="true">›</span>
