@@ -16,6 +16,8 @@ export function GallerySection() {
         return gallery[selectedIndex];
     }, [selectedIndex]);
 
+    const currentImageNumber = selectedIndex !== null ? selectedIndex + 1 : 0;
+
     useEffect(() => {
         if (selectedIndex === null) {
             document.body.style.overflow = "";
@@ -298,7 +300,7 @@ export function GallerySection() {
                                 opacity: 0.9,
                             }}
                         >
-                            {selectedImage.alt} — {selectedIndex + 1} / {gallery.length}
+                            {selectedImage.alt} — {currentImageNumber} / {gallery.length}
                         </p>
                     </div>
 
