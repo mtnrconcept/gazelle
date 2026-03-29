@@ -10,10 +10,14 @@ const LENS_CX = 0.781;
 const LENS_CY = 0.233;
 const LENS_RX = 0.188;
 const LENS_RY = 0.213;
-const LOUPE_PX = 420;
+const LOUPE_PX = 630; // 420 * 1.5
 const ZOOM_MIN = 1.1;
 const ZOOM_MAX = 4;
 const ZOOM_DEFAULT = 1.25;
+
+// Position du bout du manche (après flip CSS) — c'est ici que le doigt se pose en mobile
+const HANDLE_CX = 0.15;
+const HANDLE_CY = 0.90;
 export function PresseSection() {
     const [loupeActive, setLoupeActive] = useState(false);
     const [pos, setPos] = useState({ x: 0, y: 0 });
@@ -33,6 +37,10 @@ export function PresseSection() {
     const lensCX = LENS_CX * loupeW;
     const lensCY = LENS_CY * loupeH;
     const lensR = Math.min(LENS_RX * loupeW, LENS_RY * loupeH);
+
+    // Offset mobile : décalage doigt (manche) → centre lentille
+    const handleOffsetX = (LENS_CX - HANDLE_CX) * loupeW;
+    const handleOffsetY = (LENS_CY - HANDLE_CY) * loupeH;
 
     // Pourcentage de zoom pour l'affichage
     const zoomPct = Math.round(((zoom - ZOOM_MIN) / (ZOOM_MAX - ZOOM_MIN)) * 100);
@@ -91,13 +99,9 @@ export function PresseSection() {
         }
         if (!frameRef.current) return;
         const r = frameRef.current.getBoundingClientRect();
-        const px = e.clientX - r.left;
-        const py = e.clientY - r.top;
-        if (px <= 400 && py >= (r.height - 500)) {
-            setLoupeActive(true);
-            setHintVisible(false);
-            setPos({ x: e.clientX - r.left, y: e.clientY - r.top });
-        }
+        setLoupeActive(true);
+        setHintVisible(false);
+        setPos({ x: e.clientX - r.left, y: e.clientY - r.top });
     }, [loupeActive, isPanning]);
 
     // ── Desktop: molette de la souris pour zoomer ──
@@ -112,7 +116,7 @@ export function PresseSection() {
         return () => el.removeEventListener('wheel', onWheel);
     }, [loupeActive]);
 
-    // ── Mobile: touch move pour déplacer la loupe ──
+    // ── Mobile: touch move pour déplacer la loupe (par le manche) ──
     useEffect(() => {
         if (!loupeActive || !frameRef.current) return;
         const el = frameRef.current;
@@ -121,13 +125,14 @@ export function PresseSection() {
             e.preventDefault();
             const t = e.touches[0];
             const r = el.getBoundingClientRect();
-            setPos({ x: t.clientX - r.left, y: t.clientY - r.top });
+            // Le doigt est sur le manche → on décale pour que la lentille soit au-dessus
+            setPos({ x: t.clientX - r.left + handleOffsetX, y: t.clientY - r.top + handleOffsetY });
         };
         el.addEventListener('touchmove', onTouch, { passive: false });
         return () => el.removeEventListener('touchmove', onTouch);
-    }, [loupeActive, draggingWheel]);
+    }, [loupeActive, draggingWheel, handleOffsetX, handleOffsetY]);
 
-    // ── Mobile: tap pour activer ──
+    // ── Mobile: tap pour activer (le doigt active depuis le manche) ──
     useEffect(() => {
         if (loupeActive || !frameRef.current) return;
         const el = frameRef.current;
@@ -136,16 +141,16 @@ export function PresseSection() {
             const r = el.getBoundingClientRect();
             const px = t.clientX - r.left;
             const py = t.clientY - r.top;
-            if (px <= 400 && py >= (r.height - 500)) {
+            if (px <= r.width * 0.25 && py >= r.height * 0.65) {
                 e.preventDefault();
                 setLoupeActive(true);
                 setHintVisible(false);
-                setPos({ x: t.clientX - r.left, y: t.clientY - r.top });
+                setPos({ x: px + handleOffsetX, y: py + handleOffsetY });
             }
         };
         el.addEventListener('touchstart', onTouch, { passive: false });
         return () => el.removeEventListener('touchstart', onTouch);
-    }, [loupeActive]);
+    }, [loupeActive, handleOffsetX, handleOffsetY]);
 
     // ── Escape ──
     useEffect(() => {

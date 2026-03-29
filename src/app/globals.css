@@ -4917,24 +4917,24 @@ body.snap-enabled .panel {
     cursor: none;
 }
 
-/* ── Spotlight vignettage sur la loupe ── */
+/* ── Spotlight overlay sombre avec zone éclairée sur la loupe ── */
 .presse-spotlightOverlay {
     position: absolute;
     inset: 0;
     z-index: 4;
     pointer-events: none;
     background: radial-gradient(
-        circle 18% at 12% 78%,
+        ellipse 22% 35% at 12% 75%,
         transparent 0%,
-        transparent 55%,
-        rgba(0, 0, 0, 0.35) 75%,
-        rgba(0, 0, 0, 0.7) 100%
+        transparent 60%,
+        rgba(0, 0, 0, 0.4) 75%,
+        rgba(0, 0, 0, 0.75) 100%
     );
-    animation: spotlightPulse 2.5s ease-in-out infinite alternate;
+    animation: spotlightFadeIn 0.8s ease-out forwards;
 }
 
-@keyframes spotlightPulse {
-    0%   { opacity: 0.85; }
+@keyframes spotlightFadeIn {
+    0%   { opacity: 0; }
     100% { opacity: 1; }
 }
 
