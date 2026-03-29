@@ -8,7 +8,7 @@ import { ReserveSection } from '@/components/ReserveSection';
 
 const tabs = [
     { id: 'all', label: '✦ Tout' },
-    { id: 'signature', label: 'Signature' }, // ✅ AJOUT
+    { id: 'signature', label: 'Nos plats signatures' },
     { id: 'entrees', label: 'Entrées' },
     { id: 'vegetarien', label: 'Végétarien' },
     { id: 'plats', label: 'Plats + Plats du jour' },
@@ -32,6 +32,7 @@ type MenuPageClientProps = {
 
 export function MenuPageClient({ sections }: MenuPageClientProps) {
     const [activeTab, setActiveTab] = useState('all');
+    const isSignatureTab = activeTab === 'signature';
 
     useEffect(() => {
         const container = document.querySelector('.menu-menuContainer');
@@ -42,11 +43,10 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
         }
     }, [activeTab]);
 
-    const visibleSections =
-        activeTab === 'all'
-            ? sections
-            : activeTab === 'signature'
-            ? [] // ✅ pas de sections classiques
+    const visibleSections = activeTab === 'all'
+        ? sections
+        : isSignatureTab
+            ? []
             : sections.filter((s) => s.title === tabMap[activeTab]);
 
     return (
@@ -101,17 +101,15 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
             </div>
 
             <div className="container menu-menuContainer">
-                {/* ✅ Onglet Signature */}
-                {activeTab === 'signature' && <SignatureSection />}
-
-                {/* ✅ Sections classiques */}
-                {activeTab !== 'signature' &&
+                {isSignatureTab ? (
+                    <SignatureSection />
+                ) : (
                     visibleSections.map((section) => (
                         <MenuSection key={section.title} section={section} />
-                    ))}
+                    ))
+                )}
             </div>
 
-            {/* ❌ SUPPRIMÉ : SignatureSection ici */}
 
             <section className="menu-traiteurSection reveal" data-reveal="up">
                 <div className="container">
