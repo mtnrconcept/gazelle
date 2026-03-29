@@ -15,9 +15,6 @@ const ZOOM_MIN = 1.1;
 const ZOOM_MAX = 4;
 const ZOOM_DEFAULT = 1.25;
 
-// Position du bout du manche (après flip CSS) — c'est ici que le doigt se pose en mobile
-const HANDLE_CX = 0.15;
-const HANDLE_CY = 0.90;
 export function PresseSection() {
     const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
     const zoomMultiplier = isMobile ? 2 : 1;
@@ -44,9 +41,9 @@ export function PresseSection() {
     const lensCY = LENS_CY * loupeH;
     const lensR = Math.min(LENS_RX * loupeW, LENS_RY * loupeH);
 
-    // Offset mobile : décalage doigt (manche) → centre lentille
-    const handleOffsetX = (LENS_CX - HANDLE_CX) * loupeW;
-    const handleOffsetY = (LENS_CY - HANDLE_CY) * loupeH;
+    // Offset mobile : le doigt se pose sur le bord gauche de la lentille
+    const handleOffsetX = LENS_RX * loupeW;
+    const handleOffsetY = 0;
 
     // Pourcentage de zoom pour l'affichage
     const zoomPct = Math.round(((zoom - effectiveZoomMin) / (effectiveZoomMax - effectiveZoomMin)) * 100);
