@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
 import { useState, useEffect } from 'react';
 import type { MenuSectionData } from '@/types/menu';
 import { MenuSection } from '@/components/MenuSection';
 import { SignatureSection } from '@/components/SignatureSection';
-import { GallerySection } from '@/components/GallerySection';
 import { ReserveSection } from '@/components/ReserveSection';
 
 const tabs = [
     { id: 'all', label: '✦ Tout' },
+    { id: 'signature', label: 'Signature' }, // ✅ AJOUT
     { id: 'entrees', label: 'Entrées' },
     { id: 'vegetarien', label: 'Végétarien' },
     { id: 'plats', label: 'Plats + Plats du jour' },
@@ -34,8 +34,6 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
     const [activeTab, setActiveTab] = useState('all');
 
     useEffect(() => {
-        // When switching tabs, immediately reveal all menu items so they
-        // don't stay hidden while the smooth scroll is still in progress.
         const container = document.querySelector('.menu-menuContainer');
         if (container) {
             container.querySelectorAll<HTMLElement>('.reveal:not(.is-visible), [data-reveal]:not(.is-visible)').forEach((node) => {
@@ -44,17 +42,24 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
         }
     }, [activeTab]);
 
-    const visibleSections = activeTab === 'all'
-        ? sections
-        : sections.filter((s) => s.title === tabMap[activeTab]);
+    const visibleSections =
+        activeTab === 'all'
+            ? sections
+            : activeTab === 'signature'
+            ? [] // ✅ pas de sections classiques
+            : sections.filter((s) => s.title === tabMap[activeTab]);
 
     return (
         <div className="menu-page">
             <div className="menu-hero">
                 <div className="menu-heroContent">
                     <p className="menu-heroEyebrow">Restaurant érythréen & éthiopien</p>
-                    <h1 className="heroPageTitle menu-heroTitle" data-text="Menu erythreen & ethiopien">Menu erythreen &amp; ethiopien</h1>
-                    <p className="menu-heroTagline">Tous nos plats sont servis avec de l'injera fait maison (Sans gluten disponible)</p>
+                    <h1 className="heroPageTitle menu-heroTitle" data-text="Menu erythreen & ethiopien">
+                        Menu erythreen &amp; ethiopien
+                    </h1>
+                    <p className="menu-heroTagline">
+                        Tous nos plats sont servis avec de l'injera fait maison (Sans gluten disponible)
+                    </p>
                 </div>
             </div>
 
@@ -67,12 +72,16 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
                             className={`menu-tab ${activeTab === tab.id ? 'menu-tabActive' : ''}`}
                             onClick={(e) => {
                                 setActiveTab(tab.id);
-                                (e.currentTarget as HTMLButtonElement).scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-                                
-                                // Scroll to the top of the menu container with an offset for the sticky tabs
+
+                                (e.currentTarget as HTMLButtonElement).scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'nearest',
+                                    inline: 'center',
+                                });
+
                                 const menuContainer = document.querySelector('.menu-menuContainer');
                                 if (menuContainer) {
-                                    const offset = 220; // sticky header + tabs height approximation
+                                    const offset = 220;
                                     const bodyRect = document.body.getBoundingClientRect().top;
                                     const elementRect = menuContainer.getBoundingClientRect().top;
                                     const elementPosition = elementRect - bodyRect;
@@ -80,7 +89,7 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
 
                                     window.scrollTo({
                                         top: offsetPosition,
-                                        behavior: 'smooth'
+                                        behavior: 'smooth',
                                     });
                                 }
                             }}
@@ -92,27 +101,39 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
             </div>
 
             <div className="container menu-menuContainer">
-                {visibleSections.map((section) => (
-                    <MenuSection key={section.title} section={section} />
-                ))}
+                {/* ✅ Onglet Signature */}
+                {activeTab === 'signature' && <SignatureSection />}
+
+                {/* ✅ Sections classiques */}
+                {activeTab !== 'signature' &&
+                    visibleSections.map((section) => (
+                        <MenuSection key={section.title} section={section} />
+                    ))}
             </div>
 
-            <SignatureSection />
+            {/* ❌ SUPPRIMÉ : SignatureSection ici */}
+
             <section className="menu-traiteurSection reveal" data-reveal="up">
                 <div className="container">
                     <div className="menu-traiteurBox">
                         <div className="menu-traiteurContent">
-                            <h2 className="gold-sectionTitleSmall" data-text="Service Traiteur & Entreprise">Service Traiteur & Entreprise</h2>
-                            <p>Organisez vos événements avec les saveurs de La Gazelle d'Or. Buffets, réceptions et repas d'entreprise, sur devis.</p>
+                            <h2 className="gold-sectionTitleSmall" data-text="Service Traiteur & Entreprise">
+                                Service Traiteur & Entreprise
+                            </h2>
+                            <p>
+                                Organisez vos événements avec les saveurs de La Gazelle d'Or. Buffets, réceptions et repas d'entreprise, sur devis.
+                            </p>
                         </div>
-                        <a href="mailto:lagazelledorgeneva@gmail.com?subject=Demande de devis traiteur" className="menu-traiteurButton">
+                        <a
+                            href="mailto:lagazelledorgeneva@gmail.com?subject=Demande de devis traiteur"
+                            className="menu-traiteurButton"
+                        >
                             Demander un devis
                         </a>
                     </div>
                 </div>
             </section>
-
-            <GallerySection />
+            <menu-traiteurSection/>
             <ReserveSection />
         </div>
     );
