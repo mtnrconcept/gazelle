@@ -131,7 +131,6 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
                     </div>
                 </div>
             </section>
-            <menu-traiteurSection/>
             <ReserveSection />
         </div>
     );
