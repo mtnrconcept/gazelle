@@ -21,12 +21,12 @@ export default function HistoirePage() {
                     className="history-heroVideo"
                     poster="/images/3.webp"
                 >
-                    <source src="https://lagazelledorgeneva.com/assets/video_hero-Ck-O8Wsn.mp4" type="video/mp4" />
+                    <source src="/images/_assets/video_hero-Ck-O8Wsn.mp4" type="video/mp4" />
                 </video>
                 <div className="history-heroContent">
                     <p className="history-heroEyebrow">Depuis plus de 15 ans à Genève</p>
-                    <h1 className="heroPageTitle history-heroTitle" data-text="L'histoire de La Gazelle d'Or">L&apos;histoire de La Gazelle d&apos;Or</h1>
-                    <p className="history-heroTagline">Un voyage culinaire au cœur de la Corne de l'Afrique</p>
+                    <h1 className="heroPageTitle history-heroTitle" data-text="L&apos;histoire de La Gazelle d&apos;Or">L&apos;histoire de La Gazelle d&apos;Or</h1>
+                    <p className="history-heroTagline">Un voyage culinaire au cœur de la Corne de l&apos;Afrique</p>
                 </div>
             </div>
 
@@ -44,13 +44,13 @@ export default function HistoirePage() {
                             
                             <div className="history-storyBody">
                                 <p className="story-lead">
-                                    La Gazelle d'Or est née d'un rêve simple : apporter à Genève les saveurs authentiques de l'Érythrée et de l'Éthiopie. Fondé avec passion et nostalgie des saveurs de la Corne de l'Afrique, notre restaurant est devenu bien plus qu'un simple lieu de restauration.
+                                    La Gazelle d&apos;Or est née d&apos;un rêve simple : apporter à Genève les saveurs authentiques de l&apos;Érythrée et de l&apos;Éthiopie. Fondé avec passion et nostalgie des saveurs de la Corne de l&apos;Afrique, notre restaurant est devenu bien plus qu&apos;un simple lieu de restauration.
                                 </p>
                                 <p>
                                     Niché au cœur du quartier des Grottes, au 55 rue de Lyon, notre établissement vous transporte instantanément dans un village africain. Des cases traditionnelles abritent des tables basses entourées de fauteuils en osier, flanquées de coussins colorés et de grandes corbeilles multicolores tissées à la main.
                                 </p>
                                 <p>
-                                    Chaque plat raconte une histoire, chaque épice évoque un souvenir d'enfance. Nous perpétuons des recettes familiales transmises avec fierté, préparées avec des ingrédients importés directement pour garantir une authenticité totale.
+                                    Chaque plat raconte une histoire, chaque épice évoque un souvenir d&apos;enfance. Nous perpétuons des recettes familiales transmises avec fierté, préparées avec des ingrédients importés directement pour garantir une authenticité totale.
                                 </p>
                             </div>
                         </div>
@@ -125,13 +125,13 @@ export default function HistoirePage() {
                             
                             <div className="history-storyBody">
                                 <p>
-                                    L'injera est bien plus qu'un simple pain. Cette galette fermentée à base de farine de teff est le fondement de toute la cuisine érythréenne et éthiopienne. Chez nous, elle est préparée chaque jour selon la méthode traditionnelle.
+                                    L&apos;injera est bien plus qu&apos;un simple pain. Cette galette fermentée à base de farine de teff est le fondement de toute la cuisine érythréenne et éthiopienne. Chez nous, elle est préparée chaque jour selon la méthode traditionnelle.
                                 </p>
                                 <p>
                                     Sa texture légèrement spongieuse et son goût subtilement acidulé en font le support parfait pour recueillir les saveurs riches de nos ragoûts et sauces épicées. On ne mange pas <em>avec</em> l'injera — on mange <em>dedans</em>.
                                 </p>
                                 <p>
-                                    C'est aussi un geste de partage : arracher un morceau d'injera et saisir les mets ensemble dans un plat commun est au cœur de la tradition d'hospitalité africaine.
+                                    C&apos;est aussi un geste de partage : arracher un morceau d&apos;injera et saisir les mets ensemble dans un plat commun est au cœur de la tradition d&apos;hospitalité africaine.
                                 </p>
                             </div>
                         </div>

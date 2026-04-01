@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { menuData } from '@/data/menu';
 import { MenuPageClient } from './MenuPageClient';
+import type { MenuSectionData } from '@/types/menu';
 
 export const metadata: Metadata = {
     title: "Menu érythréen & éthiopien à Genève",
@@ -8,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function MenuPage() {
-    return <MenuPageClient sections={menuData as any} />;
+    return <MenuPageClient sections={menuData as MenuSectionData[]} />;
 }
