@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import type { MenuSection } from '@/data/menu';
+import { useEffect, useMemo, useState } from 'react';
+import type { MenuItem as MenuItemSource, MenuSection as MenuSectionSource } from '@/data/menu';
+import type { MenuItemData, MenuSectionData } from '@/types/menu';
 import { MenuSection as MenuSectionComponent } from '@/components/MenuSection';
 import { ReserveSection } from '@/components/ReserveSection';
 
@@ -14,7 +15,7 @@ const tabs = [
     { id: 'degustations', label: 'Menus' },
     { id: 'streetfood', label: 'African Streetfood' },
     { id: 'boissons', label: 'Boissons' },
-];
+] as const;
 
 const tabMap: Record<string, string> = {
     signature: 'PLATS SIGNATURES',
@@ -27,18 +28,75 @@ const tabMap: Record<string, string> = {
 };
 
 type MenuPageClientProps = {
-    sections: MenuSection[];
+    sections: MenuSectionSource[];
 };
+
+function buildSectionId(parentId: number, sortOrder: number): number {
+    return parentId * 100 + sortOrder + 1;
+}
+
+function buildItemId(sectionId: number, sortOrder: number): number {
+    return sectionId * 1000 + sortOrder + 1;
+}
+
+function normalizeItem(
+    item: MenuItemSource,
+    sortOrder: number,
+    sectionId: number
+): MenuItemData {
+    return {
+        id: buildItemId(sectionId, sortOrder),
+        sortOrder,
+        sectionId,
+        name: item.name,
+        description: item.description,
+        price: item.price,
+        image: item.image,
+    } as MenuItemData;
+}
+
+function normalizeSection(
+    section: MenuSectionSource,
+    sortOrder: number,
+    parentId: number | null,
+    parentSeed: number
+): MenuSectionData {
+    const sectionId = buildSectionId(parentSeed, sortOrder);
+
+    const normalizedSubsections = (section.subsections ?? []).map((subsection, index) =>
+        normalizeSection(subsection, index, sectionId, sectionId)
+    );
+
+    return {
+        id: sectionId,
+        title: section.title,
+        notes: section.notes ?? [],
+        sortOrder,
+        parentId,
+        items: (section.items ?? []).map((item, index) =>
+            normalizeItem(item, index, sectionId)
+        ),
+        subsections: normalizedSubsections,
+    } as MenuSectionData;
+}
+
+function normalizeSections(sections: MenuSectionSource[]): MenuSectionData[] {
+    return sections.map((section, index) => normalizeSection(section, index, null, 1));
+}
 
 export function MenuPageClient({ sections }: MenuPageClientProps) {
     const [activeTab, setActiveTab] = useState('all');
+
+    const normalizedSections = useMemo(() => normalizeSections(sections), [sections]);
 
     useEffect(() => {
         const container = document.querySelector('.menu-menuContainer');
 
         if (container) {
             container
-                .querySelectorAll<HTMLElement>('.reveal:not(.is-visible), [data-reveal]:not(.is-visible)')
+                .querySelectorAll<HTMLElement>(
+                    '.reveal:not(.is-visible), [data-reveal]:not(.is-visible)'
+                )
                 .forEach((node) => {
                     node.classList.add('is-visible');
                 });
@@ -47,8 +105,8 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
 
     const visibleSections =
         activeTab === 'all'
-            ? sections
-            : sections.filter((section) => section.title === tabMap[activeTab]);
+            ? normalizedSections
+            : normalizedSections.filter((section) => section.title === tabMap[activeTab]);
 
     return (
         <div className="menu-page">
@@ -125,7 +183,7 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
 
             <div className="container menu-menuContainer">
                 {visibleSections.map((section) => (
-                    <MenuSectionComponent key={section.title} section={section} />
+                    <MenuSectionComponent key={section.id} section={section} />
                 ))}
             </div>
 
