@@ -32,6 +32,12 @@ export function PingPongVideo({ src, className, poster }: PingPongVideoProps) {
         function captureFrame() {
             if (!video || !canvas || !ctx || cancelled || video.paused || video.ended) return;
 
+            // Sécurité : on attend que la vidéo ait des dimensions réelles
+            if (video.videoWidth === 0 || video.videoHeight === 0) {
+                captureId = requestAnimationFrame(captureFrame);
+                return;
+            }
+
             if (canvas.width !== video.videoWidth) {
                 canvas.width = video.videoWidth;
                 canvas.height = video.videoHeight;
