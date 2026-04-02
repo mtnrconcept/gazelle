@@ -9,7 +9,7 @@ const signatureSection: MenuSectionData = {
     title: 'PLATS SIGNATURES',
     items: [
         {
-            id: 'signature-la-gazelle-royale',
+            id: 1001,
             sortOrder: 1,
             name: 'La Gazelle Royale',
             description:
@@ -18,7 +18,7 @@ const signatureSection: MenuSectionData = {
             image: '/images/_assets/LA%20GAZELLE%20ROYALE-EI-niyer.png',
         },
         {
-            id: 'signature-doro-wet',
+            id: 1002,
             sortOrder: 2,
             name: 'Doro Wet',
             description:
@@ -27,7 +27,7 @@ const signatureSection: MenuSectionData = {
             image: '/images/_assets/DORO%20WET-qlKOx6dc.png',
         },
         {
-            id: 'signature-sambusa-maison',
+            id: 1003,
             sortOrder: 3,
             name: 'Sambusa Maison',
             description:
@@ -36,7 +36,7 @@ const signatureSection: MenuSectionData = {
             image: '/images/_assets/SAMBUSA%20FAIT%20MAISON-D_wwG_sv.jpeg',
         },
         {
-            id: 'signature-kitfo',
+            id: 1004,
             sortOrder: 4,
             name: 'Kitfo',
             description:
@@ -45,7 +45,7 @@ const signatureSection: MenuSectionData = {
             image: '/images/_assets/KITEFO-D2dNuOak.png',
         },
         {
-            id: 'signature-degustation-vegetarienne',
+            id: 1005,
             sortOrder: 5,
             name: 'Degustation Vegetarienne',
             description:
@@ -54,7 +54,7 @@ const signatureSection: MenuSectionData = {
             image: '/images/_assets/D%C3%A9gustation%20de%20L%C3%A9gumes-BHGAtiLV.png',
         },
         {
-            id: 'signature-tibs-d-agneau',
+            id: 1006,
             sortOrder: 6,
             name: "Tibs d'Agneau",
             description:
