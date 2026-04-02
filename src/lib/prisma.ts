@@ -14,7 +14,7 @@ function createPrismaClient() {
     password: 'amiMILKA1007&&', // Password brut pour éviter les erreurs de parsing
     database: 'u211547797_lagazelledor26',
     connectionLimit: 5,
-    connectTimeout: 10000, 
+    connectTimeout: 4000, // On échoue au bout de 4s pour éviter le 503 de Hostinger
     idleTimeout: 30000    
   };
 

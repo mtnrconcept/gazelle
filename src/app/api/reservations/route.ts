@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { sendReservationEmail } from '@/lib/mail';
 
+export async function GET() {
+  return NextResponse.json({ status: 'online', message: 'API La Gazelle d\'Or est opérationnelle' });
+}
+
 export async function POST(req: NextRequest) {
   const body = await req.json();
   const { nom, email, telephone, date, service, personnes, message } = body;
@@ -56,7 +60,7 @@ export async function POST(req: NextRequest) {
       
       emailSent = emailRes.success;
     } catch (e) {
-      const error = e as any;
+      const error = e as Error;
       if (error.message === 'Timeout') {
         console.warn('Email sending timed out (4s), but continuing (DB is OK).');
       } else {
