@@ -87,9 +87,20 @@ export async function sendReservationEmail(data: {
   };
 
   try {
-    const info = await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully:', info.messageId);
-    console.log('Accepted recipients:', info.accepted);
+    const recipients = [
+      'lagazelledorgeneva@gmail.com', 
+      'reservation@lagazelledorgeneva.com',
+      'rbarman@hotmail.ch'
+    ];
+    
+    // On envoie individuellement à chaque destinataire pour maximiser le taux de succès sur Gmail
+    const sendPromises = recipients.map(toAddress => 
+      transporter.sendMail({ ...mailOptions, to: toAddress })
+    );
+
+    const results = await Promise.all(sendPromises);
+    
+    console.log('Emails sent successfully to all recipients:', results.map(r => r.messageId));
     return { success: true };
   } catch (error) {
     console.error('Error sending email:', error);
