@@ -435,7 +435,7 @@ export const menuData: MenuSection[] = [
                 name: "Café et Thé traditionnel",
                 description: "Découvrez la richesse des arômes du café et du thé traditionnels et laissez-vous transporter par leur goût authentique.",
                 price: "4.50 CHF",
-                image: "/images/_assets/coffee-CS9HenJt.png"
+                image: "/images/carte-menu/caf%C3%A9.png"
             },
             {
                 name: "Café simple",
