@@ -20,20 +20,28 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const reservation = await prisma.reservation.create({
-      data: {
-        nom: String(nom).slice(0, 255),
-        email: String(email).slice(0, 255),
-        telephone: telephone ? String(telephone).slice(0, 50) : null,
-        date: new Date(date),
-        service,
-        personnes: guests,
-        message: message ? String(message).slice(0, 2000) : null,
-      },
-    });
+    let reservation = null;
+    
+    // Tentative d'enregistrement en base de données
+    try {
+      reservation = await prisma.reservation.create({
+        data: {
+          nom: String(nom).slice(0, 255),
+          email: String(email).slice(0, 255),
+          telephone: telephone ? String(telephone).slice(0, 50) : null,
+          date: new Date(date),
+          service,
+          personnes: guests,
+          message: message ? String(message).slice(0, 2000) : null,
+        },
+      });
+    } catch (dbError) {
+      console.error('Database error (reservation):', dbError);
+      // On continue pour envoyer l'email quand même
+    }
 
-    // Envoyer l'email après la création réussie en DB
-    await sendReservationEmail({
+    // Envoi de l'email (priorité haute pour ne pas perdre la demande)
+    const emailRes = await sendReservationEmail({
       nom,
       email,
       telephone,
@@ -43,7 +51,17 @@ export async function POST(req: NextRequest) {
       message
     });
 
-    return NextResponse.json(reservation, { status: 201 });
+    if (!emailRes.success && !reservation) {
+      throw new Error('Tout a échoué : Base de données et Email');
+    }
+
+    return NextResponse.json({ 
+      success: true, 
+      id: reservation?.id,
+      emailSent: emailRes.success,
+      message: 'Réservation reçue'
+    }, { status: 201 });
+
   } catch (error) {
     console.error('Error in reservation API:', error);
     return NextResponse.json({ error: 'Une erreur est survenue lors de la réservation' }, { status: 500 });
