@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.hostinger.com',
+  host: 'smtp.titan.email',
   port: 587,
   secure: false, // Port 587 utilise STARTTLS (secure doit être false)
   auth: {
