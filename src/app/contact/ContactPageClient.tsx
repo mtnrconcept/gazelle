@@ -59,7 +59,7 @@ export function ContactPageClient() {
                 <div className="contact-heroContent">
                     <p className="contact-heroEyebrow">Réservation en ligne</p>
                     <h1 className="heroPageTitle contact-heroTitle" data-text="Reserver une table a La Gazelle d'Or">Reserver une table a La Gazelle d&apos;Or</h1>
-                    <p className="contact-heroTagline">Offrez-vous un voyage culinaire au cœur de l'Afrique</p>
+                    <p className="contact-heroTagline">Offrez-vous un voyage culinaire au cœur de l&apos;Afrique</p>
                 </div>
             </div>
 
@@ -141,7 +141,7 @@ export function ContactPageClient() {
 
                                 <div className="contact-row">
                                     <div className="contact-field">
-                                        <label className="contact-label" htmlFor="telephone">Téléphone</label>
+                                        <label className="contact-label" htmlFor="telephone">Téléphone *</label>
                                         <input
                                             id="telephone"
                                             name="telephone"
@@ -150,6 +150,7 @@ export function ContactPageClient() {
                                             value={form.telephone}
                                             onChange={handleChange}
                                             placeholder="+41 __ ___ __ __"
+                                            required
                                         />
                                     </div>
                                     <div className="contact-field">
@@ -249,7 +250,7 @@ export function ContactPageClient() {
                             <div className="contact-divider"></div>
 
                             <div className="contact-infoBlock">
-                                <p className="contact-infoLabel">Heures d'ouverture</p>
+                                <p className="contact-infoLabel">Heures d&apos;ouverture</p>
                                 <div className="contact-hours">
                                     <div className="contact-hourRow">
                                         <span className="contact-day">Lun – Sam</span>

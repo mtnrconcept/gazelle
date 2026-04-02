@@ -10,8 +10,8 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const { nom, email, telephone, date, service, personnes, message } = body;
 
-  if (!nom || !email || !date || !service || !personnes) {
-    return NextResponse.json({ error: 'Champs requis manquants' }, { status: 400 });
+  if (!nom || !email || !telephone || !date || !service || !personnes) {
+    return NextResponse.json({ error: 'Champs requis manquants (le téléphone est obligatoire)' }, { status: 400 });
   }
 
   if (!['dejeuner', 'diner'].includes(service)) {
