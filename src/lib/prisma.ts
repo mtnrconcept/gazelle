@@ -15,7 +15,9 @@ function createPrismaClient() {
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || '',
     database: process.env.DB_NAME || 'gazelle_dor',
-    connectionLimit: 5
+    connectionLimit: 5,
+    connectTimeout: 5000, // 5 secondes max pour se connecter
+    idleTimeout: 10000    // 10 secondes max d'inactivité
   };
 
   // Si DATABASE_URL est présent (format Prisma classique), on essaie de l'extraire pour simplifier

@@ -59,6 +59,7 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
                     playsInline
                     className="menu-heroVideo"
                     poster="/images/2.webp"
+                    onLoadedMetadata={(e) => (e.currentTarget.style.opacity = "1")}
                 >
                     <source src="/images/_assets/video_hero-Ck-O8Wsn.mp4" type="video/mp4" />
                 </video>
