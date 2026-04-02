@@ -9,6 +9,8 @@ const signatureSection: MenuSectionData = {
     title: 'PLATS SIGNATURES',
     items: [
         {
+            id: 'signature-la-gazelle-royale',
+            sortOrder: 1,
             name: 'La Gazelle Royale',
             description:
                 "Notre plat signature : Agneau, Zegni et Doro servis sur un grand injera partagé. Le symbole de notre restaurant.",
@@ -16,6 +18,8 @@ const signatureSection: MenuSectionData = {
             image: '/images/_assets/LA%20GAZELLE%20ROYALE-EI-niyer.png',
         },
         {
+            id: 'signature-doro-wet',
+            sortOrder: 2,
             name: 'Doro Wet',
             description:
                 'Poulet juteux mariné au citron, mijoté dans une sauce paprika aux épices ancestrales. Un classique incontournable.',
@@ -23,6 +27,8 @@ const signatureSection: MenuSectionData = {
             image: '/images/_assets/DORO%20WET-qlKOx6dc.png',
         },
         {
+            id: 'signature-sambusa-maison',
+            sortOrder: 3,
             name: 'Sambusa Maison',
             description:
                 'Feuilletés croustillants farcis à la viande ou aux légumes, faits chaque jour dans notre cuisine.',
@@ -30,6 +36,8 @@ const signatureSection: MenuSectionData = {
             image: '/images/_assets/SAMBUSA%20FAIT%20MAISON-D_wwG_sv.jpeg',
         },
         {
+            id: 'signature-kitfo',
+            sortOrder: 4,
             name: 'Kitfo',
             description:
                 "Steak tartare érythréen & éthiopien assaisonné d'un beurre aux herbes, de piments rouges et de gingembre frais.",
@@ -37,6 +45,8 @@ const signatureSection: MenuSectionData = {
             image: '/images/_assets/KITEFO-D2dNuOak.png',
         },
         {
+            id: 'signature-degustation-vegetarienne',
+            sortOrder: 5,
             name: 'Degustation Vegetarienne',
             description:
                 'Un assortiment généreux de Shiro, épinards, lentilles rouges et jaunes, chou et laitue sur injera.',
@@ -44,6 +54,8 @@ const signatureSection: MenuSectionData = {
             image: '/images/_assets/D%C3%A9gustation%20de%20L%C3%A9gumes-BHGAtiLV.png',
         },
         {
+            id: 'signature-tibs-d-agneau',
+            sortOrder: 6,
             name: "Tibs d'Agneau",
             description:
                 "Morceaux d'agneau maigre sautés au beurre avec oignons, piments verts et poivre vert exotique.",
@@ -85,6 +97,7 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
 
     useEffect(() => {
         const container = document.querySelector('.menu-menuContainer');
+
         if (container) {
             container
                 .querySelectorAll<HTMLElement>(
