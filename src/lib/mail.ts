@@ -24,7 +24,7 @@ export async function sendReservationEmail(data: {
 }) {
   const mailOptions = {
     from: `"Site Web La Gazelle d'Or" <${process.env.SMTP_USER}>`,
-    to: process.env.EMAIL_TO || 'lagazelledorgeneva@gmail.com',
+    to: `${process.env.EMAIL_TO || 'lagazelledorgeneva@gmail.com'}, reservation@lagazelledorgeneva.com`,
     subject: `Nouvelle Réservation - ${data.nom} - ${new Date(data.date).toLocaleDateString()}`,
     text: `
       Nouvelle demande de réservation reçue :
