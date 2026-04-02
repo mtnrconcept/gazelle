@@ -14,6 +14,47 @@ export type MenuSection = {
 
 export const menuData: MenuSection[] = [
     {
+        title: "PLATS SIGNATURES",
+        items: [
+            {
+                name: "La Gazelle Royale",
+                description: "Notre plat signature : agneau, zegni et doro servis sur un grand injera partagé. Le symbole de notre restaurant.",
+                price: "dès 32 CHF",
+                image: "/images/_assets/LA%20GAZELLE%20ROYALE-EI-niyer.png"
+            },
+            {
+                name: "Doro Wet",
+                description: "Poulet juteux mariné au citron, mijoté dans une sauce paprika aux épices ancestrales. Un classique incontournable.",
+                price: "27.00 CHF",
+                image: "/images/_assets/DORO%20WET-qlKOx6dc.png"
+            },
+            {
+                name: "SAMBUSA (fait maison)",
+                description: "1 pièce · Feuilletés fourrés à la viande de bœuf et aux légumes.",
+                price: "3.50 CHF",
+                image: "/images/_assets/SAMBUSA%20FAIT%20MAISON-D_wwG_sv.jpeg"
+            },
+            {
+                name: "Kitfo",
+                description: "Steak tartare érythréen & éthiopien assaisonné avec un beurre aux herbes, des piments rouges finement hachés, du gingembre et du poivre, arrosé avec un goût de whisky.",
+                price: "30.00 CHF",
+                image: "/images/_assets/KITEFO-D2dNuOak.png"
+            },
+            {
+                name: "Dégustation de légumes",
+                description: "Une combinaison des plats shiro, épinards, lentilles (jaune et rouge), chou et laitue.",
+                price: "25.00 CHF (1p) · 45.00 CHF (2p) · 65.00 CHF (3p)",
+                image: "/images/_assets/D%C3%A9gustation%20de%20L%C3%A9gumes-BHGAtiLV.png"
+            },
+            {
+                name: "Tibs d'agneau",
+                description: "Morceaux d'agneau maigre sautés au beurre incorporés à des oignons, des piments verts et du poivre vert.",
+                price: "32.00 CHF",
+                image: "/images/_assets/Tibs%20d'agneau-CTyXF8Tl.png"
+            }
+        ]
+    },
+    {
         title: "ENTREES / STARTERS",
         items: [
             {
