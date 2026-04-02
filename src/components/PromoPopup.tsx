@@ -66,7 +66,7 @@ export function PromoPopup() {
         </p>
 
         <button className="promo-cta" onClick={handleClose}>
-          J&apos;en profite !
+          {"J'en profite !"}
         </button>
       </div>
     </>
