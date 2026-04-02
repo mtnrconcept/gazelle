@@ -126,7 +126,7 @@ export const menuData: MenuSection[] = [
                     },
                     {
                         name: "Kitfo",
-                        description: "Steak tartare éthiopien assaisonné avec un beurre aux herbes, des piments rouges finement hachés, du gingembre et du poivre, arrosé avec un goût de whisky.",
+                        description: "Steak tartare érythréen & éthiopien assaisonné avec un beurre aux herbes, des piments rouges finement hachés, du gingembre et du poivre, arrosé avec un goût de whisky.",
                         price: "30.00 CHF",
                         image: "/images/_assets/KITEFO-D2dNuOak.png"
                     },
@@ -336,7 +336,7 @@ export const menuData: MenuSection[] = [
                     },
                     {
                         name: "KITFO",
-                        description: "Steak tartare éthiopien assaisonné avec un beurre aux herbes, des piments rouges finement hachés, du gingembre et du poivre."
+                        description: "Steak tartare érythréen & éthiopien assaisonné avec un beurre aux herbes, des piments rouges finement hachés, du gingembre et du poivre."
                     }
                 ]
             },

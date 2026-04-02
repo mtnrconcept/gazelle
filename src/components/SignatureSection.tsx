@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const dishes = [
     {
         name: 'La Gazelle Royale',
@@ -19,7 +21,7 @@ const dishes = [
     },
     {
         name: 'Kitfo',
-        description: "Steak tartare éthiopien assaisonné d'un beurre aux herbes, de piments rouges et de gingembre frais.",
+        description: "Steak tartare érythréen & éthiopien assaisonné d'un beurre aux herbes, de piments rouges et de gingembre frais.",
         price: '30 CHF',
         image: '/images/_assets/KITEFO-D2dNuOak.png'
     },
@@ -42,7 +44,7 @@ export function SignatureSection() {
         <section className="signature-section panel decoratedSection reveal" data-reveal="right">
             <div className="container signature-container">
                 <div className="signature-header">
-                    <p className="signature-eyebrow">Escale au cœur de l&apos;Afrique</p>
+                    <p className="signature-eyebrow">{"Escale au cœur de l'Afrique"}</p>
                     <div className="signature-titleRow">
                         <h2 className="gold-sectionTitleMedium signature-title" data-text="Nos plats signatures">Nos plats signatures</h2>
                     </div>
@@ -51,7 +53,13 @@ export function SignatureSection() {
                     {dishes.map((dish) => (
                         <article key={dish.name} className="signature-card">
                             <div className="signature-imageWrapper">
-                                <img src={dish.image} alt={`${dish.name} - Spécialité authentique éthiopienne à La Gazelle d&apos;Or Genève`} loading="lazy" />
+                                <Image
+                                    src={dish.image}
+                                    alt={`${dish.name} - Spécialité authentique érythréenne & éthiopienne à La Gazelle d'Or Genève`}
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                    className="object-cover"
+                                />
                             </div>
                             <div className="signature-cardInfo">
                                 <h3>{dish.name}</h3>

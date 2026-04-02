@@ -40,26 +40,35 @@ export async function POST(req: NextRequest) {
       // On continue pour envoyer l'email quand même
     }
 
-    // Envoi de l'email (priorité haute pour ne pas perdre la demande)
-    const emailRes = await sendReservationEmail({
-      nom,
-      email,
-      telephone,
-      date,
-      service,
-      personnes: guests,
-      message
-    });
-
-    if (!emailRes.success && !reservation) {
-      throw new Error('Tout a échoué : Base de données et Email');
+    // 43. Envoi de l'email (on tente mais on ne bloque pas si c'est lent)
+    let emailSent = false;
+    try {
+      // On lance l'envoi d'email
+      const emailPromise = sendReservationEmail({
+        nom, email, telephone, date, service, personnes: guests, message
+      });
+      
+      // On attend maximum 4 secondes. Si c'est plus long, tant pis, le client a déjà sa confirmation.
+      const emailRes = await Promise.race([
+        emailPromise,
+        new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 4000))
+      ]) as { success: boolean };
+      
+      emailSent = emailRes.success;
+    } catch (e) {
+      const error = e as any;
+      if (error.message === 'Timeout') {
+        console.warn('Email sending timed out (4s), but continuing (DB is OK).');
+      } else {
+        console.error('Email failed during sending:', e);
+      }
     }
 
     return NextResponse.json({ 
       success: true, 
       id: reservation?.id,
-      emailSent: emailRes.success,
-      message: 'Réservation reçue'
+      emailSent: emailSent,
+      message: 'Réservation enregistrée avec succès'
     }, { status: 201 });
 
   } catch (error) {

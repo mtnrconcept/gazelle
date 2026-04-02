@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 
 const gallery = Array.from({ length: 10 }, (_, index) => ({
     src: `/images/galerie/retouche/${index + 1}.png`,
-    alt: `Décoration authentique et ambiance éthiopienne à La Gazelle d&apos;Or Genève - Photo ${index + 1}`,
+    alt: `Décoration authentique et ambiance érythréenne & éthiopienne à La Gazelle d'Or Genève - Photo ${index + 1}`,
 }));
 
 type InfiniteSlide = {
@@ -190,15 +190,15 @@ export function GallerySection() {
                             className="gold-sectionTitle gallery-title gallery-titleDesktop"
                             data-text="L'ambiance a la Gazelle d'Or"
                         >
-                            L&apos;ambiance a la Gazelle d&apos;Or
+                            {"L'ambiance a la Gazelle d'Or"}
                         </h2>
 
                         <h2
                             className="gold-sectionTitle gallery-title gallery-titleMobile"
                             data-text={"L'ambiance a la\nGazelle d'Or"}
                         >
-                            <span>L&apos;ambiance a la</span>
-                            <span className="gallery-titleLineSecond">Gazelle d&apos;Or</span>
+                            <span>{"L'ambiance a la"}</span>
+                            <span className="gallery-titleLineSecond">{"Gazelle d'Or"}</span>
                         </h2>
                     </div>
 

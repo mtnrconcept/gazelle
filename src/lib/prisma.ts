@@ -5,36 +5,19 @@ import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 
 function createPrismaClient() {
-  const isProd = process.env.NODE_ENV === 'production';
-  
-  // Sur Hostinger (Production), on utilise les variables d'hPanel
-  // Sinon on utilise les valeurs par défaut pour le développement local
+  // Configuration brute pour MariaDB (Hostinger)
+  // On privilégie 127.0.0.1 au lieu d'un nom de domaine externe
   const config = {
-    host: process.env.DB_HOST || '127.0.0.1',
-    port: parseInt(process.env.DB_PORT || '3306'),
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'gazelle_dor',
+    host: '127.0.0.1', 
+    port: 3306,
+    user: 'u211547797_raphael',
+    password: 'amiMILKA1007&&', // Password brut pour éviter les erreurs de parsing
+    database: 'u211547797_lagazelledor26',
     connectionLimit: 5,
-    connectTimeout: 5000, // 5 secondes max pour se connecter
-    idleTimeout: 10000    // 10 secondes max d'inactivité
+    connectTimeout: 10000, 
+    idleTimeout: 30000    
   };
 
-  // Si DATABASE_URL est présent (format Prisma classique), on essaie de l'extraire pour simplifier
-  const dbUrl = process.env.DATABASE_URL;
-  if (dbUrl) {
-    try {
-      const url = new URL(dbUrl.replace('mysql://', 'http://').replace('mariadb://', 'http://'));
-      config.host = url.hostname;
-      config.port = parseInt(url.port) || 3306;
-      config.user = decodeURIComponent(url.username);
-      config.password = decodeURIComponent(url.password);
-      config.database = url.pathname.replace('/', '');
-    } catch (e) {
-      console.warn("Prisma: Impossible d'analyser DATABASE_URL, utilisation des autres variables.");
-    }
-  }
-  
   const adapter = new PrismaMariaDb(config);
   return new PrismaClient({ adapter });
 }

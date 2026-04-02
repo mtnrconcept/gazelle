@@ -11,8 +11,8 @@ import { ReserveSection } from '@/components/ReserveSection';
 import { ParallaxLeaves } from './ParallaxLeaves';
 
 export const metadata: Metadata = {
-  title: "Meilleur Restaurant Éthiopien & Érythréen à Genève | La Gazelle d'Or",
-  description: "Découvrez l'authenticité de la cuisine éthiopienne à Genève. Plats traditionnels, injera maison, options végétariennes et vegan. Réservez une table à la Gazelle d'Or.",
+  title: "Meilleur Restaurant Érythréen & Éthiopien à Genève | La Gazelle d'Or",
+  description: "Découvrez l'authenticité de la cuisine érythréenne et éthiopienne à Genève. Plats traditionnels, injera maison, options végétariennes et vegan. Réservez une table à la Gazelle d'Or.",
 };
 
 export default function Home() {

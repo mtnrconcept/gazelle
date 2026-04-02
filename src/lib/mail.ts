@@ -1,15 +1,16 @@
 import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.hostinger.com',
-  port: parseInt(process.env.SMTP_PORT || '465'),
-  secure: process.env.SMTP_SECURE === 'true' || process.env.SMTP_SECURE === undefined || process.env.SMTP_SECURE === '1',
+  host: 'smtp.hostinger.com',
+  port: 587,
+  secure: false, // Port 587 utilise STARTTLS (secure doit être false)
   auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
+    user: 'reservation@lagazelledorgeneva.com',
+    pass: 'amiMILKA1007&&', // Password brut
   },
   tls: {
-    rejectUnauthorized: false // Aide à la compatibilité sur certains serveurs Hostinger
+    // Indispensable sur certains hébergements pour accepter les certificats du serveur
+    rejectUnauthorized: false
   }
 });
 

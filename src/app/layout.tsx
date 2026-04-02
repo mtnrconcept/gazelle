@@ -24,13 +24,13 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL('https://lagazelledorgeneva.com'),
   title: {
-    default: "La Gazelle d'Or | Restaurant éthiopien & érythréen à Genève | Cuisine Authentique",
+    default: "La Gazelle d'Or | Restaurant érythréen & éthiopien à Genève | Cuisine Authentique",
     template: "%s | La Gazelle d'Or Genève",
   },
-  description: "Découvrez l'authenticité de la cuisine éthiopienne et érythréenne à Genève. Injera fait maison, plats végétariens, vegan et service traiteur africain. Une expérience culinaire unique aux Grottes.",
+  description: "Découvrez l'authenticité de la cuisine érythréenne et éthiopienne à Genève. Injera fait maison, plats végétariens, vegan et service traiteur africain. Une expérience culinaire unique aux Grottes.",
   keywords: [
-    'restaurant éthiopien Genève',
     'restaurant érythréen Genève',
+    'restaurant éthiopien Genève',
     'cuisine africaine Genève',
     'injera fait maison',
     'restaurant végétarien Genève',
@@ -42,8 +42,8 @@ export const metadata: Metadata = {
     'dîner africain',
   ],
   openGraph: {
-    title: "La Gazelle d'Or | Restaurant éthiopien & érythréen à Genève",
-    description: "Le meilleur de la cuisine éthiopienne et érythréenne à Genève. Ambiance chaleureuse, plats traditionnels et options végétariennes.",
+    title: "La Gazelle d'Or | Restaurant érythréen & éthiopien à Genève",
+    description: "Le meilleur de la cuisine érythréenne et éthiopienne à Genève. Ambiance chaleureuse, plats traditionnels et options végétariennes.",
     url: 'https://lagazelledorgeneva.com',
     siteName: "La Gazelle d'Or",
     images: [
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
         url: '/images/_assets/logo-hero-B4ENhAYs.png',
         width: 1200,
         height: 630,
-        alt: "La Gazelle d'Or Genève - Restaurant Éthiopien",
+        alt: "La Gazelle d'Or Genève - Restaurant Érythréen & Éthiopien",
       },
     ],
     locale: 'fr_CH',
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "La Gazelle d'Or | Restaurant Éthiopien Genève",
+    title: "La Gazelle d'Or | Restaurant Érythréen & Éthiopien Genève",
     description: "Injera maison et saveurs authentiques de la Corne de l'Afrique à Genève.",
     images: ['/images/_assets/logo-hero-B4ENhAYs.png'],
   },

@@ -64,12 +64,12 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
                     <source src="/images/_assets/video_hero-Ck-O8Wsn.mp4" type="video/mp4" />
                 </video>
                 <div className="menu-heroContent">
-                    <p className="menu-heroEyebrow">Restaurant érythréen &amp; éthiopien</p>
-                    <h1 className="heroPageTitle menu-heroTitle" data-text="Menu erythreen & ethiopien">
-                        Menu erythreen &amp; ethiopien
+                    <p className="menu-heroEyebrow">{"Restaurant érythréen & éthiopien"}</p>
+                    <h1 className="heroPageTitle menu-heroTitle" data-text="Menu érythréen & éthiopien">
+                        {"Menu érythréen & éthiopien"}
                     </h1>
                     <p className="menu-heroTagline">
-                        Tous nos plats sont servis avec de l&apos;injera fait maison (Sans gluten disponible)
+                        {"Tous nos plats sont servis avec de l'injera fait maison (Sans gluten disponible)"}
                     </p>
                 </div>
             </div>
@@ -130,7 +130,7 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
                                 Service Traiteur & Entreprise
                             </h2>
                     <p>
-                        Organisez vos événements avec les saveurs de La Gazelle d&apos;Or. Buffets, réceptions et repas d&apos;entreprise, sur devis.
+                        {"Organisez vos événements avec les saveurs de La Gazelle d'Or. Buffets, réceptions et repas d'entreprise, sur devis."}
                     </p>
                         </div>
                         <a

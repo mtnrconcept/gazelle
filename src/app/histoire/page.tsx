@@ -1,12 +1,13 @@
 import { Metadata } from 'next';
+import Image from 'next/image';
 import { GallerySection } from '@/components/GallerySection';
 import { ReserveSection } from '@/components/ReserveSection';
 import { PresseSection } from '@/components/PresseSection';
 import { Flame, Coffee, HeartHandshake } from 'lucide-react';
 
 export const metadata: Metadata = {
-    title: "L'Histoire de La Gazelle d'Or | Tradition Éthiopienne à Genève",
-    description: "Découvrez l'histoire de notre restaurant familial à Genève. Plus de 15 ans de passion pour la cuisine éthiopienne et érythréenne authentique aux Grottes.",
+    title: "L'Histoire de La Gazelle d'Or | Tradition Érythréenne & Éthiopienne à Genève",
+    description: "Découvrez l'histoire de notre restaurant familial à Genève. Plus de 15 ans de passion pour la cuisine érythréenne et éthiopienne authentique aux Grottes.",
 };
 
 export default function HistoirePage() {
@@ -25,8 +26,8 @@ export default function HistoirePage() {
                 </video>
                 <div className="history-heroContent">
                     <p className="history-heroEyebrow">Depuis plus de 15 ans à Genève</p>
-                    <h1 className="heroPageTitle history-heroTitle" data-text="L&apos;histoire de La Gazelle d&apos;Or">L&apos;histoire de La Gazelle d&apos;Or</h1>
-                    <p className="history-heroTagline">Un voyage culinaire au cœur de la Corne de l&apos;Afrique</p>
+                    <h1 className="heroPageTitle history-heroTitle" data-text="L'histoire de La Gazelle d'Or">{"L'histoire de La Gazelle d'Or"}</h1>
+                    <p className="history-heroTagline">{"Un voyage culinaire au cœur de la Corne de l'Afrique"}</p>
                 </div>
             </div>
 
@@ -44,23 +45,25 @@ export default function HistoirePage() {
                             
                             <div className="history-storyBody">
                                 <p className="story-lead">
-                                    La Gazelle d&apos;Or est née d&apos;un rêve simple : apporter à Genève les saveurs authentiques de l&apos;Érythrée et de l&apos;Éthiopie. Fondé avec passion et nostalgie des saveurs de la Corne de l&apos;Afrique, notre restaurant est devenu bien plus qu&apos;un simple lieu de restauration.
+                                    {"La Gazelle d'Or est née d'un rêve simple : apporter à Genève les saveurs authentiques de l'Érythrée et de l'Éthiopie. Fondé avec passion et nostalgie des saveurs de la Corne de l'Afrique, notre restaurant est devenu bien plus qu'un simple lieu de restauration."}
                                 </p>
                                 <p>
                                     Niché au cœur du quartier des Grottes, au 55 rue de Lyon, notre établissement vous transporte instantanément dans un village africain. Des cases traditionnelles abritent des tables basses entourées de fauteuils en osier, flanquées de coussins colorés et de grandes corbeilles multicolores tissées à la main.
                                 </p>
                                 <p>
-                                    Chaque plat raconte une histoire, chaque épice évoque un souvenir d&apos;enfance. Nous perpétuons des recettes familiales transmises avec fierté, préparées avec des ingrédients importés directement pour garantir une authenticité totale.
+                                    {"Chaque plat raconte une histoire, chaque épice évoque un souvenir d'enfance. Nous perpétuons des recettes familiales transmises avec fierté, préparées avec des ingrédients importés directement pour garantir une authenticité totale."}
                                 </p>
                             </div>
                         </div>
                         <div className="history-storyMedia">
                             <div className="history-photoFrame">
                                 <div className="history-storyImageWrapper">
-                                    <img
+                                    <Image
                                         src="/images/1.jpg"
-                                        alt="Intérieur authentique du restaurant La Gazelle d&apos;Or Genève - Décoration Africaine"
-                                        loading="lazy"
+                                        alt="Intérieur authentique du restaurant La Gazelle d'Or Genève - Décoration Africaine"
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 50vw"
+                                        className="object-cover"
                                     />
                                     <div className="photo-texture" />
                                 </div>
@@ -82,7 +85,7 @@ export default function HistoirePage() {
                                 <Flame size={44} className="history-icon" strokeWidth={1.5} />
                             </div>
                             <h3>Authenticite</h3>
-                            <p>Nos mélanges d&apos;épices — Berbere, Mitmita, Niter Kibbeh — sont importés directement d&apos;Érythrée et d&apos;Éthiopie pour une expérience gustative sans compromis.</p>
+                            <p>{"Nos mélanges d'épices — Berbere, Mitmita, Niter Kibbeh — sont importés directement d'Érythrée et d'Éthiopie pour une expérience gustative sans compromis."}</p>
                         </div>
                         <div className="history-card">
                             <div className="history-iconWrapper">
@@ -109,10 +112,12 @@ export default function HistoirePage() {
                         <div className="history-injeraMedia">
                             <div className="history-photoFrame photo-frame-reversed">
                                 <div className="history-injeraImageWrapper">
-                                    <img
+                                    <Image
                                         src="/images/injera.png"
-                                        alt="Injera fait maison - Galette traditionnelle éthiopienne à base de Teff"
-                                        loading="lazy"
+                                        alt="Injera fait maison - Galette traditionnelle érythréenne et éthiopienne"
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 50vw"
+                                        className="object-cover"
                                     />
                                     <div className="photo-texture" />
                                 </div>
@@ -125,13 +130,13 @@ export default function HistoirePage() {
                             
                             <div className="history-storyBody">
                                 <p>
-                                    L&apos;injera est bien plus qu&apos;un simple pain. Cette galette fermentée à base de farine de teff est le fondement de toute la cuisine érythréenne et éthiopienne. Chez nous, elle est préparée chaque jour selon la méthode traditionnelle.
+                                    {"L'injera est bien plus qu'un simple pain. Cette galette fermentée à base de farine de teff est le fondement de toute la cuisine érythréenne et éthiopienne. Chez nous, elle est préparée chaque jour selon la méthode traditionnelle."}
                                 </p>
                                 <p>
-                                    Sa texture légèrement spongieuse et son goût subtilement acidulé en font le support parfait pour recueillir les saveurs riches de nos ragoûts et sauces épicées. On ne mange pas <em>avec</em> l&apos;injera — on mange <em>dedans</em>.
+                                    {"Sa texture légèrement spongieuse et son goût subtilement acidulé en font le support parfait pour recueillir les saveurs riches de nos ragoûts et sauces épicées. On ne mange pas "}<em>avec</em>{" l'injera — on mange "}<em>dedans</em>.
                                 </p>
                                 <p>
-                                    C&apos;est aussi un geste de partage : arracher un morceau d&apos;injera et saisir les mets ensemble dans un plat commun est au cœur de la tradition d&apos;hospitalité africaine.
+                                    {"C'est aussi un geste de partage : arracher un morceau d'injera et saisir les mets ensemble dans un plat commun est au cœur de la tradition d'hospitalité africaine."}
                                 </p>
                             </div>
                         </div>
@@ -168,7 +173,7 @@ export default function HistoirePage() {
                         En franchissant nos portes, vous pénétrez dans un véritable village africain. Des cases traditionnelles abritent des tables basses avec des fauteuils en osier agrémentés de coussins colorés. Les grandes corbeilles en osier multicolore tissées à la main illuminent l&apos;espace d&apos;une chaleur inimitable.
                     </p>
                     <p className="history-ambianceText">
-                        Les sons doux de musiques érythréennes et éthiopiennes accompagnent votre repas, complétant une immersion culturelle totale. Chaque détail a été pensé pour vous faire voyager, l&apos;espace d&apos;un repas, jusqu&apos;à la Corne de l&apos;Afrique.
+                        {"Les sons doux de musiques érythréennes et éthiopiennes accompagnent votre repas, complétant une immersion culturelle totale. Chaque détail a été pensé pour vous faire voyager, l'espace d'un repas, jusqu'à la Corne de l'Afrique."}
                     </p>
                 </section>
 
