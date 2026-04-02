@@ -3,7 +3,7 @@ import { Hero } from '@/components/Hero';
 import { Marquee } from '@/components/Marquee';
 import { ExperienceSection } from '@/components/ExperienceSection';
 import { AboutSection } from '@/components/AboutSection';
-import { SignatureSection } from '@/components/SignatureSection';
+
 import { ReviewSection } from '@/components/ReviewSection';
 import { GallerySection } from '@/components/GallerySection';
 import { OrderBanner } from '@/components/OrderBanner';
@@ -23,7 +23,7 @@ export default function Home() {
       <Marquee />
       <ExperienceSection />
       <AboutSection />
-      <SignatureSection />
+  
       <ReviewSection />
       <GallerySection />
       <OrderBanner />
