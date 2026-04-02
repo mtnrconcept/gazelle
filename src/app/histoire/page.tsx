@@ -5,8 +5,8 @@ import { PresseSection } from '@/components/PresseSection';
 import { Flame, Coffee, HeartHandshake } from 'lucide-react';
 
 export const metadata: Metadata = {
-    title: "L'histoire de La Gazelle d'Or",
-    description: "L'histoire de La Gazelle d'Or, restaurant érythréen et éthiopien à Genève.",
+    title: "L'Histoire de La Gazelle d'Or | Tradition Éthiopienne à Genève",
+    description: "Découvrez l'histoire de notre restaurant familial à Genève. Plus de 15 ans de passion pour la cuisine éthiopienne et érythréenne authentique aux Grottes.",
 };
 
 export default function HistoirePage() {
@@ -59,7 +59,7 @@ export default function HistoirePage() {
                                 <div className="history-storyImageWrapper">
                                     <img
                                         src="/images/1.jpg"
-                                        alt="Cuisine traditionnelle La Gazelle d'Or"
+                                        alt="Intérieur authentique du restaurant La Gazelle d&apos;Or Genève - Décoration Africaine"
                                         loading="lazy"
                                     />
                                     <div className="photo-texture" />
@@ -82,7 +82,7 @@ export default function HistoirePage() {
                                 <Flame size={44} className="history-icon" strokeWidth={1.5} />
                             </div>
                             <h3>Authenticite</h3>
-                            <p>Nos mélanges d'épices — Berbere, Mitmita, Niter Kibbeh — sont importés directement d'Érythrée et d'Éthiopie pour une expérience gustative sans compromis.</p>
+                            <p>Nos mélanges d&apos;épices — Berbere, Mitmita, Niter Kibbeh — sont importés directement d&apos;Érythrée et d&apos;Éthiopie pour une expérience gustative sans compromis.</p>
                         </div>
                         <div className="history-card">
                             <div className="history-iconWrapper">
@@ -111,7 +111,7 @@ export default function HistoirePage() {
                                 <div className="history-injeraImageWrapper">
                                     <img
                                         src="/images/injera.png"
-                                        alt="Injera et spécialités de la maison"
+                                        alt="Injera fait maison - Galette traditionnelle éthiopienne à base de Teff"
                                         loading="lazy"
                                     />
                                     <div className="photo-texture" />
@@ -121,14 +121,14 @@ export default function HistoirePage() {
                         </div>
                         <div className="history-injeraText">
                             <span className="history-eyebrow">Le cœur de notre cuisine</span>
-                            <h2 className="gold-sectionTitle history-sectionTitle" data-text="L'Injera,notre galette signature">L&apos;Injera — notre galette signature</h2>
+                            <h2 className="gold-sectionTitle history-sectionTitle" data-text="L&apos;Injera,notre galette signature">L&apos;Injera — notre galette signature</h2>
                             
                             <div className="history-storyBody">
                                 <p>
                                     L&apos;injera est bien plus qu&apos;un simple pain. Cette galette fermentée à base de farine de teff est le fondement de toute la cuisine érythréenne et éthiopienne. Chez nous, elle est préparée chaque jour selon la méthode traditionnelle.
                                 </p>
                                 <p>
-                                    Sa texture légèrement spongieuse et son goût subtilement acidulé en font le support parfait pour recueillir les saveurs riches de nos ragoûts et sauces épicées. On ne mange pas <em>avec</em> l'injera — on mange <em>dedans</em>.
+                                    Sa texture légèrement spongieuse et son goût subtilement acidulé en font le support parfait pour recueillir les saveurs riches de nos ragoûts et sauces épicées. On ne mange pas <em>avec</em> l&apos;injera — on mange <em>dedans</em>.
                                 </p>
                                 <p>
                                     C&apos;est aussi un geste de partage : arracher un morceau d&apos;injera et saisir les mets ensemble dans un plat commun est au cœur de la tradition d&apos;hospitalité africaine.
@@ -143,7 +143,7 @@ export default function HistoirePage() {
                     <div className="history-statsGrid">
                         <div className="history-statCard">
                             <span className="history-statValue">34+</span>
-                            <span className="history-statLabel">Années d'expérience</span>
+                            <span className="history-statLabel">Années d&apos;expérience</span>
                         </div>
                         <div className="history-statCard">
                             <span className="history-statValue">4.5 / 5</span>
@@ -162,13 +162,13 @@ export default function HistoirePage() {
 
                 {/* Ambiance Section */}
                 <section className="history-ambianceSection reveal" data-reveal="right">
-                    <span className="history-eyebrow">L'expérience complète</span>
+                    <span className="history-eyebrow">L&apos;expérience complète</span>
                     <h2 className="gold-sectionTitle history-sectionTitle" data-text="Un decor qui vous transporte">Un decor qui vous transporte</h2>
                     <p className="history-ambianceText">
-                        En franchissant nos portes, vous pénétrez dans un véritable village africain. Des cases traditionnelles abritent des tables basses avec des fauteuils en osier agrémentés de coussins colorés. Les grandes corbeilles en osier multicolore tissées à la main illuminent l'espace d'une chaleur inimitable.
+                        En franchissant nos portes, vous pénétrez dans un véritable village africain. Des cases traditionnelles abritent des tables basses avec des fauteuils en osier agrémentés de coussins colorés. Les grandes corbeilles en osier multicolore tissées à la main illuminent l&apos;espace d&apos;une chaleur inimitable.
                     </p>
                     <p className="history-ambianceText">
-                        Les sons doux de musiques érythréennes et éthiopiennes accompagnent votre repas, complétant une immersion culturelle totale. Chaque détail a été pensé pour vous faire voyager, l'espace d'un repas, jusqu'à la Corne de l'Afrique.
+                        Les sons doux de musiques érythréennes et éthiopiennes accompagnent votre repas, complétant une immersion culturelle totale. Chaque détail a été pensé pour vous faire voyager, l&apos;espace d&apos;un repas, jusqu&apos;à la Corne de l&apos;Afrique.
                     </p>
                 </section>
 

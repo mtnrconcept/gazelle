@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { sendReservationEmail } from '@/lib/mail';
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
@@ -18,17 +19,33 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Nombre de personnes invalide' }, { status: 400 });
   }
 
-  const reservation = await prisma.reservation.create({
-    data: {
-      nom: String(nom).slice(0, 255),
-      email: String(email).slice(0, 255),
-      telephone: telephone ? String(telephone).slice(0, 50) : null,
-      date: new Date(date),
+  try {
+    const reservation = await prisma.reservation.create({
+      data: {
+        nom: String(nom).slice(0, 255),
+        email: String(email).slice(0, 255),
+        telephone: telephone ? String(telephone).slice(0, 50) : null,
+        date: new Date(date),
+        service,
+        personnes: guests,
+        message: message ? String(message).slice(0, 2000) : null,
+      },
+    });
+
+    // Envoyer l'email après la création réussie en DB
+    await sendReservationEmail({
+      nom,
+      email,
+      telephone,
+      date,
       service,
       personnes: guests,
-      message: message ? String(message).slice(0, 2000) : null,
-    },
-  });
+      message
+    });
 
-  return NextResponse.json(reservation, { status: 201 });
+    return NextResponse.json(reservation, { status: 201 });
+  } catch (error) {
+    console.error('Error in reservation API:', error);
+    return NextResponse.json({ error: 'Une erreur est survenue lors de la réservation' }, { status: 500 });
+  }
 }

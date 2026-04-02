@@ -51,7 +51,7 @@ export function SignatureSection() {
                     {dishes.map((dish) => (
                         <article key={dish.name} className="signature-card">
                             <div className="signature-imageWrapper">
-                                <img src={dish.image} alt={dish.name} loading="lazy" />
+                                <img src={dish.image} alt={`${dish.name} - Spécialité authentique éthiopienne à La Gazelle d&apos;Or Genève`} loading="lazy" />
                             </div>
                             <div className="signature-cardInfo">
                                 <h3>{dish.name}</h3>

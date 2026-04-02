@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 
 const gallery = Array.from({ length: 10 }, (_, index) => ({
     src: `/images/galerie/retouche/${index + 1}.png`,
-    alt: `Photo ${index + 1}`,
+    alt: `Décoration authentique et ambiance éthiopienne à La Gazelle d&apos;Or Genève - Photo ${index + 1}`,
 }));
 
 type InfiniteSlide = {

@@ -2,8 +2,8 @@ import { Metadata } from 'next';
 import { ReserveSection } from '@/components/ReserveSection';
 
 export const metadata: Metadata = {
-    title: "Événements africains à Genève",
-    description: "Soirées africaines, événements privés et privatisations à La Gazelle d'Or à Genève. Musique, café et thé traditionnel et expériences culturelles.",
+    title: "Événements Africains & Traiteur à Genève | La Gazelle d'Or",
+    description: "Organisez vos événements privés, soirées culturelles ou profitez de notre service traiteur africain à Genève. Ambiance éthiopienne authentique et moments inoubliables.",
 };
 
 const events = [
@@ -38,7 +38,7 @@ export default function EvenementsPage() {
         <div className="events-page">
             <div className="events-hero">
                 <div className="events-heroContent">
-                    <p className="events-heroEyebrow">Vivez l'Afrique à Genève</p>
+                    <p className="events-heroEyebrow">Vivez l&apos;Afrique à Genève</p>
                     <h1 className="heroPageTitle events-heroTitle" data-text="Evenements africains a Geneve">Evenements africains a Geneve</h1>
                     <p className="events-heroTagline">Des expériences culturelles uniques au cœur du restaurant</p>
                 </div>
@@ -69,7 +69,7 @@ export default function EvenementsPage() {
                         <span className="events-eyebrow">Votre événement sur mesure</span>
                         <h2 className="gold-sectionTitle events-ctaTitle" data-text="Privatisez la Gazelle d'Or">Privatisez la Gazelle d&apos;Or</h2>
                         <p className="events-ctaText">
-                            Pour tout événement privé — anniversaire, mariage, repas d'entreprise ou soirée à thème — notre équipe vous accompagne pour créer une expérience africaine mémorable.
+                            Pour tout événement privé — anniversaire, mariage, repas d&apos;entreprise ou soirée à thème — notre équipe vous accompagne pour créer une expérience africaine mémorable.
                         </p>
                         <div className="events-ctaButtons">
                             <a href="tel:+41223403350" className="events-ctaButton">
