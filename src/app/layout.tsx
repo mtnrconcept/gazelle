@@ -24,49 +24,53 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   metadataBase: new URL('https://lagazelledorgeneva.com'),
   title: {
-    default: "La Gazelle d'Or | Restaurant érythréen & éthiopien à Genève",
+    default: "La Gazelle d'Or | Restaurant érythréen & éthiopien à Genève | Cuisine Authentique",
     template: "%s | La Gazelle d'Or Genève",
   },
   description:
-    "Découvrez l'authenticité de la cuisine érythréenne et éthiopienne à Genève. Injera fait maison, plats végétariens, vegan et service traiteur africain.",
-  applicationName: "La Gazelle d'Or",
-  category: 'restaurant',
-  alternates: {
-    canonical: '/',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-      'max-video-preview': -1,
-    },
+    "Découvrez l'authenticité de la cuisine érythréenne et éthiopienne à Genève. Injera fait maison, plats végétariens, vegan et service traiteur africain. Une expérience culinaire unique aux Grottes.",
+  keywords: [
+    'restaurant érythréen Genève',
+    'restaurant éthiopien Genève',
+    'cuisine africaine Genève',
+    'injera fait maison',
+    'restaurant végétarien Genève',
+    'restaurant vegan Genève',
+    'traiteur africain Genève',
+    "La Gazelle d'Or",
+    'spécialités éthiopiennes',
+    'déjeuner Genève',
+    'dîner africain',
+  ],
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
   },
   openGraph: {
     title: "La Gazelle d'Or | Restaurant érythréen & éthiopien à Genève",
     description:
-      "Cuisine érythréenne et éthiopienne à Genève : injera maison, plats traditionnels, options végétariennes et service traiteur.",
-    url: '/',
+      "Le meilleur de la cuisine érythréenne et éthiopienne à Genève. Ambiance chaleureuse, plats traditionnels et options végétariennes.",
+    url: 'https://lagazelledorgeneva.com',
     siteName: "La Gazelle d'Or",
-    locale: 'fr_CH',
-    type: 'website',
     images: [
       {
         url: '/images/_assets/logo-hero-B4ENhAYs.png',
         width: 1200,
         height: 630,
-        alt: "La Gazelle d'Or Genève - Restaurant érythréen et éthiopien",
+        alt: "La Gazelle d'Or Genève - Restaurant Érythréen & Éthiopien",
       },
     ],
+    locale: 'fr_CH',
+    type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: "La Gazelle d'Or | Restaurant érythréen & éthiopien Genève",
-    description:
-      "Injera maison et saveurs authentiques de la Corne de l'Afrique à Genève.",
+    title: "La Gazelle d'Or | Restaurant Érythréen & Éthiopien Genève",
+    description: "Injera maison et saveurs authentiques de la Corne de l'Afrique à Genève.",
     images: ['/images/_assets/logo-hero-B4ENhAYs.png'],
   },
 };
