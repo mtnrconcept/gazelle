@@ -59,6 +59,15 @@ export async function POST(req: NextRequest) {
       ]) as { success: boolean };
       
       emailSent = emailRes.success;
+      
+      // Si l'e-mail est envoyé avec succès, on met à jour le statut en base de données
+      if (emailSent && reservation) {
+        await prisma.reservation.update({
+          where: { id: reservation.id },
+          data: { status: 'confirmed' }
+        });
+        console.log(`Reservation ${reservation.id} status updated to confirmed.`);
+      }
     } catch (e) {
       const error = e as Error;
       if (error.message === 'Timeout') {

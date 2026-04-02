@@ -24,8 +24,8 @@ export async function sendReservationEmail(data: {
   message?: string | null;
 }) {
   const mailOptions = {
-    from: `"Site Web La Gazelle d'Or" <${process.env.SMTP_USER}>`,
-    to: `${process.env.EMAIL_TO || 'lagazelledorgeneva@gmail.com'}, reservation@lagazelledorgeneva.com`,
+    from: `"Site Web La Gazelle d'Or" <reservation@lagazelledorgeneva.com>`,
+    to: `lagazelledorgeneva@gmail.com, reservation@lagazelledorgeneva.com`,
     subject: `Nouvelle Réservation - ${data.nom} - ${new Date(data.date).toLocaleDateString()}`,
     text: `
       Nouvelle demande de réservation reçue :
@@ -87,7 +87,9 @@ export async function sendReservationEmail(data: {
   };
 
   try {
-    await transporter.sendMail(mailOptions);
+    const info = await transporter.sendMail(mailOptions);
+    console.log('Email sent successfully:', info.messageId);
+    console.log('Accepted recipients:', info.accepted);
     return { success: true };
   } catch (error) {
     console.error('Error sending email:', error);
