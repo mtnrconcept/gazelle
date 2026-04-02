@@ -1,9 +1,10 @@
 import { Metadata } from 'next';
+import Image from 'next/image';
 import { ReserveSection } from '@/components/ReserveSection';
 
 export const metadata: Metadata = {
-    title: "Événements africains à Genève",
-    description: "Soirées africaines, événements privés et privatisations à La Gazelle d'Or à Genève. Musique, café et thé traditionnel et expériences culturelles.",
+    title: "Événements Africains & Traiteur à Genève | La Gazelle d'Or",
+    description: "Organisez vos événements privés, soirées culturelles ou profitez de notre service traiteur africain à Genève. Ambiance érythréenne & éthiopienne authentique et moments inoubliables.",
 };
 
 const events = [
@@ -17,13 +18,13 @@ const events = [
         title: 'Cafe et The traditionnel',
         eyebrow: 'Authenticité',
         description: 'Découvrez la richesse des arômes du café et du thé traditionnels et laissez-vous transporter par leur goût authentique. Une expérience sensorielle unique qui honore nos racines.',
-        image: '/images/6.webp'
+        image: '/images/café.png'
     },
     {
         title: 'Privatisation',
         eyebrow: 'Exclusivité',
         description: 'Pour vos anniversaires, mariages ou événements privés, privatisez notre espace. Nous créons pour vous une ambiance sur mesure et un menu adapté à vos envies.',
-        image: '/images/3.webp'
+        image: '/images/2.webp'
     },
     {
         title: 'Service traiteur',
@@ -38,7 +39,7 @@ export default function EvenementsPage() {
         <div className="events-page">
             <div className="events-hero">
                 <div className="events-heroContent">
-                    <p className="events-heroEyebrow">Vivez l'Afrique à Genève</p>
+                    <p className="events-heroEyebrow">{"Vivez l'Afrique à Genève"}</p>
                     <h1 className="heroPageTitle events-heroTitle" data-text="Evenements africains a Geneve">Evenements africains a Geneve</h1>
                     <p className="events-heroTagline">Des expériences culturelles uniques au cœur du restaurant</p>
                 </div>
@@ -53,7 +54,13 @@ export default function EvenementsPage() {
                             id={event.title === 'Service traiteur' ? 'traiteur' : undefined}
                         >
                             <div className="events-eventImage">
-                                <img src={event.image} alt={event.title} />
+                                <Image
+                                    src={event.image}
+                                    alt={`${event.title} - La Gazelle d'Or Genève`}
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                    className="object-cover"
+                                />
                             </div>
                             <div className="events-eventBody">
                                 <span className="events-eyebrow">{event.eyebrow}</span>
@@ -67,9 +74,9 @@ export default function EvenementsPage() {
                 <section className="events-privatisationCta">
                     <div className="events-ctaInner">
                         <span className="events-eyebrow">Votre événement sur mesure</span>
-                        <h2 className="gold-sectionTitle events-ctaTitle" data-text="Privatisez la Gazelle d'Or">Privatisez la Gazelle d&apos;Or</h2>
+                        <h2 className="gold-sectionTitle events-ctaTitle" data-text="Privatisez la Gazelle d'Or">{"Privatisez la Gazelle d'Or"}</h2>
                         <p className="events-ctaText">
-                            Pour tout événement privé — anniversaire, mariage, repas d'entreprise ou soirée à thème — notre équipe vous accompagne pour créer une expérience africaine mémorable.
+                            {"Pour tout événement privé — anniversaire, mariage, repas d'entreprise ou soirée à thème — notre équipe vous accompagne pour créer une expérience africaine mémorable."}
                         </p>
                         <div className="events-ctaButtons">
                             <a href="tel:+41223403350" className="events-ctaButton">
