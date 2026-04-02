@@ -220,9 +220,11 @@ export function PresseSection() {
             >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                    src="/images/journaux2.png"
+                    src="/images/journaux2.webp"
                     alt="Coupures de presse sur La Gazelle d'Or"
                     className="history-presseImage"
+                    loading="lazy"
+                    decoding="async"
                 />
                 <div className="history-presseOverlay" aria-hidden="true" />
 
@@ -258,7 +260,7 @@ export function PresseSection() {
                                 top: lensCY - lensR,
                                 width: lensR * 2,
                                 height: lensR * 2,
-                                backgroundImage: 'url(/images/journaux2.png)',
+                                backgroundImage: 'url(/images/journaux2.webp)',
                                 backgroundSize: `${bgW}px auto`,
                                 backgroundPosition: `${bgX}px ${bgY}px`,
                             }}
