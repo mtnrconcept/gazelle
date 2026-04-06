@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 const gallery = Array.from({ length: 10 }, (_, index) => ({
     src: `/images/galerie/retouche/${index + 1}.png`,
@@ -179,6 +179,78 @@ export function GallerySection() {
         setSelectedIndex(null);
     };
 
+    // --- Touch swipe for carousel ---
+    const carouselRef = useRef<HTMLDivElement>(null);
+    const touchStartX = useRef(0);
+    const touchStartY = useRef(0);
+    const touchDeltaX = useRef(0);
+    const isDragging = useRef(false);
+    const [dragOffset, setDragOffset] = useState(0);
+
+    const handleCarouselTouchStart = useCallback((e: React.TouchEvent) => {
+        touchStartX.current = e.touches[0].clientX;
+        touchStartY.current = e.touches[0].clientY;
+        touchDeltaX.current = 0;
+        isDragging.current = true;
+        setIsTransitionEnabled(false);
+    }, []);
+
+    const handleCarouselTouchMove = useCallback((e: React.TouchEvent) => {
+        if (!isDragging.current) return;
+        const dx = e.touches[0].clientX - touchStartX.current;
+        const dy = e.touches[0].clientY - touchStartY.current;
+        // If scrolling more vertically, don't hijack
+        if (Math.abs(dy) > Math.abs(dx) && Math.abs(touchDeltaX.current) < 5) return;
+        touchDeltaX.current = dx;
+        setDragOffset(dx);
+    }, []);
+
+    const handleCarouselTouchEnd = useCallback(() => {
+        if (!isDragging.current) return;
+        isDragging.current = false;
+        const threshold = 50;
+        setDragOffset(0);
+        setIsTransitionEnabled(true);
+        if (touchDeltaX.current < -threshold) {
+            goToNextSlide();
+        } else if (touchDeltaX.current > threshold) {
+            goToPreviousSlide();
+        }
+        touchDeltaX.current = 0;
+    }, []);
+
+    // --- Touch swipe for lightbox ---
+    const lightboxTouchStartX = useRef(0);
+    const lightboxDeltaX = useRef(0);
+    const [lightboxDragOffset, setLightboxDragOffset] = useState(0);
+    const isLightboxDragging = useRef(false);
+
+    const handleLightboxTouchStart = useCallback((e: React.TouchEvent) => {
+        lightboxTouchStartX.current = e.touches[0].clientX;
+        lightboxDeltaX.current = 0;
+        isLightboxDragging.current = true;
+    }, []);
+
+    const handleLightboxTouchMove = useCallback((e: React.TouchEvent) => {
+        if (!isLightboxDragging.current) return;
+        const dx = e.touches[0].clientX - lightboxTouchStartX.current;
+        lightboxDeltaX.current = dx;
+        setLightboxDragOffset(dx);
+    }, []);
+
+    const handleLightboxTouchEnd = useCallback(() => {
+        if (!isLightboxDragging.current) return;
+        isLightboxDragging.current = false;
+        const threshold = 50;
+        setLightboxDragOffset(0);
+        if (lightboxDeltaX.current < -threshold) {
+            showNextImage();
+        } else if (lightboxDeltaX.current > threshold) {
+            showPreviousImage();
+        }
+        lightboxDeltaX.current = 0;
+    }, []);
+
     return (
         <>
             <section className="gallery-section panel decoratedSection reveal" data-reveal="up">
@@ -220,18 +292,23 @@ export function GallerySection() {
                         </button>
 
                         <div
+                            ref={carouselRef}
                             className="gallery-carousel"
+                            onTouchStart={handleCarouselTouchStart}
+                            onTouchMove={handleCarouselTouchMove}
+                            onTouchEnd={handleCarouselTouchEnd}
                             style={{
                                 overflow: "hidden",
                                 width: "100%",
+                                touchAction: "pan-y",
                             }}
                         >
                             <div
                                 onTransitionEnd={handleTrackTransitionEnd}
                                 style={{
                                     display: "flex",
-                                    transform: `translateX(-${(100 / slidesPerView) * currentIndex}%)`,
-                                    transition: isTransitionEnabled ? "transform 0.5s ease" : "none",
+                                    transform: `translateX(calc(-${(100 / slidesPerView) * currentIndex}% + ${dragOffset}px))`,
+                                    transition: isTransitionEnabled ? "transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)" : "none",
                                 }}
                             >
                                 {infiniteSlides.map((item, idx) => (
@@ -389,6 +466,9 @@ export function GallerySection() {
 
                     <div
                         onClick={(event) => event.stopPropagation()}
+                        onTouchStart={handleLightboxTouchStart}
+                        onTouchMove={handleLightboxTouchMove}
+                        onTouchEnd={handleLightboxTouchEnd}
                         style={{
                             maxWidth: "min(1100px, 92vw)",
                             maxHeight: "88vh",
@@ -397,11 +477,15 @@ export function GallerySection() {
                             alignItems: "center",
                             justifyContent: "center",
                             gap: "14px",
+                            transform: `translateX(${lightboxDragOffset}px)`,
+                            transition: lightboxDragOffset === 0 ? "transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)" : "none",
+                            touchAction: "pan-y",
                         }}
                     >
                         <img
                             src={selectedImage.src}
                             alt={selectedImage.alt}
+                            draggable={false}
                             style={{
                                 maxWidth: "100%",
                                 maxHeight: "78vh",
@@ -410,6 +494,7 @@ export function GallerySection() {
                                 objectFit: "contain",
                                 borderRadius: "16px",
                                 boxShadow: "0 20px 60px rgba(0,0,0,0.45)",
+                                userSelect: "none",
                             }}
                         />
 
