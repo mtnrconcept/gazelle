@@ -4745,6 +4745,8 @@ body.snap-enabled .panel {
 }
 
 .history-injeraImageWrapper {
+    position: relative;
+    aspect-ratio: 4 / 3;
     border: 1px solid rgba(182, 106, 44, 0.4);
     box-shadow: var(--shadow-md);
     overflow: hidden;
