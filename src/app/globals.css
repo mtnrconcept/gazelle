@@ -1038,13 +1038,13 @@ body.snap-enabled .panel {
 .history-heroTitle,
 .contact-heroTitle {
     font-family: var(--font-display);
-    font-size: clamp(2.6rem, 7vw, 5.5rem);
+    font-size: clamp(1.9rem, 7vw, 5.5rem);
     font-weight: 700;
     color: #f2d28a;
-    letter-spacing: 5px;
+    letter-spacing: clamp(1.5px, 1vw, 5px);
     text-transform: uppercase;
     text-shadow: 0 2px 3px rgba(120, 60, 10, 0.55);
-    line-height: 1.05;
+    line-height: 1.08;
     margin: 0;
     background: linear-gradient(135deg, #fff1c8, #f3c567 40%, #c9872f 55%, #f5e2b0 75%, #fff1c8);
     background-size: 240% auto;
@@ -1055,6 +1055,11 @@ body.snap-enabled .panel {
     position: relative;
     display: inline-block;
     margin-bottom: clamp(0.35rem, 1.2vw, 0.85rem);
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    text-wrap: balance;
+    padding: 0 0.25rem;
 }
 
 .hero-title::after,
@@ -1110,11 +1115,13 @@ body.snap-enabled .panel {
 .contact-heroEyebrow {
     font-family: var(--font-display);
     font-size: clamp(0.9rem, 2vw, 1.08rem);
-    letter-spacing: 10px;
+    letter-spacing: clamp(3px, 2.5vw, 10px);
     text-transform: uppercase;
     color: rgba(248, 226, 176, 0.98);
     text-shadow: 0 1px 4px rgba(0,0,0,0.8);
     text-align: center;
+    overflow-wrap: break-word;
+    word-break: break-word;
 }
 
 .hero-bottomContent {
@@ -1139,11 +1146,16 @@ body.snap-enabled .panel {
     font-size: clamp(0.98rem, 1.9vw, 1.16rem);
     color: rgba(255, 245, 218, 0.98);
     text-transform: uppercase;
-    letter-spacing: 5px;
+    letter-spacing: clamp(1.5px, 1.2vw, 5px);
     text-shadow: 0 1px 6px rgba(0,0,0,0.9);
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
+    text-align: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 100%;
+    padding: 0 0.5rem;
 }
 
 .hero-tagline::before,
@@ -1157,9 +1169,10 @@ body.snap-enabled .panel {
 .contact-heroTagline::before,
 .contact-heroTagline::after {
     content: '';
-    width: 40px;
+    width: clamp(20px, 6vw, 40px);
     height: 1px;
     background: linear-gradient(90deg, transparent, rgba(200, 146, 42, 0.8));
+    flex-shrink: 0;
 }
 
 .hero-tagline::after,
@@ -2226,8 +2239,8 @@ body.snap-enabled .panel {
     text-transform: uppercase;
     text-wrap: balance;
     text-align: center;
-    overflow-wrap: normal;
-    word-break: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
     color: #24120a;
     background: none;
     -webkit-text-fill-color: currentColor;
@@ -2724,8 +2737,9 @@ body.snap-enabled .panel {
     }
 
     .menu-imageWrapper {
-        width: 42%;
-        min-width: 132px;
+        width: 38%;
+        min-width: 100px;
+        max-width: 130px;
         height: auto;
         aspect-ratio: 1 / 1;
         border-radius: calc(var(--border-radius) - 4px);
@@ -2744,10 +2758,39 @@ body.snap-enabled .panel {
 
     .menu-cardContent {
         min-width: 0;
+        overflow: hidden;
+    }
+
+    .menu-itemName {
+        font-size: 1.1rem;
+        overflow-wrap: break-word;
+        word-break: break-word;
     }
 
     .menu-price {
-        font-size: 1.14rem;
+        font-size: 1.1rem;
+    }
+
+    .menu-description {
+        font-size: 0.97rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .menu-card {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .menu-imageWrapper {
+        width: 100%;
+        max-width: 160px;
+        height: 130px;
+        aspect-ratio: unset;
+    }
+
+    .menu-itemName {
+        font-size: 1rem;
     }
 }
 
@@ -5273,7 +5316,7 @@ body.snap-enabled .panel {
 
 .events-eventsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
     gap: 2.5rem;
     padding: 6rem 0;
     max-width: 1100px;
@@ -5437,11 +5480,16 @@ body.snap-enabled .panel {
 }
 
 .menu-menuContainer {
-    padding: 3rem 0 4rem;
+    padding-top: 3rem;
+    padding-bottom: 4rem;
 }
 
 @media (max-width: 900px) {
     .menu-hero {
+        background-attachment: scroll;
+    }
+
+    .menu-page {
         background-attachment: scroll;
     }
 }
@@ -5454,7 +5502,7 @@ body.snap-enabled .panel {
 .menu-traiteurBox {
     background: rgba(35, 18, 8, 0.95);
     border: 1px solid rgba(217, 162, 79, 0.4);
-    padding: 3rem;
+    padding: clamp(1.5rem, 5vw, 3rem);
     border-radius: var(--border-radius);
     display: flex;
     flex-direction: column;
@@ -5523,12 +5571,305 @@ body.snap-enabled .panel {
         text-align: left;
         padding: 4rem;
     }
-    
+
     .menu-traiteurContent p {
         margin: 0;
     }
 }
 
+/* ══ GLOBAL RESPONSIVE FIXES ═══════════════════════════════════════════ */
+
+/* Ensure no horizontal overflow on any element */
+.menu-section,
+.about-section,
+.experience-section,
+.gallery-section,
+.reserve-section,
+.review-section,
+.order-section,
+.events-page,
+.history-page,
+.contact-content,
+.menu-page {
+    max-width: 100%;
+}
+
+/* Reserve card: reduce padding on small screens */
+@media (max-width: 480px) {
+    .reserve-card {
+        padding: 2rem 1.25rem;
+    }
+}
+
+/* History stats grid: 2 columns on tablet, 1 on mobile */
+@media (max-width: 767px) and (min-width: 480px) {
+    .history-statsGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* History grid: 2 columns on tablet */
+@media (min-width: 640px) and (max-width: 767px) {
+    .history-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* About section: ensure image doesn't overflow on mobile */
+@media (max-width: 640px) {
+    .about-media {
+        display: none;
+    }
+}
+
+/* Experience grid: 2 columns on tablet */
+@media (min-width: 640px) and (max-width: 899px) {
+    .experience-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Contact row: 2 columns on tablet */
+@media (min-width: 640px) {
+    .contact-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Events section padding on mobile */
+@media (max-width: 600px) {
+    .events-eventsGrid {
+        padding: 3rem 0;
+        gap: 1.5rem;
+    }
+}
+
+/* Menu heroContent: prevent overflow */
+.menu-heroContent,
+.events-heroContent,
+.history-heroContent,
+.contact-heroContent {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+/* Menu tab: reduce padding on mobile */
+@media (max-width: 600px) {
+    .menu-tab {
+        padding: 0.85rem 0.9rem;
+        font-size: 0.9rem;
+        letter-spacing: 1.5px;
+    }
+}
+
+/* Gallery mobile title: allow text wrapping */
+@media (max-width: 639px) {
+    .gallery-titleMobile {
+        overflow-wrap: break-word;
+        word-break: break-word;
+        max-width: 100%;
+    }
+}
+
+/* Ultra-small screens (iPhone SE, 320px wide) */
+@media (max-width: 360px) {
+    .container {
+        padding: 0 0.75rem;
+    }
+
+    .panel {
+        padding: 2rem 0;
+    }
+
+    .hero-ctaButton {
+        padding: 0.875rem 1.75rem;
+        font-size: 0.9rem;
+    }
+
+    .footer-logoTitle {
+        font-size: 1.25rem;
+        letter-spacing: 1.5px;
+    }
+
+    .menu-traiteurButton {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    h1, h2, h3, h4 {
+        letter-spacing: 0.5px;
+        word-spacing: -0.05em;
+    }
+}
+
+/* Tablet range (640–900px): improve multi-column layouts */
+@media (min-width: 640px) and (max-width: 899px) {
+    .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .menu-imageWrapper {
+        width: 90px;
+        height: 90px;
+    }
+}
+
+/* Fix review summary card overflow on mobile */
+@media (max-width: 480px) {
+    .review-summaryCard {
+        padding: 1.25rem 1.5rem;
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+/* ══ HERO SECTIONS RESPONSIVE FIXES ═══════════════════════════════════ */
+
+/* Ensure all hero content containers are safely padded and never overflow */
+.hero-topContent,
+.hero-bottomContent,
+.menu-heroContent,
+.events-heroContent,
+.history-heroContent,
+.contact-heroContent {
+    width: 100%;
+    max-width: min(900px, 100%);
+    padding-left: clamp(1rem, 4vw, 2rem);
+    padding-right: clamp(1rem, 4vw, 2rem);
+    box-sizing: border-box;
+}
+
+/* Use dvh for hero heights to account for mobile browser chrome */
+@supports (height: 100dvh) {
+    .hero-section {
+        min-height: 100dvh;
+    }
+
+    .history-hero {
+        height: 100dvh;
+        min-height: 100dvh;
+    }
+}
+
+/* Tablet and mobile hero adjustments */
+@media (max-width: 900px) {
+    .menu-hero {
+        height: auto;
+        min-height: 340px;
+        padding-bottom: 2rem;
+    }
+
+    .events-hero {
+        height: auto;
+        min-height: 320px;
+        padding-bottom: 2rem;
+        background-attachment: scroll;
+    }
+
+    .contact-hero {
+        height: auto;
+        min-height: 340px;
+        padding-bottom: 2rem;
+    }
+
+    .history-hero {
+        height: auto;
+        min-height: 480px;
+    }
+}
+
+/* Small phones: stack hero tagline elements vertically and trim decorative lines */
+@media (max-width: 600px) {
+    .hero-tagline,
+    .menu-heroTagline,
+    .events-heroTagline,
+    .history-heroTagline,
+    .contact-heroTagline {
+        font-size: clamp(0.82rem, 3vw, 1rem);
+        gap: 0.5rem;
+        line-height: 1.5;
+    }
+
+    .hero-tagline::before,
+    .hero-tagline::after,
+    .menu-heroTagline::before,
+    .menu-heroTagline::after,
+    .events-heroTagline::before,
+    .events-heroTagline::after,
+    .history-heroTagline::before,
+    .history-heroTagline::after,
+    .contact-heroTagline::before,
+    .contact-heroTagline::after {
+        display: none;
+    }
+
+    .hero-location,
+    .menu-heroEyebrow,
+    .events-heroEyebrow,
+    .history-heroEyebrow,
+    .contact-heroEyebrow {
+        font-size: clamp(0.75rem, 2.6vw, 1rem);
+    }
+
+    .menu-hero,
+    .events-hero,
+    .contact-hero {
+        min-height: 280px;
+    }
+
+    .history-hero {
+        min-height: 420px;
+    }
+}
+
+/* Ultra-small screens: further reductions */
+@media (max-width: 380px) {
+    .hero-title {
+        font-size: clamp(1.7rem, 8vw, 2.2rem);
+        letter-spacing: 1px;
+    }
+
+    .heroPageTitle,
+    .menu-heroTitle,
+    .events-heroTitle,
+    .history-heroTitle,
+    .contact-heroTitle {
+        font-size: clamp(1.45rem, 7vw, 1.9rem);
+        letter-spacing: 1px;
+    }
+
+    .hero-tagline,
+    .menu-heroTagline,
+    .events-heroTagline,
+    .history-heroTagline,
+    .contact-heroTagline {
+        letter-spacing: 1px;
+    }
+
+    .hero-location,
+    .menu-heroEyebrow,
+    .events-heroEyebrow,
+    .history-heroEyebrow,
+    .contact-heroEyebrow {
+        letter-spacing: 2px;
+    }
+}
+
+/* Landscape orientation on short mobile screens: prevent hero from taking entire viewport */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero-section {
+        min-height: 500px;
+    }
+
+    .history-hero {
+        height: auto;
+        min-height: 420px;
+    }
+
+    .menu-hero,
+    .events-hero,
+    .contact-hero {
+        min-height: 360px;
 /* ══ ADMIN RESPONSIVE SAFEGUARDS ═══════════════════════════════════════ */
 .admin-layout-main {
     min-width: 0;
