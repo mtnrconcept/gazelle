@@ -738,14 +738,16 @@ body.snap-enabled .panel {
 
 .header-mobileRow {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 1fr auto auto;
     align-items: center;
+    gap: 0.5rem;
     padding: 0.8rem 0;
 }
 
 .header-mobileRow > .header-brand {
     grid-column: 2;
     justify-self: center;
+    min-width: 0;
 }
 
 .header-mobileMenuBtn {
@@ -758,8 +760,15 @@ body.snap-enabled .panel {
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 0.98rem;
+    font-family: var(--font-display);
     background: rgba(20, 12, 7, 0.6);
     transition: background 0.3s, border-color 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+    line-height: 1;
+    flex-shrink: 0;
 }
 
 .header-mobileMenuBtn:hover {
@@ -5700,6 +5709,12 @@ body.snap-enabled .panel {
 
 /* Ultra-small screens (iPhone SE, 320px wide) */
 @media (max-width: 360px) {
+    .header-mobileMenuBtn {
+        padding: 0.4rem 0.7rem;
+        font-size: 0.88rem;
+        letter-spacing: 1.2px;
+    }
+
     .container {
         padding: 0 0.75rem;
     }
