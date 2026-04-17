@@ -47,7 +47,9 @@
 }
 
 html {
-  overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
@@ -65,8 +67,24 @@ body {
   color: var(--color-text);
   line-height: 1.7;
   min-height: 100vh;
-  overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   padding-top: var(--header-h, 126px);
+}
+
+main,
+section,
+.container {
+  max-width: 100%;
+}
+
+p,
+h1, h2, h3, h4, h5, h6,
+a,
+span,
+button {
+  overflow-wrap: anywhere;
 }
 
 .heroFullBleed {
@@ -151,7 +169,7 @@ body.snap-enabled .panel {
   content: '';
   position: absolute;
   left: 50%;
-  width: 100vw;
+  width: 100%;
   transform: translateX(-50%);
   height: 62px;
   background: url('/images/d%C3%A9cor2/bandeau.webp') no-repeat center;
@@ -4903,8 +4921,8 @@ body.snap-enabled .panel {
 
 .history-presseFrame {
     position: relative;
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
+    width: 100%;
+    margin-left: 0;
     overflow: hidden;
 }
 
@@ -5852,5 +5870,46 @@ body.snap-enabled .panel {
     .events-hero,
     .contact-hero {
         min-height: 360px;
+/* ══ ADMIN RESPONSIVE SAFEGUARDS ═══════════════════════════════════════ */
+.admin-layout-main {
+    min-width: 0;
+}
+
+@media (max-width: 900px) {
+    .admin-layout-shell {
+        flex-direction: column;
+    }
+
+    .admin-layout-main {
+        padding: 1rem !important;
+    }
+
+    .admin-sidebar {
+        width: 100% !important;
+        min-height: auto !important;
+        padding: 1rem 0 !important;
+    }
+
+    .admin-sidebar-heading {
+        margin-bottom: 1rem !important;
+    }
+
+    .admin-subsection-card {
+        margin-left: 0 !important;
+        padding-left: 0.75rem !important;
+    }
+
+    .admin-menu-itemRow {
+        align-items: flex-start !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .admin-itemForm-twoCols > input {
+        min-width: 100%;
+    }
+
+    .admin-reservations-filter > button {
+        flex: 1 1 48%;
     }
 }
