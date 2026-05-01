@@ -105,7 +105,9 @@ export function Header() {
               width={263}
               height={118}
               priority
-              sizes="263px"
+              fetchPriority="high"
+              sizes="(max-width: 768px) 200px, 263px"
+              quality={80}
               className="header-brandMark"
             />
           </Link>
@@ -169,7 +171,9 @@ export function Header() {
               width={263}
               height={118}
               priority
-              sizes="263px"
+              fetchPriority="high"
+              sizes="(max-width: 768px) 200px, 263px"
+              quality={80}
               className="header-brandMark"
             />
           </Link>

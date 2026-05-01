@@ -99,8 +99,9 @@ export function Hero() {
                         fill
                         sizes="100vw"
                         priority={idx === 0}
+                        fetchPriority={idx === 0 ? 'high' : 'auto'}
                         loading={idx === 0 ? undefined : 'lazy'}
-                        quality={75}
+                        quality={idx === 0 ? 70 : 65}
                         className={`hero-slide ${idx === current ? 'hero-slideActive' : ''}`}
                     />
                 ))}
