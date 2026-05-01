@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import type { MenuSectionData, MenuItemData } from '@/types/menu';
 
 const streetFoodImageByName: Record<string, string> = {
@@ -86,11 +87,14 @@ function MenuItemCard({ item }: { item: MenuItemData }) {
         <div className="menu-card">
             {imageSrc && (
                 <div className={`menu-imageWrapper ${imageFocusClass}`.trim()}>
-                    <img
+                    <Image
                         src={imageSrc}
                         alt={item.name}
-                        className="menu-image"
+                        fill
+                        sizes="100px"
+                        quality={70}
                         loading="lazy"
+                        className="menu-image"
                     />
                 </div>
             )}

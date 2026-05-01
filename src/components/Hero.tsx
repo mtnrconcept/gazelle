@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect, useMemo } from 'react';
 
@@ -90,11 +91,16 @@ export function Hero() {
         >
             <div className="hero-slideshow">
                 {slides.map((src, idx) => (
-                    <img
+                    <Image
                         key={src}
                         src={src}
                         alt=""
                         aria-hidden="true"
+                        fill
+                        sizes="100vw"
+                        priority={idx === 0}
+                        loading={idx === 0 ? undefined : 'lazy'}
+                        quality={75}
                         className={`hero-slide ${idx === current ? 'hero-slideActive' : ''}`}
                     />
                 ))}

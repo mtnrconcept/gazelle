@@ -1,14 +1,18 @@
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import { Hero } from '@/components/Hero';
 import { Marquee } from '@/components/Marquee';
 import { ExperienceSection } from '@/components/ExperienceSection';
 import { AboutSection } from '@/components/AboutSection';
 
 import { ReviewSection } from '@/components/ReviewSection';
-import { GallerySection } from '@/components/GallerySection';
 import { OrderBanner } from '@/components/OrderBanner';
 import { ReserveSection } from '@/components/ReserveSection';
 import { ParallaxLeaves } from './ParallaxLeaves';
+
+const GallerySection = dynamic(
+  () => import('@/components/GallerySection').then((m) => m.GallerySection)
+);
 
 export const metadata: Metadata = {
   title: "Meilleur Restaurant Érythréen & Éthiopien à Genève | La Gazelle d'Or",

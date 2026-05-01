@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 const gallery = Array.from({ length: 10 }, (_, index) => ({
@@ -346,20 +347,21 @@ export function GallerySection() {
                                             >
                                                 <div
                                                     style={{
+                                                        position: "relative",
                                                         width: "100%",
                                                         aspectRatio: "4 / 3",
                                                         overflow: "hidden",
                                                         background: "#1a1a1a",
                                                     }}
                                                 >
-                                                    <img
+                                                    <Image
                                                         src={item.src}
                                                         alt={item.alt}
+                                                        fill
+                                                        sizes="(max-width: 768px) 90vw, (max-width: 1100px) 45vw, 30vw"
+                                                        quality={70}
                                                         loading="lazy"
                                                         style={{
-                                                            display: "block",
-                                                            width: "100%",
-                                                            height: "100%",
                                                             objectFit: "cover",
                                                             objectPosition: "center",
                                                         }}
@@ -482,9 +484,13 @@ export function GallerySection() {
                             touchAction: "pan-y",
                         }}
                     >
-                        <img
+                        <Image
                             src={selectedImage.src}
                             alt={selectedImage.alt}
+                            width={1600}
+                            height={1200}
+                            sizes="(max-width: 1100px) 92vw, 1100px"
+                            quality={85}
                             draggable={false}
                             style={{
                                 maxWidth: "100%",

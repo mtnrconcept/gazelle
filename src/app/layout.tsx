@@ -82,6 +82,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" className={`${cinzel.variable} ${cormorant.variable}`}>
+      <head>
+        <link
+          rel="preload"
+          href="/african.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body>
         <Header />
         <main>{children}</main>
