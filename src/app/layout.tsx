@@ -85,6 +85,15 @@ export default function RootLayout({
       <head>
         <link
           rel="preload"
+          as="image"
+          type="image/avif"
+          href="/images/hero/lcp-1080w.avif"
+          imageSrcSet="/images/hero/lcp-360w.avif 360w, /images/hero/lcp-480w.avif 480w, /images/hero/lcp-640w.avif 640w, /images/hero/lcp-828w.avif 828w, /images/hero/lcp-1080w.avif 1080w, /images/hero/lcp-1280w.avif 1280w, /images/hero/lcp-1600w.avif 1600w"
+          imageSizes="100vw"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
           href="/african.ttf"
           as="font"
           type="font/ttf"
