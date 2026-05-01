@@ -116,13 +116,15 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
                     muted
                     loop
                     playsInline
+                    preload="metadata"
                     className="menu-heroVideo"
-                    poster="/images/2.webp"
+                    poster="/images/_assets/video_hero-poster.webp"
                     onLoadedMetadata={(e) => {
                         e.currentTarget.style.opacity = '1';
                     }}
                 >
-                    <source src="/images/_assets/video_hero-Ck-O8Wsn.mp4" type="video/mp4" />
+                    <source src="/images/_assets/video_hero-1080p.webm" type="video/webm" />
+                    <source src="/images/_assets/video_hero-1080p.mp4" type="video/mp4" />
                 </video>
 
                 <div className="menu-heroContent">
