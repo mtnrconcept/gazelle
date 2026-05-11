@@ -1,5 +1,11 @@
 import nodemailer from 'nodemailer';
 
+const reservationEmailRecipients = [
+  'lagazelledorgeneva@gmail.com',
+  'reservation@lagazelledorgeneva.com',
+  'rbarman@hotmail.ch',
+];
+
 const transporter = nodemailer.createTransport({
   host: 'smtp.titan.email',
   port: 587,
@@ -25,7 +31,7 @@ export async function sendReservationEmail(data: {
 }) {
   const mailOptions = {
     from: `"Site Web La Gazelle d'Or" <reservation@lagazelledorgeneva.com>`,
-    to: `lagazelledorgeneva@gmail.com, reservation@lagazelledorgeneva.com`,
+    to: reservationEmailRecipients.join(', '),
     subject: `Nouvelle Réservation - ${data.nom} - ${new Date(data.date).toLocaleDateString()}`,
     text: `
       Nouvelle demande de réservation reçue :
@@ -87,14 +93,8 @@ export async function sendReservationEmail(data: {
   };
 
   try {
-    const recipients = [
-      'lagazelledorgeneva@gmail.com', 
-      'reservation@lagazelledorgeneva.com',
-      'rbarman@hotmail.ch'
-    ];
-    
-    // On envoie individuellement à chaque destinataire pour maximiser le taux de succès sur Gmail
-    const sendPromises = recipients.map(toAddress => 
+    // On envoie individuellement à chaque destinataire pour maximiser le taux de succès sur Gmail.
+    const sendPromises = reservationEmailRecipients.map((toAddress) =>
       transporter.sendMail({ ...mailOptions, to: toAddress })
     );
 
