@@ -230,8 +230,8 @@ export function ContactPageClient() {
 
                             <div className="contact-infoBlock">
                                 <p className="contact-infoLabel">Email</p>
-                                <a href="mailto:lagazelledorgeneva@gmail.com" className="contact-infoLink">
-                                    lagazelledorgeneva@gmail.com
+                                <a href="mailto:reservation@lagazelledorgeneva.com" className="contact-infoLink">
+                                   reservation@lagazelledorgeneva.com
                                 </a>
                             </div>
 
