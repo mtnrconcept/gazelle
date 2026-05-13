@@ -4,9 +4,10 @@ import { MenuPageClient } from './MenuPageClient';
 
 export const metadata: Metadata = {
     title: "Menu érythréen & éthiopien à Genève",
-    description: "Découvrez le menu érythréen et éthiopien de La Gazelle d'Or à Genève : injera maison, plats traditionnels et menus dégustation.",
+    description:
+        "Découvrez le menu érythréen et éthiopien de La Gazelle d'Or à Genève : injera maison, plats traditionnels et menus dégustation.",
 };
 
 export default function MenuPage() {
-    return <MenuPageClient sections={menuData as any} />;
+    return <MenuPageClient sections={menuData} />;
 }

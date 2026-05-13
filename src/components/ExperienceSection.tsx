@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 const baseUrl = 'https://lagazelledorgeneva.com';
@@ -44,7 +45,14 @@ export function ExperienceSection() {
 
                             {/* Circular image */}
                             <div className="experience-imageWrapper">
-                                <img src={item.image} alt={item.title} loading="lazy" />
+                                <Image
+                                    src={item.image}
+                                    alt={item.title}
+                                    fill
+                                    sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 30vw"
+                                    quality={70}
+                                    loading="lazy"
+                                />
                             </div>
 
                             {/* Button at bottom */}

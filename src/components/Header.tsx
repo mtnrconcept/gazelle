@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
@@ -98,9 +99,15 @@ export function Header() {
           </div>
 
           <Link href="/" className="header-brand">
-            <img
+            <Image
               src="/images/logo.webp"
               alt="La Gazelle d'Or"
+              width={263}
+              height={118}
+              priority
+              fetchPriority="high"
+              sizes="(max-width: 768px) 200px, 263px"
+              quality={80}
               className="header-brandMark"
             />
           </Link>
@@ -158,9 +165,15 @@ export function Header() {
 
         <div className="header-mobileRow">
           <Link href="/" className="header-brand">
-            <img
+            <Image
               src="/images/logo.webp"
               alt="La Gazelle d'Or"
+              width={263}
+              height={118}
+              priority
+              fetchPriority="high"
+              sizes="(max-width: 768px) 200px, 263px"
+              quality={80}
               className="header-brandMark"
             />
           </Link>

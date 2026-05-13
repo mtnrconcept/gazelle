@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect, useMemo } from 'react';
 
@@ -89,13 +90,38 @@ export function Hero() {
             style={{ '--scroll-y': `${scrollY}px` } as React.CSSProperties}
         >
             <div className="hero-slideshow">
-                {slides.map((src, idx) => (
+                {/* Slide 0 — LCP element: static <picture> with explicit srcset to bypass /_next/image */}
+                <picture>
+                    <source
+                        type="image/avif"
+                        srcSet="/images/hero/lcp-360w.avif 360w, /images/hero/lcp-480w.avif 480w, /images/hero/lcp-640w.avif 640w, /images/hero/lcp-828w.avif 828w, /images/hero/lcp-1080w.avif 1080w, /images/hero/lcp-1280w.avif 1280w, /images/hero/lcp-1600w.avif 1600w"
+                        sizes="100vw"
+                    />
+                    <source
+                        type="image/webp"
+                        srcSet="/images/hero/lcp-360w.webp 360w, /images/hero/lcp-480w.webp 480w, /images/hero/lcp-640w.webp 640w, /images/hero/lcp-828w.webp 828w, /images/hero/lcp-1080w.webp 1080w, /images/hero/lcp-1280w.webp 1280w, /images/hero/lcp-1600w.webp 1600w"
+                        sizes="100vw"
+                    />
                     <img
+                        src="/images/hero/lcp-1080w.webp"
+                        alt=""
+                        aria-hidden="true"
+                        decoding="async"
+                        fetchPriority="high"
+                        className={`hero-slide ${current === 0 ? 'hero-slideActive' : ''}`}
+                    />
+                </picture>
+                {slides.slice(1).map((src, idx) => (
+                    <Image
                         key={src}
                         src={src}
                         alt=""
                         aria-hidden="true"
-                        className={`hero-slide ${idx === current ? 'hero-slideActive' : ''}`}
+                        fill
+                        sizes="100vw"
+                        loading="lazy"
+                        quality={65}
+                        className={`hero-slide ${idx + 1 === current ? 'hero-slideActive' : ''}`}
                     />
                 ))}
             </div>

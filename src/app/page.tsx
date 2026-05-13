@@ -1,18 +1,22 @@
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import { Hero } from '@/components/Hero';
 import { Marquee } from '@/components/Marquee';
 import { ExperienceSection } from '@/components/ExperienceSection';
 import { AboutSection } from '@/components/AboutSection';
-import { SignatureSection } from '@/components/SignatureSection';
+
 import { ReviewSection } from '@/components/ReviewSection';
-import { GallerySection } from '@/components/GallerySection';
 import { OrderBanner } from '@/components/OrderBanner';
 import { ReserveSection } from '@/components/ReserveSection';
 import { ParallaxLeaves } from './ParallaxLeaves';
 
+const GallerySection = dynamic(
+  () => import('@/components/GallerySection').then((m) => m.GallerySection)
+);
+
 export const metadata: Metadata = {
-  title: "Restaurant érythréen & éthiopien à Genève",
-  description: "La Gazelle d'Or à Genève : cuisine érythréenne et éthiopienne, injera maison, ambiance africaine et réservation en ligne.",
+  title: "Meilleur Restaurant Érythréen & Éthiopien à Genève | La Gazelle d'Or",
+  description: "Découvrez l'authenticité de la cuisine érythréenne et éthiopienne à Genève. Plats traditionnels, injera maison, options végétariennes et vegan. Réservez une table à la Gazelle d'Or.",
 };
 
 export default function Home() {
@@ -23,7 +27,7 @@ export default function Home() {
       <Marquee />
       <ExperienceSection />
       <AboutSection />
-      <SignatureSection />
+  
       <ReviewSection />
       <GallerySection />
       <OrderBanner />
