@@ -1,21 +1,22 @@
-import { Metadata } from 'next';
 import Image from 'next/image';
 import { ReserveSection } from '@/components/ReserveSection';
+import { buildBreadcrumbJsonLd, buildPageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-    title: "Événements Africains & Traiteur à Genève | La Gazelle d'Or",
-    description: "Organisez vos événements privés, soirées culturelles ou profitez de notre service traiteur africain à Genève. Ambiance érythréenne & éthiopienne authentique et moments inoubliables.",
-};
+export const metadata = buildPageMetadata({
+    title: "Événements, privatisation & traiteur africain à Genève | La Gazelle d'Or",
+    description: "Privatisez La Gazelle d'Or ou demandez notre service traiteur à Genève pour anniversaires, mariages, entreprises et événements aux saveurs érythréennes et éthiopiennes.",
+    path: '/evenements',
+});
 
 const events = [
     {
-        title: 'Soirees Culturelles',
+        title: 'Soirées culturelles',
         eyebrow: 'Tradition',
         description: 'Plongez au cœur de la culture érythréenne et éthiopienne avec nos soirées thématiques. Musique traditionnelle, démonstrations culinaires et moments de partage inoubliables.',
         image: '/images/0.webp'
     },
     {
-        title: 'Cafe et The traditionnel',
+        title: 'Café et thé traditionnel',
         eyebrow: 'Authenticité',
         description: 'Découvrez la richesse des arômes du café et du thé traditionnels et laissez-vous transporter par leur goût authentique. Une expérience sensorielle unique qui honore nos racines.',
         image: '/images/café.png'
@@ -35,62 +36,75 @@ const events = [
 ];
 
 export default function EvenementsPage() {
+    const breadcrumbJsonLd = buildBreadcrumbJsonLd([
+        { name: 'Accueil', path: '/' },
+        { name: 'Événements', path: '/evenements' },
+    ]);
+
     return (
-        <div className="events-page">
-            <div className="events-hero">
-                <div className="events-heroContent">
-                    <p className="events-heroEyebrow">{"Vivez l'Afrique à Genève"}</p>
-                    <h1 className="heroPageTitle events-heroTitle" data-text="Evenements africains a Geneve">Evenements africains a Geneve</h1>
-                    <p className="events-heroTagline">Des expériences culturelles uniques au cœur du restaurant</p>
-                </div>
-            </div>
-
-            <div className="container events-content">
-                <section className="events-eventsGrid">
-                    {events.map((event) => (
-                        <article 
-                            key={event.title} 
-                            className="events-eventCard"
-                            id={event.title === 'Service traiteur' ? 'traiteur' : undefined}
-                        >
-                            <div className="events-eventImage">
-                                <Image
-                                    src={event.image}
-                                    alt={`${event.title} - La Gazelle d'Or Genève`}
-                                    fill
-                                    sizes="(max-width: 768px) 100vw, 50vw"
-                                    className="object-cover"
-                                />
-                            </div>
-                            <div className="events-eventBody">
-                                <span className="events-eyebrow">{event.eyebrow}</span>
-                                <h2 className="gold-sectionTitleMedium events-eventTitle" data-text={event.title}>{event.title}</h2>
-                                <p className="events-eventDesc">{event.description}</p>
-                            </div>
-                        </article>
-                    ))}
-                </section>
-
-                <section className="events-privatisationCta">
-                    <div className="events-ctaInner">
-                        <span className="events-eyebrow">Votre événement sur mesure</span>
-                        <h2 className="gold-sectionTitle events-ctaTitle" data-text="Privatisez la Gazelle d'Or">{"Privatisez la Gazelle d'Or"}</h2>
-                        <p className="events-ctaText">
-                            {"Pour tout événement privé — anniversaire, mariage, repas d'entreprise ou soirée à thème — notre équipe vous accompagne pour créer une expérience africaine mémorable."}
-                        </p>
-                        <div className="events-ctaButtons">
-                            <a href="tel:+41223403350" className="events-ctaButton">
-                                « Nous appeler »
-                            </a>
-                            <a href="mailto:lagazelledorgeneva@gmail.com" className="events-ctaButtonOutline">
-                                Envoyer un email
-                            </a>
-                        </div>
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(breadcrumbJsonLd).replace(/</g, '\\u003c'),
+                }}
+            />
+            <div className="events-page">
+                <div className="events-hero">
+                    <div className="events-heroContent">
+                        <p className="events-heroEyebrow">{"Vivez l'Afrique à Genève"}</p>
+                        <h1 className="heroPageTitle events-heroTitle" data-text="Événements africains à Genève">Événements africains à Genève</h1>
+                        <p className="events-heroTagline">Des expériences culturelles uniques au cœur du restaurant</p>
                     </div>
-                </section>
-            </div>
+                </div>
 
-            <ReserveSection />
-        </div>
+                <div className="container events-content">
+                    <section className="events-eventsGrid">
+                        {events.map((event) => (
+                            <article 
+                                key={event.title} 
+                                className="events-eventCard"
+                                id={event.title === 'Service traiteur' ? 'traiteur' : undefined}
+                            >
+                                <div className="events-eventImage">
+                                    <Image
+                                        src={event.image}
+                                        alt={`${event.title} - La Gazelle d'Or Genève`}
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 50vw"
+                                        className="object-cover"
+                                    />
+                                </div>
+                                <div className="events-eventBody">
+                                    <span className="events-eyebrow">{event.eyebrow}</span>
+                                    <h2 className="gold-sectionTitleMedium events-eventTitle" data-text={event.title}>{event.title}</h2>
+                                    <p className="events-eventDesc">{event.description}</p>
+                                </div>
+                            </article>
+                        ))}
+                    </section>
+
+                    <section className="events-privatisationCta">
+                        <div className="events-ctaInner">
+                            <span className="events-eyebrow">Votre événement sur mesure</span>
+                            <h2 className="gold-sectionTitle events-ctaTitle" data-text="Privatisez la Gazelle d'Or">{"Privatisez la Gazelle d'Or"}</h2>
+                            <p className="events-ctaText">
+                                {"Pour tout événement privé — anniversaire, mariage, repas d'entreprise ou soirée à thème — notre équipe vous accompagne pour créer une expérience africaine mémorable."}
+                            </p>
+                            <div className="events-ctaButtons">
+                                <a href="tel:+41223403350" className="events-ctaButton">
+                                    « Nous appeler »
+                                </a>
+                                <a href="mailto:lagazelledorgeneva@gmail.com" className="events-ctaButtonOutline">
+                                    Envoyer un email
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <ReserveSection />
+            </div>
+        </>
     );
 }

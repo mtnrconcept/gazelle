@@ -71,7 +71,7 @@ export function ReviewSection() {
                                 </div>
                                 <span className="review-source">{review.source}</span>
                             </div>
-                            <p className="review-text">"{review.text}"</p>
+                            <p className="review-text">&ldquo;{review.text}&rdquo;</p>
                             <span className="review-time">{review.time}</span>
                         </div>
                     ))}

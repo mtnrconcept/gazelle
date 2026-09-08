@@ -1,6 +1,15 @@
 "use client";
 
 import { useEffect, useMemo, useRef } from 'react';
+import type { CSSProperties } from 'react';
+
+type LeafStyle = CSSProperties & {
+  '--leaf-speed': number;
+  '--leaf-scale': number;
+  '--leaf-blur': string;
+  '--leaf-opacity': number;
+  '--leaf-z': number;
+};
 
 export function ParallaxLeaves() {
   const layerRef = useRef<HTMLDivElement>(null);
@@ -16,39 +25,52 @@ export function ParallaxLeaves() {
     const layer = layerRef.current;
     if (!layer) return;
 
+    let frameId: number | null = null;
+
     const update = () => {
+      frameId = null;
       const scrollY = window.scrollY || window.pageYOffset || 0;
       layer.style.setProperty('--scroll-y', `${scrollY}px`);
     };
 
+    const scheduleUpdate = () => {
+      if (frameId !== null) return;
+      frameId = window.requestAnimationFrame(update);
+    };
+
     update();
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
+    window.addEventListener('resize', scheduleUpdate);
 
     return () => {
-      window.removeEventListener('scroll', update);
-      window.removeEventListener('resize', update);
+      window.removeEventListener('scroll', scheduleUpdate);
+      window.removeEventListener('resize', scheduleUpdate);
+      if (frameId !== null) window.cancelAnimationFrame(frameId);
     };
   }, []);
 
   return (
     <div className="home-parallaxLayerFront" aria-hidden="true" ref={layerRef}>
-      {leaves.map((leaf, index) => (
-        <span
-          key={`leaf-${index}`}
-          className={`home-leaf ${leaf.side === 'right' ? 'home-leafRight' : ''}`}
-          style={{
-            top: `${leaf.y}vh`,
-            left: `${leaf.x}%`,
-            '--leaf-speed': leaf.speed,
-            '--leaf-scale': leaf.scale,
-            '--leaf-blur': `${leaf.blur}px`,
-            '--leaf-opacity': leaf.opacity,
-            '--leaf-z': leaf.zIndex,
-            backgroundImage: `url('/images/palm-leaf-${leaf.image}.png')`
-          } as any}
-        />
-      ))}
+      {leaves.map((leaf, index) => {
+        const style: LeafStyle = {
+          top: `${leaf.y}vh`,
+          left: `${leaf.x}%`,
+          '--leaf-speed': leaf.speed,
+          '--leaf-scale': leaf.scale,
+          '--leaf-blur': `${leaf.blur}px`,
+          '--leaf-opacity': leaf.opacity,
+          '--leaf-z': leaf.zIndex,
+          backgroundImage: `url('/images/palm-leaf-${leaf.image}.png')`,
+        };
+
+        return (
+          <span
+            key={`leaf-${index}`}
+            className={`home-leaf ${leaf.side === 'right' ? 'home-leafRight' : ''}`}
+            style={style}
+          />
+        );
+      })}
     </div>
   );
 }

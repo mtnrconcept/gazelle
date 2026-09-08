@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { MenuItem as MenuItemSource, MenuSection as MenuSectionSource } from '@/data/menu';
 import type { MenuItemData, MenuSectionData } from '@/types/menu';
+import { DecorativeHeroVideo } from '@/components/DecorativeHeroVideo';
 import { MenuSection as MenuSectionComponent } from '@/components/MenuSection';
 import { ReserveSection } from '@/components/ReserveSection';
 
@@ -111,21 +112,11 @@ export function MenuPageClient({ sections }: MenuPageClientProps) {
     return (
         <div className="menu-page">
             <div className="menu-hero">
-                <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    preload="metadata"
+                <DecorativeHeroVideo
                     className="menu-heroVideo"
                     poster="/images/_assets/video_hero-poster.webp"
-                    onLoadedMetadata={(e) => {
-                        e.currentTarget.style.opacity = '1';
-                    }}
-                >
-                    <source src="/images/_assets/video_hero-1080p.webm" type="video/webm" />
-                    <source src="/images/_assets/video_hero-1080p.mp4" type="video/mp4" />
-                </video>
+                    revealOnMetadata
+                />
 
                 <div className="menu-heroContent">
                     <p className="menu-heroEyebrow">
