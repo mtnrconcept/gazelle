@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { ExternalLink, ChevronDown, Phone, UtensilsCrossed } from 'lucide-react';
+import { siteConfig } from '@/lib/site';
 
 const navLeft = [
   { href: '/', label: 'Accueil' },
@@ -44,18 +45,17 @@ export function Header() {
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsDropdownOpen(false);
       }
     };
+
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
-  // Calcule et met à jour dynamiquement la hauteur du header dans une variable CSS globale
   useEffect(() => {
     const updateHeaderHeight = () => {
       if (headerRef.current) {
@@ -66,9 +66,7 @@ export function Header() {
 
     updateHeaderHeight();
 
-    const resizeObserver = new ResizeObserver(() => {
-        updateHeaderHeight();
-    });
+    const resizeObserver = new ResizeObserver(updateHeaderHeight);
 
     if (headerRef.current) {
       resizeObserver.observe(headerRef.current);
@@ -101,12 +99,11 @@ export function Header() {
           <Link href="/" className="header-brand">
             <Image
               src="/images/logo.webp"
-              alt="La Gazelle d'Or"
+              alt={siteConfig.name}
               width={263}
               height={118}
-              priority
-              fetchPriority="high"
-              sizes="(max-width: 768px) 200px, 263px"
+              loading="eager"
+              sizes="263px"
               quality={80}
               className="header-brandMark"
             />
@@ -123,7 +120,6 @@ export function Header() {
               </Link>
             ))}
 
-            {/* Dropdown Commander */}
             <div className="header-dropdown" ref={dropdownRef}>
               <button
                 className="header-reserveButton"
@@ -150,7 +146,7 @@ export function Header() {
                 ))}
                 <span className="header-dropdownDivider" />
                 <span className="header-dropdownLabel">Sur place</span>
-                <a href="tel:+41223403350" className="header-dropdownLink header-dropdownLink--phone" onClick={() => setIsDropdownOpen(false)}>
+                <a href={`tel:${siteConfig.telephone}`} className="header-dropdownLink header-dropdownLink--phone" onClick={() => setIsDropdownOpen(false)}>
                   <Phone size={14} />
                   <span>Réserver par téléphone</span>
                 </a>
@@ -167,17 +163,16 @@ export function Header() {
           <Link href="/" className="header-brand">
             <Image
               src="/images/logo.webp"
-              alt="La Gazelle d'Or"
+              alt={siteConfig.name}
               width={263}
               height={118}
-              priority
-              fetchPriority="high"
-              sizes="(max-width: 768px) 200px, 263px"
+              loading="eager"
+              sizes="200px"
               quality={80}
               className="header-brandMark"
             />
           </Link>
-          <button className="header-mobileMenuBtn" onClick={toggleMenu} aria-label="Toggle menu">
+          <button className="header-mobileMenuBtn" onClick={toggleMenu} aria-label="Ouvrir ou fermer le menu">
             {isMenuOpen ? '✕' : '☰ Menu'}
           </button>
         </div>
@@ -212,8 +207,8 @@ export function Header() {
               </a>
             ))}
           </div>
-          <a href="tel:+41223403350" className="header-mobileCtaButton" onClick={toggleMenu}>
-            Réserver · +41 22 340 33 50
+          <a href={`tel:${siteConfig.telephone}`} className="header-mobileCtaButton" onClick={toggleMenu}>
+            Réserver · {siteConfig.telephoneDisplay}
           </a>
         </div>
       </div>

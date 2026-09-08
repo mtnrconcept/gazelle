@@ -1,90 +1,38 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const gallery = Array.from({ length: 10 }, (_, index) => ({
     src: `/images/galerie/retouche/${index + 1}.png`,
     alt: `Décoration authentique et ambiance érythréenne & éthiopienne à La Gazelle d'Or Genève - Photo ${index + 1}`,
 }));
 
-type InfiniteSlide = {
-    src: string;
-    alt: string;
-    originalIndex: number;
-    key: string;
-};
-
 export function GallerySection() {
-    const [slidesPerView, setSlidesPerView] = useState(3);
-    const [currentIndex, setCurrentIndex] = useState(3);
-    const [isTransitionEnabled, setIsTransitionEnabled] = useState(true);
+    const carouselRef = useRef<HTMLDivElement>(null);
+    const lightboxTouchStartX = useRef(0);
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-
-    useEffect(() => {
-        const updateSlidesPerView = () => {
-            if (window.innerWidth < 768) {
-                setSlidesPerView(1);
-                return;
-            }
-
-            if (window.innerWidth < 1100) {
-                setSlidesPerView(2);
-                return;
-            }
-
-            setSlidesPerView(3);
-        };
-
-        updateSlidesPerView();
-        window.addEventListener("resize", updateSlidesPerView);
-
-        return () => {
-            window.removeEventListener("resize", updateSlidesPerView);
-        };
-    }, []);
-
-    useEffect(() => {
-        setIsTransitionEnabled(false);
-        setCurrentIndex(slidesPerView);
-
-        const frame = requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                setIsTransitionEnabled(true);
-            });
-        });
-
-        return () => {
-            cancelAnimationFrame(frame);
-        };
-    }, [slidesPerView]);
-
-    const infiniteSlides = useMemo<InfiniteSlide[]>(() => {
-        const cloneCount = slidesPerView;
-
-        const slidesBefore = gallery.slice(-cloneCount).map((item, index) => ({
-            ...item,
-            originalIndex: gallery.length - cloneCount + index,
-            key: `before-${gallery.length - cloneCount + index}`,
-        }));
-
-        const slidesMain = gallery.map((item, index) => ({
-            ...item,
-            originalIndex: index,
-            key: `main-${index}`,
-        }));
-
-        const slidesAfter = gallery.slice(0, cloneCount).map((item, index) => ({
-            ...item,
-            originalIndex: index,
-            key: `after-${index}`,
-        }));
-
-        return [...slidesBefore, ...slidesMain, ...slidesAfter];
-    }, [slidesPerView]);
 
     const selectedImage = selectedIndex !== null ? gallery[selectedIndex] : null;
     const currentImageNumber = selectedIndex !== null ? selectedIndex + 1 : 0;
+
+    const showPreviousImage = useCallback(() => {
+        setSelectedIndex((previous) => {
+            if (previous === null) return 0;
+            return (previous - 1 + gallery.length) % gallery.length;
+        });
+    }, []);
+
+    const showNextImage = useCallback(() => {
+        setSelectedIndex((previous) => {
+            if (previous === null) return 0;
+            return (previous + 1) % gallery.length;
+        });
+    }, []);
+
+    const closeLightbox = useCallback(() => {
+        setSelectedIndex(null);
+    }, []);
 
     useEffect(() => {
         if (selectedIndex === null) {
@@ -96,23 +44,11 @@ export function GallerySection() {
 
         const handleKeyDown = (event: KeyboardEvent) => {
             if (event.key === "Escape") {
-                setSelectedIndex(null);
-                return;
-            }
-
-            if (event.key === "ArrowRight") {
-                setSelectedIndex((prev) => {
-                    if (prev === null) return 0;
-                    return (prev + 1) % gallery.length;
-                });
-                return;
-            }
-
-            if (event.key === "ArrowLeft") {
-                setSelectedIndex((prev) => {
-                    if (prev === null) return 0;
-                    return (prev - 1 + gallery.length) % gallery.length;
-                });
+                closeLightbox();
+            } else if (event.key === "ArrowRight") {
+                showNextImage();
+            } else if (event.key === "ArrowLeft") {
+                showPreviousImage();
             }
         };
 
@@ -122,135 +58,29 @@ export function GallerySection() {
             document.body.style.overflow = "";
             window.removeEventListener("keydown", handleKeyDown);
         };
-    }, [selectedIndex]);
+    }, [closeLightbox, selectedIndex, showNextImage, showPreviousImage]);
 
-    const goToNextSlide = () => {
-        setIsTransitionEnabled(true);
-        setCurrentIndex((prev) => prev + 1);
-    };
+    const scrollCarousel = (direction: -1 | 1) => {
+        const carousel = carouselRef.current;
+        if (!carousel) return;
 
-    const goToPreviousSlide = () => {
-        setIsTransitionEnabled(true);
-        setCurrentIndex((prev) => prev - 1);
-    };
-
-    const handleTrackTransitionEnd = () => {
-        const cloneCount = slidesPerView;
-
-        if (currentIndex < cloneCount) {
-            setIsTransitionEnabled(false);
-            setCurrentIndex(currentIndex + gallery.length);
-
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    setIsTransitionEnabled(true);
-                });
-            });
-
-            return;
-        }
-
-        if (currentIndex >= gallery.length + cloneCount) {
-            setIsTransitionEnabled(false);
-            setCurrentIndex(currentIndex - gallery.length);
-
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    setIsTransitionEnabled(true);
-                });
-            });
-        }
-    };
-
-    const showPreviousImage = () => {
-        setSelectedIndex((prev) => {
-            if (prev === null) return 0;
-            return (prev - 1 + gallery.length) % gallery.length;
+        carousel.scrollBy({
+            left: direction * Math.max(carousel.clientWidth * 0.82, 280),
+            behavior: "smooth",
         });
     };
 
-    const showNextImage = () => {
-        setSelectedIndex((prev) => {
-            if (prev === null) return 0;
-            return (prev + 1) % gallery.length;
-        });
+    const handleLightboxTouchStart = (event: React.TouchEvent) => {
+        lightboxTouchStartX.current = event.touches[0]?.clientX ?? 0;
     };
 
-    const closeLightbox = () => {
-        setSelectedIndex(null);
+    const handleLightboxTouchEnd = (event: React.TouchEvent) => {
+        const endX = event.changedTouches[0]?.clientX ?? lightboxTouchStartX.current;
+        const delta = endX - lightboxTouchStartX.current;
+
+        if (delta < -50) showNextImage();
+        if (delta > 50) showPreviousImage();
     };
-
-    // --- Touch swipe for carousel ---
-    const carouselRef = useRef<HTMLDivElement>(null);
-    const touchStartX = useRef(0);
-    const touchStartY = useRef(0);
-    const touchDeltaX = useRef(0);
-    const isDragging = useRef(false);
-    const [dragOffset, setDragOffset] = useState(0);
-
-    const handleCarouselTouchStart = useCallback((e: React.TouchEvent) => {
-        touchStartX.current = e.touches[0].clientX;
-        touchStartY.current = e.touches[0].clientY;
-        touchDeltaX.current = 0;
-        isDragging.current = true;
-        setIsTransitionEnabled(false);
-    }, []);
-
-    const handleCarouselTouchMove = useCallback((e: React.TouchEvent) => {
-        if (!isDragging.current) return;
-        const dx = e.touches[0].clientX - touchStartX.current;
-        const dy = e.touches[0].clientY - touchStartY.current;
-        // If scrolling more vertically, don't hijack
-        if (Math.abs(dy) > Math.abs(dx) && Math.abs(touchDeltaX.current) < 5) return;
-        touchDeltaX.current = dx;
-        setDragOffset(dx);
-    }, []);
-
-    const handleCarouselTouchEnd = useCallback(() => {
-        if (!isDragging.current) return;
-        isDragging.current = false;
-        const threshold = 50;
-        setDragOffset(0);
-        setIsTransitionEnabled(true);
-        if (touchDeltaX.current < -threshold) {
-            goToNextSlide();
-        } else if (touchDeltaX.current > threshold) {
-            goToPreviousSlide();
-        }
-        touchDeltaX.current = 0;
-    }, []);
-
-    // --- Touch swipe for lightbox ---
-    const lightboxTouchStartX = useRef(0);
-    const lightboxDeltaX = useRef(0);
-    const [lightboxDragOffset, setLightboxDragOffset] = useState(0);
-    const isLightboxDragging = useRef(false);
-
-    const handleLightboxTouchStart = useCallback((e: React.TouchEvent) => {
-        lightboxTouchStartX.current = e.touches[0].clientX;
-        lightboxDeltaX.current = 0;
-        isLightboxDragging.current = true;
-    }, []);
-
-    const handleLightboxTouchMove = useCallback((e: React.TouchEvent) => {
-        if (!isLightboxDragging.current) return;
-        const dx = e.touches[0].clientX - lightboxTouchStartX.current;
-        lightboxDeltaX.current = dx;
-        setLightboxDragOffset(dx);
-    }, []);
-
-    const handleLightboxTouchEnd = useCallback(() => {
-        if (!isLightboxDragging.current) return;
-        isLightboxDragging.current = false;
-        const threshold = 50;
-        setLightboxDragOffset(0);
-        if (lightboxDeltaX.current < -threshold) {
-            showNextImage();
-        } else if (lightboxDeltaX.current > threshold) {
-            showPreviousImage();
-        }
-        lightboxDeltaX.current = 0;
-    }, []);
 
     return (
         <>
@@ -258,20 +88,11 @@ export function GallerySection() {
                 <div className="container gallery-container">
                     <div className="gallery-header">
                         <p className="gallery-eyebrow">Immersion culturelle</p>
-
                         <h2
-                            className="gold-sectionTitle gallery-title gallery-titleDesktop"
-                            data-text="L'ambiance a la Gazelle d'Or"
+                            className="gold-sectionTitle gallery-title"
+                            data-text="L'ambiance à la Gazelle d'Or"
                         >
-                            {"L'ambiance a la Gazelle d'Or"}
-                        </h2>
-
-                        <h2
-                            className="gold-sectionTitle gallery-title gallery-titleMobile"
-                            data-text={"L'ambiance a la\nGazelle d'Or"}
-                        >
-                            <span>{"L'ambiance a la"}</span>
-                            <span className="gallery-titleLineSecond">{"Gazelle d'Or"}</span>
+                            L&apos;ambiance à la Gazelle d&apos;Or
                         </h2>
                     </div>
 
@@ -286,7 +107,7 @@ export function GallerySection() {
                         <button
                             type="button"
                             className="gallery-carouselArrow gallery-carouselArrowLeft"
-                            onClick={goToPreviousSlide}
+                            onClick={() => scrollCarousel(-1)}
                             aria-label="Voir les images précédentes"
                         >
                             <span aria-hidden="true">‹</span>
@@ -295,96 +116,90 @@ export function GallerySection() {
                         <div
                             ref={carouselRef}
                             className="gallery-carousel"
-                            onTouchStart={handleCarouselTouchStart}
-                            onTouchMove={handleCarouselTouchMove}
-                            onTouchEnd={handleCarouselTouchEnd}
                             style={{
-                                overflow: "hidden",
+                                display: "flex",
+                                gap: "16px",
+                                overflowX: "auto",
+                                overflowY: "hidden",
                                 width: "100%",
-                                touchAction: "pan-y",
+                                scrollSnapType: "x mandatory",
+                                scrollBehavior: "smooth",
+                                scrollbarWidth: "none",
+                                overscrollBehaviorInline: "contain",
+                                WebkitOverflowScrolling: "touch",
                             }}
                         >
-                            <div
-                                onTransitionEnd={handleTrackTransitionEnd}
-                                style={{
-                                    display: "flex",
-                                    transform: `translateX(calc(-${(100 / slidesPerView) * currentIndex}% + ${dragOffset}px))`,
-                                    transition: isTransitionEnabled ? "transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)" : "none",
-                                }}
-                            >
-                                {infiniteSlides.map((item, idx) => (
+                            {gallery.map((item, index) => (
+                                <div
+                                    key={item.src}
+                                    className="gallery-slide"
+                                    style={{
+                                        flex: "0 0 min(86vw, 420px)",
+                                        scrollSnapAlign: "center",
+                                        boxSizing: "border-box",
+                                    }}
+                                >
                                     <div
-                                        key={`${item.key}-${idx}`}
-                                        className="gallery-slide"
                                         style={{
-                                            flex: `0 0 ${100 / slidesPerView}%`,
-                                            maxWidth: `${100 / slidesPerView}%`,
-                                            boxSizing: "border-box",
-                                            padding: "0 12px",
+                                            background: "#efe3cf",
+                                            border: "1px solid rgba(186, 140, 80, 0.35)",
+                                            boxShadow: "0 10px 24px rgba(0, 0, 0, 0.10)",
+                                            overflow: "hidden",
+                                            height: "100%",
                                         }}
                                     >
-                                        <div
+                                        <button
+                                            type="button"
+                                            onClick={() => setSelectedIndex(index)}
+                                            aria-label={`Agrandir ${item.alt}`}
                                             style={{
-                                                background: "#efe3cf",
-                                                border: "1px solid rgba(186, 140, 80, 0.35)",
-                                                boxShadow: "0 10px 24px rgba(0, 0, 0, 0.10)",
-                                                overflow: "hidden",
-                                                height: "100%",
+                                                display: "block",
+                                                width: "100%",
+                                                padding: 0,
+                                                border: "none",
+                                                background: "transparent",
+                                                cursor: "zoom-in",
                                             }}
                                         >
-                                            <button
-                                                type="button"
-                                                onClick={() => setSelectedIndex(item.originalIndex)}
-                                                aria-label={`Agrandir ${item.alt}`}
+                                            <div
                                                 style={{
-                                                    display: "block",
+                                                    position: "relative",
                                                     width: "100%",
-                                                    padding: 0,
-                                                    border: "none",
-                                                    background: "transparent",
-                                                    cursor: "zoom-in",
+                                                    aspectRatio: "4 / 3",
+                                                    overflow: "hidden",
+                                                    background: "#1a1a1a",
                                                 }}
                                             >
-                                                <div
+                                                <Image
+                                                    src={item.src}
+                                                    alt={item.alt}
+                                                    fill
+                                                    sizes="(max-width: 768px) 86vw, 420px"
+                                                    quality={70}
+                                                    loading="lazy"
                                                     style={{
-                                                        position: "relative",
-                                                        width: "100%",
-                                                        aspectRatio: "4 / 3",
-                                                        overflow: "hidden",
-                                                        background: "#1a1a1a",
-                                                    }}
-                                                >
-                                                    <Image
-                                                        src={item.src}
-                                                        alt={item.alt}
-                                                        fill
-                                                        sizes="(max-width: 768px) 90vw, (max-width: 1100px) 45vw, 30vw"
-                                                        quality={70}
-                                                        loading="lazy"
-                                                        style={{
-                                                            objectFit: "cover",
-                                                            objectPosition: "center",
-                                                        }}
-                                                    />
-                                                </div>
-
-                                                <div
-                                                    style={{
-                                                        height: "56px",
-                                                        background: "#efe3cf",
+                                                        objectFit: "cover",
+                                                        objectPosition: "center",
                                                     }}
                                                 />
-                                            </button>
-                                        </div>
+                                            </div>
+                                            <div
+                                                aria-hidden="true"
+                                                style={{
+                                                    height: "56px",
+                                                    background: "#efe3cf",
+                                                }}
+                                            />
+                                        </button>
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            ))}
                         </div>
 
                         <button
                             type="button"
                             className="gallery-carouselArrow gallery-carouselArrowRight"
-                            onClick={goToNextSlide}
+                            onClick={() => scrollCarousel(1)}
                             aria-label="Voir les images suivantes"
                         >
                             <span aria-hidden="true">›</span>
@@ -469,7 +284,6 @@ export function GallerySection() {
                     <div
                         onClick={(event) => event.stopPropagation()}
                         onTouchStart={handleLightboxTouchStart}
-                        onTouchMove={handleLightboxTouchMove}
                         onTouchEnd={handleLightboxTouchEnd}
                         style={{
                             maxWidth: "min(1100px, 92vw)",
@@ -479,8 +293,6 @@ export function GallerySection() {
                             alignItems: "center",
                             justifyContent: "center",
                             gap: "14px",
-                            transform: `translateX(${lightboxDragOffset}px)`,
-                            transition: lightboxDragOffset === 0 ? "transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)" : "none",
                             touchAction: "pan-y",
                         }}
                     >

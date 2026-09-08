@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 import { PingPongVideo } from './PingPongVideo';
 
 export function AboutSection() {
@@ -9,12 +9,10 @@ export function AboutSection() {
                     <span className="about-kicker">Notre héritage</span>
                     <h2 className="gold-sectionTitle about-title" data-text="Une Passion Familiale">Une Passion Familiale</h2>
                     <p className="about-text">
-                        Notre maison est née de la passion pour la cuisine érythréenne et éthiopienne authentique.
-                        Nous avons ramené à Genève les recettes traditionnelles de notre famille, transmises de génération en génération.
+                        {"Notre maison est née de la passion pour la cuisine érythréenne et éthiopienne authentique. Nous avons ramené à Genève les recettes traditionnelles de notre famille, transmises de génération en génération."}
                     </p>
                     <p className="about-text">
-                        Chaque plat raconte une histoire, chaque saveur évoque un souvenir d'enfance.
-                        Nous utilisons des ingrédients importés directement d'Érythrée et d'Éthiopie.
+                        {"Chaque plat raconte une histoire, chaque saveur évoque un souvenir d'enfance. Nous utilisons des ingrédients importés directement d'Érythrée et d'Éthiopie."}
                     </p>
                     <div className="about-stats">
                         <div className="about-stat">
@@ -43,7 +41,7 @@ export function AboutSection() {
                         />
                     </div>
                     <div className="about-highlightCard">
-                        <span className="about-highlightTitle">Cafe et The traditionnel</span>
+                        <span className="about-highlightTitle">Café et thé traditionnel</span>
                         <p>Découvrez la richesse des arômes du café et du thé traditionnels et laissez-vous transporter par leur goût authentique.</p>
                     </div>
                 </div>

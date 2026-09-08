@@ -1,8 +1,14 @@
+import type { Metadata } from 'next';
 import { AdminGuard } from './components/AdminGuard';
 import { AdminSidebar } from './components/AdminSidebar';
 
-export const metadata = {
-    title: 'Admin — La Gazelle d\'Or',
+export const metadata: Metadata = {
+    title: "Admin — La Gazelle d'Or",
+    robots: {
+        index: false,
+        follow: false,
+        nocache: true,
+    },
 };
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
