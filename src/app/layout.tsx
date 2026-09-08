@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Cinzel, Cormorant_Garamond } from 'next/font/google';
 import './globals.css';
+import './accent-font-fallback.css';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ScrollReveal } from '@/components/ScrollReveal';
