@@ -5,15 +5,19 @@ import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
 
 function createPrismaClient() {
+  // Configuration brute pour MariaDB (Hostinger)
+  // On privilégie 127.0.0.1 au lieu d'un nom de domaine externe
   const config = {
-    host: '127.0.0.1',
+    host: '127.0.0.1', 
     port: 3306,
-    user: 'root',
-    password: '',
-    database: 'gazelle_dor',
-    connectionLimit: 5
+    user: 'u211547797_raphael',
+    password: 'amiMILKA1007&&', // Password brut pour éviter les erreurs de parsing
+    database: 'u211547797_lagazelledor26',
+    connectionLimit: 5,
+    connectTimeout: 4000, // On échoue au bout de 4s pour éviter le 503 de Hostinger
+    idleTimeout: 30000    
   };
-  
+
   const adapter = new PrismaMariaDb(config);
   return new PrismaClient({ adapter });
 }

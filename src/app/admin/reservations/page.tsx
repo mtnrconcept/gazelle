@@ -54,9 +54,9 @@ export default function AdminReservationsPage() {
 
     return (
         <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+            <div className="admin-reservations-toolbar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', gap: '0.75rem', flexWrap: 'wrap' }}>
                 <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#3a2819' }}>Réservations</h1>
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <div className="admin-reservations-filter" style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                     {['', 'pending', 'confirmed', 'cancelled'].map((f) => (
                         <button
                             key={f}
@@ -83,7 +83,8 @@ export default function AdminReservationsPage() {
                 <p style={{ color: '#888' }}>Aucune réservation trouvée.</p>
             ) : (
                 <div style={{ background: '#fff', borderRadius: '0.75rem', overflow: 'hidden', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.875rem' }}>
+                    <div className="admin-reservations-tableWrap" style={{ overflowX: 'auto' }}>
+                    <table style={{ width: '100%', minWidth: '760px', borderCollapse: 'collapse', fontSize: '0.875rem' }}>
                         <thead>
                             <tr style={{ background: '#fafafa', textAlign: 'left' }}>
                                 <th style={{ padding: '0.75rem 1rem', fontWeight: 600 }}>Date</th>
@@ -135,6 +136,7 @@ export default function AdminReservationsPage() {
                             })}
                         </tbody>
                     </table>
+                    </div>
                 </div>
             )}
         </div>

@@ -1,6 +1,5 @@
+import Image from 'next/image';
 import Link from 'next/link';
-
-const baseUrl = 'https://lagazelledorgeneva.com';
 
 const features = [
     {
@@ -16,7 +15,7 @@ const features = [
         href: '/histoire'
     },
     {
-        title: 'Soirees & Evenements',
+        title: 'Soirées & Événements',
         button: 'Galerie',
         image: '/images/7.webp',
         href: '/evenements'
@@ -36,18 +35,22 @@ export function ExperienceSection() {
                 <div className="experience-grid">
                     {features.map((item) => (
                         <article key={item.title} className="experience-card">
-                            {/* Title at top */}
                             <div className="experience-cardHeader">
                                 <h3 className="experience-cardTitle">{item.title}</h3>
                                 <span className="experience-diamond">◆</span>
                             </div>
 
-                            {/* Circular image */}
                             <div className="experience-imageWrapper">
-                                <img src={item.image} alt={item.title} loading="lazy" />
+                                <Image
+                                    src={item.image}
+                                    alt={item.title}
+                                    fill
+                                    sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 30vw"
+                                    quality={70}
+                                    loading="lazy"
+                                />
                             </div>
 
-                            {/* Button at bottom */}
                             <Link href={item.href} className="experience-cardButton">
                                 {item.button}
                             </Link>
