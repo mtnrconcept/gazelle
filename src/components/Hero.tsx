@@ -151,7 +151,17 @@ export function Hero() {
 
             <div className="hero-topContent">
                 <h1 className="hero-title" data-text="La Gazelle d'Or">La Gazelle d&apos;Or</h1>
-                <p className="hero-location">Genève</p>
+                <p
+                    className="hero-location"
+                    style={{
+                        maxWidth: 'min(92vw, 760px)',
+                        fontSize: 'clamp(0.72rem, 1.2vw, 1rem)',
+                        letterSpacing: 'clamp(2px, 0.45vw, 6px)',
+                        lineHeight: 1.6,
+                    }}
+                >
+                    Restaurant érythréen · éthiopien · Genève
+                </p>
             </div>
 
             <div className="hero-bottomContent">
