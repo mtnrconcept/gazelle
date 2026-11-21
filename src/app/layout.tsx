@@ -6,6 +6,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { PromoPopup } from '@/components/PromoPopup';
+import { AnniversaryIntro } from '@/components/AnniversaryIntro';
 import { siteConfig } from '@/lib/site';
 
 const cinzel = Cinzel({
@@ -75,6 +76,7 @@ export default function RootLayout({
         <Footer />
         <ScrollReveal />
         <PromoPopup />
+        <AnniversaryIntro />
       </body>
     </html>
   );

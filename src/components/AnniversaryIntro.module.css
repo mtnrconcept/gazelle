@@ -1,0 +1,121 @@
+/* Intro vidéo anniversaire (jusqu'au 29.11.2026). Fichier séparé de globals.css. */
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: grid;
+    place-items: center;
+    background: #080302;
+    overscroll-behavior: contain;
+    touch-action: none;
+    animation: introIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.video,
+.still {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.video {
+    object-fit: contain;
+    background: #080302;
+}
+
+.still {
+    object-fit: contain;
+}
+
+.close {
+    position: absolute;
+    top: max(14px, env(safe-area-inset-top));
+    right: max(14px, env(safe-area-inset-right));
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 48px;
+    padding: 0 1.15rem 0 0.95rem;
+    border: 1px solid rgba(217, 162, 79, 0.75);
+    border-radius: 999px;
+    background: rgba(10, 5, 2, 0.72);
+    color: #fbe7b5;
+    font-family: var(--font-display), serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.close:hover {
+    background: rgba(48, 20, 6, 0.88);
+    transform: scale(1.03);
+}
+
+.close:focus-visible,
+.play:focus-visible {
+    outline: 2px solid #fbe7b5;
+    outline-offset: 3px;
+}
+
+.play {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 64px;
+    padding: 0 1.75rem 0 1.4rem;
+    border: 1px solid rgba(217, 162, 79, 0.85);
+    border-radius: 999px;
+    background: linear-gradient(180deg, #a6241c, #771412);
+    color: #fff;
+    font-family: var(--font-display), serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.55);
+}
+
+.spinner {
+    position: relative;
+    z-index: 1;
+    width: 44px;
+    height: 44px;
+    border: 3px solid rgba(217, 162, 79, 0.22);
+    border-top-color: #d9a24f;
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+}
+
+.sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@keyframes introIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
