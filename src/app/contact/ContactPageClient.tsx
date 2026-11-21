@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from 'react';
+import { swissToday } from '@/lib/reservation-validation';
 import { PingPongVideo } from '@/components/PingPongVideo';
 
 export function ContactPageClient() {
@@ -14,6 +15,8 @@ export function ContactPageClient() {
         message: '',
     });
     const [sent, setSent] = useState(false);
+    const [notificationFailed, setNotificationFailed] = useState(false);
+    const [emailOnly, setEmailOnly] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState('');
 
@@ -41,6 +44,9 @@ export function ContactPageClient() {
                 throw new Error(data.error || 'Erreur serveur');
             }
 
+            const data = await res.json();
+            setNotificationFailed(data.emailSent === false);
+            setEmailOnly(data.deliveryMode === 'email_only');
             setSent(true);
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Une erreur est survenue. Veuillez réessayer.');
@@ -96,9 +102,15 @@ export function ContactPageClient() {
                         {sent ? (
                             <div className="contact-successCard">
                                 <span className="contact-successIcon">✓</span>
-                                <h3>Reservation enregistree !</h3>
-                                <p>Votre demande a bien été enregistrée. Nous vous confirmerons votre réservation dans les plus brefs délais.</p>
-                                <button className="contact-resetBtn" onClick={() => { setSent(false); setForm({ nom: '', email: '', telephone: '', date: '', service: 'diner', personnes: '2', message: '' }); }}>
+                                <h3>{emailOnly ? 'Demande transmise !' : 'Demande enregistrée !'}</h3>
+                                {emailOnly ? (
+                                    <p>Votre demande a été transmise directement au restaurant par e-mail. Elle n’apparaît pas encore dans son tableau de bord et reste en attente de confirmation par le restaurant.</p>
+                                ) : notificationFailed ? (
+                                    <p>Votre demande a été enregistrée, mais le restaurant n’a pas pu recevoir l’avis par e-mail. Merci de confirmer directement au <a href="tel:+41223403350">+41 22 340 33 50</a>.</p>
+                                ) : (
+                                    <p>Votre demande a bien été enregistrée. Elle reste en attente de confirmation par le restaurant.</p>
+                                )}
+                                <button className="contact-resetBtn" onClick={() => { setSent(false); setNotificationFailed(false); setEmailOnly(false); setForm({ nom: '', email: '', telephone: '', date: '', service: 'diner', personnes: '2', message: '' }); }}>
                                     Nouvelle réservation
                                 </button>
                             </div>
@@ -159,6 +171,7 @@ export function ContactPageClient() {
                                             id="date"
                                             name="date"
                                             type="date"
+                                            min={swissToday()}
                                             className="contact-input"
                                             value={form.date}
                                             onChange={handleChange}
