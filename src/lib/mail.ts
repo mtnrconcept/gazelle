@@ -1,5 +1,3 @@
-import nodemailer from 'nodemailer';
-
 type ReservationEmail = {
   nom: string;
   email: string;
@@ -8,36 +6,25 @@ type ReservationEmail = {
   service: string;
   personnes: number;
   message?: string | null;
+  emailOnly?: boolean;
 };
 
-export async function sendReservationEmail(data: ReservationEmail): Promise<{ success: boolean }> {
-  const host = process.env.SMTP_HOST;
-  const user = process.env.SMTP_USER;
-  const password = process.env.SMTP_PASSWORD;
-  const port = Number(process.env.SMTP_PORT || 587);
-  // All reservation notifications go exclusively to the restaurant's mailbox.
-  const recipient = 'lagazelledorgeneva@gmail.com';
+const reservationRecipient = 'lagazelledorgeneva@gmail.com';
 
-  if (!host || !user || !password ||
-      !Number.isInteger(port) || port < 1 || port > 65535) {
-    console.error('Reservation SMTP notification is not configured');
+export async function sendReservationEmail(data: ReservationEmail): Promise<{ success: boolean }> {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error('Reservation mail provider is not configured');
     return { success: false };
   }
 
-  const transporter = nodemailer.createTransport({
-    host,
-    port,
-    secure: port === 465,
-    requireTLS: port !== 465,
-    auth: { user, pass: password },
-    connectionTimeout: 7000,
-    greetingTimeout: 7000,
-    socketTimeout: 7000,
-  });
-
   const date = new Date(data.date).toLocaleDateString('fr-CH', { timeZone: 'Europe/Zurich' });
   const text = [
-    'Nouvelle demande de réservation - La Gazelle d\'Or',
+    "Nouvelle demande de réservation - La Gazelle d'Or",
+    '',
+    data.emailOnly
+      ? 'ATTENTION : la base de données est indisponible. Cette demande a été transmise uniquement par e-mail. Contactez le client pour confirmer.'
+      : 'Demande enregistrée dans le tableau de bord et en attente de confirmation.',
     '',
     'Nom : ' + data.nom,
     'Email : ' + data.email,
@@ -48,28 +35,34 @@ export async function sendReservationEmail(data: ReservationEmail): Promise<{ su
     '',
     'Message : ' + (data.message || 'Aucun'),
     '',
-    'Attention : demande en attente de confirmation par le restaurant.',
+    'La réservation doit être confirmée par le restaurant.',
   ].join('\n');
 
   try {
-    const info = await transporter.sendMail({
-      from: process.env.SMTP_FROM || user,
-      to: recipient,
-      subject: 'Nouvelle demande de réservation - ' + data.nom + ' - ' + date,
-      text,
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + apiKey,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: "La Gazelle d'Or <reservations@lagazelledor.ch>",
+        to: [reservationRecipient],
+        reply_to: data.email,
+        subject: (data.emailOnly ? '[A TRAITER PAR EMAIL] ' : '') +
+          'Nouvelle demande de réservation - ' + data.nom + ' - ' + date,
+        text,
+      }),
+      signal: AbortSignal.timeout(10000),
     });
 
-    const accepted = Array.isArray(info.accepted) &&
-      info.accepted.some((address) =>
-        (typeof address === 'string' ? address : address.address).toLowerCase() === recipient
-      );
-
-    if (!accepted) console.error('Reservation SMTP did not accept any recipient');
-    return { success: Boolean(accepted) };
+    if (!response.ok) {
+      console.error('Reservation email provider rejected request (HTTP ' + response.status + ')');
+      return { success: false };
+    }
+    return { success: true };
   } catch (error) {
-    console.error('Reservation SMTP notification failed:', error instanceof Error ? error.name : 'unknown error');
+    console.error('Reservation email provider failure:', error instanceof Error ? error.name : 'unknown');
     return { success: false };
-  } finally {
-    transporter.close();
   }
 }
