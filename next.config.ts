@@ -28,6 +28,12 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        source: '/videos/:path*',
+        headers: [
+          { key: 'Cache-Control', value: `public, max-age=${ONE_YEAR}, immutable` },
+        ],
+      },
+      {
         source: '/_next/image(.*)',
         headers: [
           { key: 'Cache-Control', value: `public, max-age=${ONE_YEAR}, immutable` },
