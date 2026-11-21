@@ -46,6 +46,12 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        source: '/fonts/:path*',
+        headers: [
+          { key: 'Cache-Control', value: `public, max-age=${ONE_YEAR}, immutable` },
+        ],
+      },
+      {
         source: '/african.ttf',
         headers: [
           { key: 'Cache-Control', value: `public, max-age=${ONE_YEAR}, immutable` },

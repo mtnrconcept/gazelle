@@ -23,3 +23,17 @@ test('decorative headings preserve accented French characters', () => {
   assert.match(css, /--font-section-display:\s*['"]AfricanSafe['"],\s*var\(--font-display\),\s*serif/);
   assert.match(layout, /import ['"]\.\/accent-font-fallback\.css['"];?/);
 });
+
+test('site fonts are self-hosted so builds never depend on Google Fonts', () => {
+  const layout = readFileSync(layoutPath, 'utf8');
+  const fontsCss = readFileSync(resolve(process.cwd(), 'src/app/self-hosted-fonts.css'), 'utf8');
+
+  assert.doesNotMatch(layout, /next\/font\/google/);
+  assert.match(layout, /import ['"]\.\/self-hosted-fonts\.css['"];?/);
+  for (const family of ['Cinzel', 'Cormorant Garamond']) {
+    assert.match(fontsCss, new RegExp(`font-family:\\s*'${family}'`));
+  }
+  for (const match of fontsCss.matchAll(/url\('(\/fonts\/[^']+)'\)/g)) {
+    assert.equal(existsSync(resolve(process.cwd(), 'public' + match[1])), true, `${match[1]} must exist`);
+  }
+});
