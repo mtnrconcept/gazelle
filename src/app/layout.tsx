@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Cinzel, Cormorant_Garamond } from 'next/font/google';
+import './self-hosted-fonts.css';
 import './globals.css';
 import './accent-font-fallback.css';
 import { Header } from '@/components/Header';
@@ -9,19 +9,14 @@ import { PromoPopup } from '@/components/PromoPopup';
 import { AnniversaryIntro } from '@/components/AnniversaryIntro';
 import { siteConfig } from '@/lib/site';
 
-const cinzel = Cinzel({
-  subsets: ['latin'],
-  variable: '--font-display',
-  weight: ['400', '600', '700'],
-  display: 'swap',
-});
-
-const cormorant = Cormorant_Garamond({
-  subsets: ['latin'],
-  variable: '--font-body',
-  weight: ['400', '500', '600'],
-  display: 'swap',
-});
+// Polices auto-hébergées (voir self-hosted-fonts.css) : préchargées comme le faisait next/font.
+const preloadedFonts = [
+  '/fonts/cinzel-latin-400-normal.woff2',
+  '/fonts/cinzel-latin-600-normal.woff2',
+  '/fonts/cinzel-latin-700-normal.woff2',
+  '/fonts/cormorant-garamond-latin-400-normal.woff2',
+  '/fonts/cormorant-garamond-latin-600-normal.woff2',
+];
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -60,8 +55,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang={siteConfig.language} className={`${cinzel.variable} ${cormorant.variable}`}>
+    <html lang={siteConfig.language}>
       <head>
+        {preloadedFonts.map((href) => (
+          <link key={href} rel="preload" href={href} as="font" type="font/woff2" crossOrigin="anonymous" />
+        ))}
         <link
           rel="preload"
           href="/african.ttf"
