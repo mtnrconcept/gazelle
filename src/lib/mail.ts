@@ -60,8 +60,9 @@ export async function sendReservationEmail(data: ReservationEmail): Promise<{ su
     });
 
     const accepted = Array.isArray(info.accepted) &&
-      info.accepted.some((address: string) => recipients.some(
-        (recipient) => recipient.toLowerCase() === String(address).toLowerCase()
+      info.accepted.some((address) => recipients.some(
+        (recipient) => recipient.toLowerCase() ===
+          (typeof address === 'string' ? address : address.address).toLowerCase()
       ));
 
     if (!accepted) console.error('Reservation SMTP did not accept any recipient');
