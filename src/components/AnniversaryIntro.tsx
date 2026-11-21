@@ -5,11 +5,14 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Play, X } from 'lucide-react';
 import {
+  ANNIVERSARY_INTRO_CLOSE_FADE_MS,
+  ANNIVERSARY_INTRO_FADE_OUT_MS,
   ANNIVERSARY_INTRO_MEDIA,
   ANNIVERSARY_INTRO_STORAGE_KEY,
   ANNIVERSARY_INTRO_TYPES,
   introLayoutFor,
   isAnniversaryIntroActive,
+  isIntroFinishing,
 } from '@/lib/anniversary-intro';
 import styles from './AnniversaryIntro.module.css';
 
@@ -63,17 +66,17 @@ export function AnniversaryIntro() {
   const eligible = useSyncExternalStore(subscribeNothing, getEligible, () => false);
   const [closed, setClosed] = useState(false);
 
-  const close = useCallback(() => {
+  const finish = useCallback(() => {
     rememberClosed();
     setClosed(true);
   }, []);
 
   if (!eligible || closed || pathname?.startsWith('/admin')) return null;
 
-  return <IntroOverlay onClose={close} />;
+  return <IntroOverlay onDone={finish} />;
 }
 
-function IntroOverlay({ onClose }: { onClose: () => void }) {
+function IntroOverlay({ onDone }: { onDone: () => void }) {
   const layoutKey = useSyncExternalStore(subscribeResize, getLayoutKey, () => 'landscape:contain');
   const reducedMotion = useSyncExternalStore(
     subscribeReducedMotion,
@@ -88,8 +91,21 @@ function IntroOverlay({ onClose }: { onClose: () => void }) {
   const resumeAt = useRef(0);
   const [playing, setPlaying] = useState(false);
   const [blocked, setBlocked] = useState(false);
+  // Durée du fondu de sortie en cours (0 = intro affichée). Le site apparaît à travers l'intro.
+  const [leavingMs, setLeavingMs] = useState(0);
 
-  // Bloque le défilement de la page, place le focus sur « Fermer », Échap ferme.
+  const leave = useCallback((ms: number) => {
+    setLeavingMs((current) => current || ms);
+  }, []);
+
+  // Filet de sécurité si l'événement de fin de transition n'arrive pas (onglet masqué…).
+  useEffect(() => {
+    if (!leavingMs) return;
+    const timer = window.setTimeout(onDone, leavingMs + 300);
+    return () => window.clearTimeout(timer);
+  }, [leavingMs, onDone]);
+
+  // Bloque le défilement de la page, place le focus sur « Fermer », Échap ferme (en fondu).
   useEffect(() => {
     const root = document.documentElement;
     const previousOverflow = root.style.overflow;
@@ -99,7 +115,7 @@ function IntroOverlay({ onClose }: { onClose: () => void }) {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         event.preventDefault();
-        onClose();
+        leave(ANNIVERSARY_INTRO_CLOSE_FADE_MS);
       } else if (event.key === 'Tab') {
         event.preventDefault();
         closeRef.current?.focus();
@@ -111,10 +127,11 @@ function IntroOverlay({ onClose }: { onClose: () => void }) {
       root.style.overflow = previousOverflow;
       document.removeEventListener('keydown', onKeyDown);
     };
-  }, [onClose]);
+  }, [leave]);
 
   // Lecture continue : aucune pause possible. Si le navigateur met la vidéo en pause
   // (onglet masqué, économie d'énergie…), elle repart dès que la page est de nouveau visible.
+  // La pause émise à la fin de la vidéo est ignorée : elle n'est lue qu'une fois.
   useEffect(() => {
     const video = videoRef.current;
     if (!video || reducedMotion) return;
@@ -124,7 +141,7 @@ function IntroOverlay({ onClose }: { onClose: () => void }) {
     video.disableRemotePlayback = true;
 
     const resume = () => {
-      if (document.visibilityState !== 'visible' || !video.paused) return;
+      if (document.visibilityState !== 'visible' || !video.paused || video.ended) return;
       video.play().catch((error: unknown) => {
         if (error instanceof DOMException && error.name === 'NotAllowedError') setBlocked(true);
       });
@@ -146,8 +163,13 @@ function IntroOverlay({ onClose }: { onClose: () => void }) {
 
   return (
     <div
-      className={styles.overlay}
+      className={leavingMs ? `${styles.overlay} ${styles.leaving}` : styles.overlay}
+      style={leavingMs ? { transitionDuration: `${leavingMs}ms` } : undefined}
       data-anniv-intro=""
+      data-leaving={leavingMs ? '' : undefined}
+      onTransitionEnd={(event) => {
+        if (leavingMs && event.target === event.currentTarget && event.propertyName === 'opacity') onDone();
+      }}
       role="dialog"
       aria-modal="true"
       aria-labelledby="anniv-intro-title"
@@ -179,7 +201,6 @@ function IntroOverlay({ onClose }: { onClose: () => void }) {
           style={{ objectFit: fit }}
           autoPlay
           muted
-          loop
           playsInline
           preload="auto"
           disablePictureInPicture
@@ -193,8 +214,11 @@ function IntroOverlay({ onClose }: { onClose: () => void }) {
             setBlocked(false);
           }}
           onTimeUpdate={(event) => {
-            resumeAt.current = event.currentTarget.currentTime;
+            const video = event.currentTarget;
+            resumeAt.current = video.currentTime;
+            if (isIntroFinishing(video.currentTime, video.duration)) leave(ANNIVERSARY_INTRO_FADE_OUT_MS);
           }}
+          onEnded={() => leave(ANNIVERSARY_INTRO_CLOSE_FADE_MS)}
           onLoadedMetadata={(event) => {
             // Changement d'orientation : la nouvelle vidéo reprend au même instant.
             const video = event.currentTarget;
@@ -217,7 +241,12 @@ function IntroOverlay({ onClose }: { onClose: () => void }) {
         </button>
       )}
 
-      <button ref={closeRef} type="button" className={styles.close} onClick={onClose}>
+      <button
+        ref={closeRef}
+        type="button"
+        className={styles.close}
+        onClick={() => leave(ANNIVERSARY_INTRO_CLOSE_FADE_MS)}
+      >
         <X size={20} aria-hidden="true" />
         <span>Fermer</span>
       </button>

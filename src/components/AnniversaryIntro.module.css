@@ -8,7 +8,16 @@
     background: #080302;
     overscroll-behavior: contain;
     touch-action: none;
-    animation: introIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
+    animation: introIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+}
+
+/* Fondu de sortie : l'intro devient transparente et le site apparaît dessous. */
+.leaving {
+    opacity: 0;
+    pointer-events: none;
+    animation: none;
+    transition-property: opacity;
+    transition-timing-function: ease-in-out;
 }
 
 .video,

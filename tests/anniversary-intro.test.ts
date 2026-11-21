@@ -4,6 +4,7 @@ import {
   ANNIVERSARY_INTRO_MEDIA,
   introLayoutFor,
   isAnniversaryIntroActive,
+  isIntroFinishing,
 } from '../src/lib/anniversary-intro';
 
 test('intro is shown until Sunday 29 November 2026 included, Geneva time', () => {
@@ -36,4 +37,14 @@ test('every orientation offers an AV1 source with an H.264 fallback', () => {
     assert.match(media.av1, /-av1\.mp4$/);
     assert.match(media.h264, /-h264\.mp4$/);
   }
+});
+
+test('the fade revealing the site starts one second before the video ends', () => {
+  assert.equal(isIntroFinishing(10, 25.6), false);
+  assert.equal(isIntroFinishing(24.5, 25.6), false);
+  assert.equal(isIntroFinishing(24.6, 25.6), true);
+  assert.equal(isIntroFinishing(25.6, 25.6), true);
+  // Duration unknown while the video loads: never fade early.
+  assert.equal(isIntroFinishing(0, Number.NaN), false);
+  assert.equal(isIntroFinishing(0, Number.POSITIVE_INFINITY), false);
 });

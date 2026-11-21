@@ -1,12 +1,13 @@
 /**
  * Intro vidéo plein écran de l'anniversaire (menus des 26, 27 et 28 novembre 2026).
  * Affichée à l'ouverture du site jusqu'au dimanche 29 novembre 2026 inclus, heure de Genève.
+ * Lue une seule fois : à la fin, elle s'efface en fondu et laisse apparaître le site.
  */
 
 /** Premier instant où l'intro n'est plus affichée : lundi 30 novembre 2026, 00:00 à Genève (CET, UTC+1). */
 export const ANNIVERSARY_INTRO_END = Date.parse('2026-11-30T00:00:00+01:00');
 
-/** Une fois fermée, l'intro ne réapparaît pas pendant la même visite (onglet). */
+/** Une fois vue ou fermée, l'intro ne réapparaît pas pendant la même visite (onglet). */
 export const ANNIVERSARY_INTRO_STORAGE_KEY = 'gazelle-intro-anniversaire-2026-fermee';
 
 const BASE = '/videos/anniversaire-2026';
@@ -32,11 +33,23 @@ export const ANNIVERSARY_INTRO_TYPES = {
   h264: 'video/mp4; codecs="avc1.640028"',
 } as const;
 
+/** Fondu qui révèle le site : il démarre cette durée avant la fin de la vidéo et se termine avec elle. */
+export const ANNIVERSARY_INTRO_FADE_OUT_MS = 1000;
+
+/** Fondu plus court quand le visiteur ferme lui-même l'intro. */
+export const ANNIVERSARY_INTRO_CLOSE_FADE_MS = 400;
+
 export type IntroOrientation = 'landscape' | 'portrait';
 export type IntroFit = 'cover' | 'contain';
 
 export function isAnniversaryIntroActive(now: number): boolean {
   return now < ANNIVERSARY_INTRO_END;
+}
+
+/** Vrai quand il reste moins que la durée du fondu de sortie : on commence à révéler le site. */
+export function isIntroFinishing(currentTime: number, duration: number): boolean {
+  if (!Number.isFinite(duration) || duration <= 0) return false;
+  return currentTime >= duration - ANNIVERSARY_INTRO_FADE_OUT_MS / 1000;
 }
 
 /**
