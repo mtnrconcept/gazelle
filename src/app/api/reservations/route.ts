@@ -6,14 +6,16 @@ import { validateReservationInput } from '@/lib/reservation-validation';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+const noStore = { 'Cache-Control': 'no-store' };
+
 export async function GET() {
   try {
     await prisma.$queryRaw`SELECT 1`;
-    return NextResponse.json({ status: 'online' }, { headers: { 'Cache-Control': 'no-store' } });
+    return NextResponse.json({ status: 'online' }, { headers: noStore });
   } catch {
     return NextResponse.json(
-      { status: 'unavailable', error: 'Service de réservation temporairement indisponible' },
-      { status: 503, headers: { 'Cache-Control': 'no-store' } },
+      { status: 'degraded', message: 'Le formulaire fonctionne en mode e-mail uniquement.' },
+      { headers: noStore },
     );
   }
 }
@@ -23,18 +25,18 @@ export async function POST(req: NextRequest) {
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json({ error: 'Données JSON invalides' }, { status: 400 });
+    return NextResponse.json({ error: 'Données JSON invalides' }, { status: 400, headers: noStore });
   }
 
   const validated = validateReservationInput(body);
   if (!validated.ok) {
-    return NextResponse.json({ error: validated.error }, { status: 400 });
+    return NextResponse.json({ error: validated.error }, { status: 400, headers: noStore });
   }
   const { nom, email, telephone, date, service, personnes, message } = validated.data;
 
-  let reservation: { id: number };
+  let reservationId: number | null = null;
   try {
-    reservation = await prisma.reservation.create({
+    const reservation = await prisma.reservation.create({
       data: {
         nom,
         email,
@@ -47,30 +49,48 @@ export async function POST(req: NextRequest) {
       },
       select: { id: true },
     });
+    reservationId = reservation.id;
   } catch (error) {
-    console.error('Reservation could not be persisted:', error instanceof Error ? error.name : 'unknown error');
+    // The restaurant can still receive and process a request while its DB is offline.
+    console.error('Reservation database unavailable; trying email-only delivery:', error instanceof Error ? error.name : 'unknown');
+  }
+
+  const emailSent = (await sendReservationEmail({
+    nom, email, telephone, date, service, personnes, message,
+    emailOnly: reservationId === null,
+  })).success;
+
+  if (reservationId === null && !emailSent) {
     return NextResponse.json(
-      { error: 'Le service de réservation est momentanément indisponible. Veuillez appeler le restaurant.' },
-      { status: 503 },
+      { error: 'Votre demande n’a pas pu être transmise. Veuillez appeler le restaurant au +41 22 340 33 50.' },
+      { status: 503, headers: noStore },
     );
   }
 
-  // Never confirm a reservation merely because SMTP accepted a notification.
-  // SMTP failure does not discard a successfully stored pending request.
-  const notification = await sendReservationEmail({
-    nom, email, telephone, date, service, personnes, message,
-  });
+  if (reservationId === null) {
+    return NextResponse.json(
+      {
+        success: true,
+        status: 'pending',
+        deliveryMode: 'email_only',
+        emailSent: true,
+        message: 'Demande transmise au restaurant par e-mail, en attente de sa confirmation.',
+      },
+      { status: 202, headers: noStore },
+    );
+  }
 
   return NextResponse.json(
     {
       success: true,
-      id: reservation.id,
+      id: reservationId,
       status: 'pending',
-      emailSent: notification.success,
-      message: notification.success
-        ? 'Demande enregistrée, en attente de confirmation du restaurant.'
-        : 'Demande enregistrée, mais la notification a échoué. Veuillez téléphoner au restaurant.',
+      deliveryMode: 'database',
+      emailSent,
+      message: emailSent
+        ? 'Demande enregistrée et transmise au restaurant, en attente de confirmation.'
+        : 'Demande enregistrée, mais la notification par e-mail a échoué. Veuillez appeler le restaurant.',
     },
-    { status: 201 },
+    { status: 201, headers: noStore },
   );
 }
