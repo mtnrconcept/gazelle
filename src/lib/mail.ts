@@ -15,11 +15,11 @@ export async function sendReservationEmail(data: ReservationEmail): Promise<{ su
   const user = process.env.SMTP_USER;
   const password = process.env.SMTP_PASSWORD;
   const port = Number(process.env.SMTP_PORT || 587);
-  const recipients = (process.env.RESERVATION_NOTIFY_EMAILS || 'lagazelledorgeneva@gmail.com')
-    .split(',').map((value) => value.trim()).filter(Boolean);
+  // All reservation notifications go exclusively to the restaurant's mailbox.
+  const recipient = 'lagazelledorgeneva@gmail.com';
 
   if (!host || !user || !password ||
-      !Number.isInteger(port) || port < 1 || port > 65535 || recipients.length === 0) {
+      !Number.isInteger(port) || port < 1 || port > 65535) {
     console.error('Reservation SMTP notification is not configured');
     return { success: false };
   }
@@ -54,16 +54,15 @@ export async function sendReservationEmail(data: ReservationEmail): Promise<{ su
   try {
     const info = await transporter.sendMail({
       from: process.env.SMTP_FROM || user,
-      to: recipients.join(', '),
+      to: recipient,
       subject: 'Nouvelle demande de réservation - ' + data.nom + ' - ' + date,
       text,
     });
 
     const accepted = Array.isArray(info.accepted) &&
-      info.accepted.some((address) => recipients.some(
-        (recipient) => recipient.toLowerCase() ===
-          (typeof address === 'string' ? address : address.address).toLowerCase()
-      ));
+      info.accepted.some((address) =>
+        (typeof address === 'string' ? address : address.address).toLowerCase() === recipient
+      );
 
     if (!accepted) console.error('Reservation SMTP did not accept any recipient');
     return { success: Boolean(accepted) };
