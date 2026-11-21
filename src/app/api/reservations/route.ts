@@ -1,91 +1,76 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { sendReservationEmail } from '@/lib/mail';
+import { validateReservationInput } from '@/lib/reservation-validation';
+
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  return NextResponse.json({ status: 'online', message: 'API La Gazelle d\'Or est opérationnelle' });
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    return NextResponse.json({ status: 'online' }, { headers: { 'Cache-Control': 'no-store' } });
+  } catch {
+    return NextResponse.json(
+      { status: 'unavailable', error: 'Service de réservation temporairement indisponible' },
+      { status: 503, headers: { 'Cache-Control': 'no-store' } },
+    );
+  }
 }
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const { nom, email, telephone, date, service, personnes, message } = body;
-
-  if (!nom || !email || !telephone || !date || !service || !personnes) {
-    return NextResponse.json({ error: 'Champs requis manquants (le téléphone est obligatoire)' }, { status: 400 });
-  }
-
-  if (!['dejeuner', 'diner'].includes(service)) {
-    return NextResponse.json({ error: 'Service invalide' }, { status: 400 });
-  }
-
-  const guests = Number(personnes);
-  if (!Number.isInteger(guests) || guests < 1 || guests > 20) {
-    return NextResponse.json({ error: 'Nombre de personnes invalide' }, { status: 400 });
-  }
-
+  let body: unknown;
   try {
-    let reservation = null;
-    
-    // Tentative d'enregistrement en base de données
-    try {
-      reservation = await prisma.reservation.create({
-        data: {
-          nom: String(nom).slice(0, 255),
-          email: String(email).slice(0, 255),
-          telephone: telephone ? String(telephone).slice(0, 50) : null,
-          date: new Date(date),
-          service,
-          personnes: guests,
-          message: message ? String(message).slice(0, 2000) : null,
-        },
-      });
-    } catch (dbError) {
-      console.error('Database error (reservation):', dbError);
-      // On continue pour envoyer l'email quand même
-    }
-
-    // 43. Envoi de l'email (on tente mais on ne bloque pas si c'est lent)
-    let emailSent = false;
-    try {
-      // On lance l'envoi d'email
-      const emailPromise = sendReservationEmail({
-        nom, email, telephone, date, service, personnes: guests, message
-      });
-      
-      // On attend maximum 4 secondes. Si c'est plus long, tant pis, le client a déjà sa confirmation.
-      const emailRes = await Promise.race([
-        emailPromise,
-        new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 4000))
-      ]) as { success: boolean };
-      
-      emailSent = emailRes.success;
-      
-      // Si l'e-mail est envoyé avec succès, on met à jour le statut en base de données
-      if (emailSent && reservation) {
-        await prisma.reservation.update({
-          where: { id: reservation.id },
-          data: { status: 'confirmed' }
-        });
-        console.log(`Reservation ${reservation.id} status updated to confirmed.`);
-      }
-    } catch (e) {
-      const error = e as Error;
-      if (error.message === 'Timeout') {
-        console.warn('Email sending timed out (4s), but continuing (DB is OK).');
-      } else {
-        console.error('Email failed during sending:', e);
-      }
-    }
-
-    return NextResponse.json({ 
-      success: true, 
-      id: reservation?.id,
-      emailSent: emailSent,
-      message: 'Réservation enregistrée avec succès'
-    }, { status: 201 });
-
-  } catch (error) {
-    console.error('Error in reservation API:', error);
-    return NextResponse.json({ error: 'Une erreur est survenue lors de la réservation' }, { status: 500 });
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: 'Données JSON invalides' }, { status: 400 });
   }
+
+  const validated = validateReservationInput(body);
+  if (!validated.ok) {
+    return NextResponse.json({ error: validated.error }, { status: 400 });
+  }
+  const { nom, email, telephone, date, service, personnes, message } = validated.data;
+
+  let reservation: { id: number };
+  try {
+    reservation = await prisma.reservation.create({
+      data: {
+        nom,
+        email,
+        telephone,
+        date: new Date(date + 'T00:00:00.000Z'),
+        service,
+        personnes,
+        message,
+        status: 'pending',
+      },
+      select: { id: true },
+    });
+  } catch (error) {
+    console.error('Reservation could not be persisted:', error instanceof Error ? error.name : 'unknown error');
+    return NextResponse.json(
+      { error: 'Le service de réservation est momentanément indisponible. Veuillez appeler le restaurant.' },
+      { status: 503 },
+    );
+  }
+
+  // Never confirm a reservation merely because SMTP accepted a notification.
+  // SMTP failure does not discard a successfully stored pending request.
+  const notification = await sendReservationEmail({
+    nom, email, telephone, date, service, personnes, message,
+  });
+
+  return NextResponse.json(
+    {
+      success: true,
+      id: reservation.id,
+      status: 'pending',
+      emailSent: notification.success,
+      message: notification.success
+        ? 'Demande enregistrée, en attente de confirmation du restaurant.'
+        : 'Demande enregistrée, mais la notification a échoué. Veuillez téléphoner au restaurant.',
+    },
+    { status: 201 },
+  );
 }
