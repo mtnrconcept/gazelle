@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { sendReservationEmail } from '@/lib/mail';
+import { sendReservationEmail, sendReservationReceipt } from '@/lib/mail';
 import { validateReservationInput } from '@/lib/reservation-validation';
 
 export const runtime = 'nodejs';
@@ -67,6 +67,12 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // Send the client an acknowledgement only after a request was saved or
+  // successfully delivered to the restaurant. This does not confirm a table.
+  const customerEmailSent = (await sendReservationReceipt({
+    nom, email, telephone, date, service, personnes, message,
+  })).success;
+
   if (reservationId === null) {
     return NextResponse.json(
       {
@@ -74,6 +80,7 @@ export async function POST(req: NextRequest) {
         status: 'pending',
         deliveryMode: 'email_only',
         emailSent: true,
+        customerEmailSent,
         message: 'Demande transmise au restaurant par e-mail, en attente de sa confirmation.',
       },
       { status: 202, headers: noStore },
@@ -87,6 +94,7 @@ export async function POST(req: NextRequest) {
       status: 'pending',
       deliveryMode: 'database',
       emailSent,
+      customerEmailSent,
       message: emailSent
         ? 'Demande enregistrée et transmise au restaurant, en attente de confirmation.'
         : 'Demande enregistrée, mais la notification par e-mail a échoué. Veuillez appeler le restaurant.',
