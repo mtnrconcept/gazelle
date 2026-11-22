@@ -17,6 +17,7 @@ export function ContactPageClient() {
     const [sent, setSent] = useState(false);
     const [notificationFailed, setNotificationFailed] = useState(false);
     const [emailOnly, setEmailOnly] = useState(false);
+    const [customerEmailSent, setCustomerEmailSent] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState('');
 
@@ -47,6 +48,7 @@ export function ContactPageClient() {
             const data = await res.json();
             setNotificationFailed(data.emailSent === false);
             setEmailOnly(data.deliveryMode === 'email_only');
+            setCustomerEmailSent(data.customerEmailSent === true);
             setSent(true);
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Une erreur est survenue. Veuillez réessayer.');
@@ -110,7 +112,10 @@ export function ContactPageClient() {
                                 ) : (
                                     <p>Votre demande a bien été enregistrée. Elle reste en attente de confirmation par le restaurant.</p>
                                 )}
-                                <button className="contact-resetBtn" onClick={() => { setSent(false); setNotificationFailed(false); setEmailOnly(false); setForm({ nom: '', email: '', telephone: '', date: '', service: 'diner', personnes: '2', message: '' }); }}>
+                                <p>{customerEmailSent
+                                    ? 'Un récapitulatif de votre demande a été envoyé à votre adresse e-mail. Il ne constitue pas encore une confirmation de table.'
+                                    : 'Nous n’avons pas pu envoyer le récapitulatif par e-mail. Conservez ces informations et contactez-nous si nécessaire.'}</p>
+                                <button className="contact-resetBtn" onClick={() => { setSent(false); setNotificationFailed(false); setEmailOnly(false); setCustomerEmailSent(false); setForm({ nom: '', email: '', telephone: '', date: '', service: 'diner', personnes: '2', message: '' }); }}>
                                     Nouvelle réservation
                                 </button>
                             </div>
