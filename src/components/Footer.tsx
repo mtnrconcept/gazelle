@@ -1,4 +1,11 @@
 import Link from 'next/link';
+import { siteConfig } from '@/lib/site';
+
+const socialLinks = [
+    { href: siteConfig.sameAs[0], label: 'Facebook' },
+    { href: siteConfig.sameAs[1], label: 'Instagram' },
+    { href: siteConfig.sameAs[2], label: 'TikTok' },
+] as const;
 
 export function Footer() {
     return (
@@ -6,38 +13,23 @@ export function Footer() {
             <div className="container">
                 <div className="footer-grid">
                     <div className="footer-brandCol">
-                        <h3 className="footer-logoTitle">La Gazelle d'Or</h3>
+                        <h3 className="footer-logoTitle">{siteConfig.name}</h3>
                         <p className="footer-tagline">
-                            Les saveurs authentiques de l'Érythrée et de l'Éthiopie au cœur de Genève.
+                            {"Les saveurs authentiques de l'Érythrée et de l'Éthiopie au cœur de Genève."}
                         </p>
                         <div className="footer-socials">
-                            <a
-                                href="https://www.facebook.com/lagazelledorgeneva"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="Facebook"
-                                className="footer-socialLink"
-                            >
-                                Facebook
-                            </a>
-                            <a
-                                href="https://www.instagram.com/lagazelledorgeneva"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="Instagram"
-                                className="footer-socialLink"
-                            >
-                                Instagram
-                            </a>
-                            <a
-                                href="https://www.tiktok.com/@la.gazelle.dor.ge"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label="TikTok"
-                                className="footer-socialLink"
-                            >
-                                TikTok
-                            </a>
+                            {socialLinks.map((social) => (
+                                <a
+                                    key={social.label}
+                                    href={social.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={social.label}
+                                    className="footer-socialLink"
+                                >
+                                    {social.label}
+                                </a>
+                            ))}
                         </div>
                     </div>
 
@@ -62,17 +54,18 @@ export function Footer() {
                                 rel="noopener noreferrer"
                                 className="footer-contactLink"
                             >
-                                Rue de Lyon 55<br />1203 Genève
+                                {siteConfig.address.streetAddress}<br />
+                                {siteConfig.address.postalCode} {siteConfig.address.addressLocality}
                             </a>
                         </div>
                         <div className="footer-contactItem">
-                            <a href="tel:+41223403350" className="footer-contactLink">
-                                +41 22 340 33 50
+                            <a href={`tel:${siteConfig.telephone}`} className="footer-contactLink">
+                                {siteConfig.telephoneDisplay}
                             </a>
                         </div>
                         <div className="footer-contactItem">
-                            <a href="mailto:lagazelledorgeneva@gmail.com" className="footer-contactLink">
-                                lagazelledorgeneva@gmail.com
+                            <a href={`mailto:${siteConfig.email}`} className="footer-contactLink">
+                                {siteConfig.email}
                             </a>
                         </div>
                     </div>
@@ -87,7 +80,7 @@ export function Footer() {
                     </div>
 
                     <div className="footer-col">
-                        <h4 className="footer-colTitle">Heures d'ouverture</h4>
+                        <h4 className="footer-colTitle">{"Heures d'ouverture"}</h4>
                         <div className="footer-hoursList">
                             <p className="footer-hourRow">
                                 <span className="footer-dayLabel">Lun – Sam</span>
@@ -106,7 +99,7 @@ export function Footer() {
                 </div>
 
                 <div className="footer-copyright">
-                    <p>&copy; {new Date().getFullYear()} La Gazelle d'Or. Tous droits réservés. · Village africain · Restaurant érythréen & éthiopien à Genève</p>
+                    <p>&copy; {new Date().getFullYear()} {siteConfig.name}. Tous droits réservés. · Village africain · Restaurant érythréen & éthiopien à Genève</p>
                     <p className="footer-signature">Site réalisé par Raphaël Barman, +41 76 475 66 69</p>
                 </div>
             </div>

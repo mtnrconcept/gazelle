@@ -3,8 +3,8 @@ const items = [
     'Rituel du cafe',
     'Epices traditionnelles',
     'Partage convivial',
-    'Cuisine erythreenne',
-    'Saveurs ethiopiennes'
+    'Cuisine érythréenne',
+    'Saveurs éthiopiennes'
 ];
 
 export function Marquee() {

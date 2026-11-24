@@ -1,34 +1,104 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { sendReservationEmail, sendReservationReceipt } from '@/lib/mail';
+import { validateReservationInput } from '@/lib/reservation-validation';
+
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
+const noStore = { 'Cache-Control': 'no-store' };
+
+export async function GET() {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    return NextResponse.json({ status: 'online' }, { headers: noStore });
+  } catch {
+    return NextResponse.json(
+      { status: 'degraded', message: 'Le formulaire fonctionne en mode e-mail uniquement.' },
+      { headers: noStore },
+    );
+  }
+}
 
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const { nom, email, telephone, date, service, personnes, message } = body;
-
-  if (!nom || !email || !date || !service || !personnes) {
-    return NextResponse.json({ error: 'Champs requis manquants' }, { status: 400 });
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: 'Données JSON invalides' }, { status: 400, headers: noStore });
   }
 
-  if (!['dejeuner', 'diner'].includes(service)) {
-    return NextResponse.json({ error: 'Service invalide' }, { status: 400 });
+  const validated = validateReservationInput(body);
+  if (!validated.ok) {
+    return NextResponse.json({ error: validated.error }, { status: 400, headers: noStore });
+  }
+  const { nom, email, telephone, date, service, personnes, message } = validated.data;
+
+  let reservationId: number | null = null;
+  try {
+    const reservation = await prisma.reservation.create({
+      data: {
+        nom,
+        email,
+        telephone,
+        date: new Date(date + 'T00:00:00.000Z'),
+        service,
+        personnes,
+        message,
+        status: 'pending',
+      },
+      select: { id: true },
+    });
+    reservationId = reservation.id;
+  } catch (error) {
+    // The restaurant can still receive and process a request while its DB is offline.
+    console.error('Reservation database unavailable; trying email-only delivery:', error instanceof Error ? error.name : 'unknown');
   }
 
-  const guests = Number(personnes);
-  if (!Number.isInteger(guests) || guests < 1 || guests > 20) {
-    return NextResponse.json({ error: 'Nombre de personnes invalide' }, { status: 400 });
+  const emailSent = (await sendReservationEmail({
+    nom, email, telephone, date, service, personnes, message,
+    emailOnly: reservationId === null,
+  })).success;
+
+  if (reservationId === null && !emailSent) {
+    return NextResponse.json(
+      { error: 'Votre demande n’a pas pu être transmise. Veuillez appeler le restaurant au +41 22 340 33 50.' },
+      { status: 503, headers: noStore },
+    );
   }
 
-  const reservation = await prisma.reservation.create({
-    data: {
-      nom: String(nom).slice(0, 255),
-      email: String(email).slice(0, 255),
-      telephone: telephone ? String(telephone).slice(0, 50) : null,
-      date: new Date(date),
-      service,
-      personnes: guests,
-      message: message ? String(message).slice(0, 2000) : null,
+  // Send the client an acknowledgement only after a request was saved or
+  // successfully delivered to the restaurant. This does not confirm a table.
+  const customerEmailSent = (await sendReservationReceipt({
+    nom, email, telephone, date, service, personnes, message,
+  })).success;
+
+  if (reservationId === null) {
+    return NextResponse.json(
+      {
+        success: true,
+        status: 'pending',
+        deliveryMode: 'email_only',
+        emailSent: true,
+        customerEmailSent,
+        message: 'Demande transmise au restaurant par e-mail, en attente de sa confirmation.',
+      },
+      { status: 202, headers: noStore },
+    );
+  }
+
+  return NextResponse.json(
+    {
+      success: true,
+      id: reservationId,
+      status: 'pending',
+      deliveryMode: 'database',
+      emailSent,
+      customerEmailSent,
+      message: emailSent
+        ? 'Demande enregistrée et transmise au restaurant, en attente de confirmation.'
+        : 'Demande enregistrée, mais la notification par e-mail a échoué. Veuillez appeler le restaurant.',
     },
-  });
-
-  return NextResponse.json(reservation, { status: 201 });
+    { status: 201, headers: noStore },
+  );
 }

@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, FormEvent } from 'react';
+import { swissToday } from '@/lib/reservation-validation';
+import { PingPongVideo } from '@/components/PingPongVideo';
 
 export function ContactPageClient() {
     const [form, setForm] = useState({
@@ -13,6 +15,9 @@ export function ContactPageClient() {
         message: '',
     });
     const [sent, setSent] = useState(false);
+    const [notificationFailed, setNotificationFailed] = useState(false);
+    const [emailOnly, setEmailOnly] = useState(false);
+    const [customerEmailSent, setCustomerEmailSent] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState('');
 
@@ -40,6 +45,10 @@ export function ContactPageClient() {
                 throw new Error(data.error || 'Erreur serveur');
             }
 
+            const data = await res.json();
+            setNotificationFailed(data.emailSent === false);
+            setEmailOnly(data.deliveryMode === 'email_only');
+            setCustomerEmailSent(data.customerEmailSent === true);
             setSent(true);
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Une erreur est survenue. Veuillez réessayer.');
@@ -51,10 +60,14 @@ export function ContactPageClient() {
     return (
         <div className="contact-page">
             <div className="contact-hero">
+                <div className="contact-heroVideoBg">
+                    <PingPongVideo src="/images/Caf%C3%A9interior.mp4" />
+                    <div className="contact-heroOverlay" />
+                </div>
                 <div className="contact-heroContent">
                     <p className="contact-heroEyebrow">Réservation en ligne</p>
                     <h1 className="heroPageTitle contact-heroTitle" data-text="Reserver une table a La Gazelle d'Or">Reserver une table a La Gazelle d&apos;Or</h1>
-                    <p className="contact-heroTagline">Offrez-vous un voyage culinaire au cœur de l'Afrique</p>
+                    <p className="contact-heroTagline">Offrez-vous un voyage culinaire au cœur de l&apos;Afrique</p>
                 </div>
             </div>
 
@@ -91,9 +104,18 @@ export function ContactPageClient() {
                         {sent ? (
                             <div className="contact-successCard">
                                 <span className="contact-successIcon">✓</span>
-                                <h3>Reservation enregistree !</h3>
-                                <p>Votre demande a bien été enregistrée. Nous vous confirmerons votre réservation dans les plus brefs délais.</p>
-                                <button className="contact-resetBtn" onClick={() => { setSent(false); setForm({ nom: '', email: '', telephone: '', date: '', service: 'diner', personnes: '2', message: '' }); }}>
+                                <h3>{emailOnly ? 'Demande transmise !' : 'Demande enregistrée !'}</h3>
+                                {emailOnly ? (
+                                    <p>Votre demande a été transmise directement au restaurant par e-mail. Elle n’apparaît pas encore dans son tableau de bord et reste en attente de confirmation par le restaurant.</p>
+                                ) : notificationFailed ? (
+                                    <p>Votre demande a été enregistrée, mais le restaurant n’a pas pu recevoir l’avis par e-mail. Merci de confirmer directement au <a href="tel:+41223403350">+41 22 340 33 50</a>.</p>
+                                ) : (
+                                    <p>Votre demande a bien été enregistrée. Elle reste en attente de confirmation par le restaurant.</p>
+                                )}
+                                <p>{customerEmailSent
+                                    ? 'Un récapitulatif de votre demande a été envoyé à votre adresse e-mail. Il ne constitue pas encore une confirmation de table.'
+                                    : 'Nous n’avons pas pu envoyer le récapitulatif par e-mail. Conservez ces informations et contactez-nous si nécessaire.'}</p>
+                                <button className="contact-resetBtn" onClick={() => { setSent(false); setNotificationFailed(false); setEmailOnly(false); setCustomerEmailSent(false); setForm({ nom: '', email: '', telephone: '', date: '', service: 'diner', personnes: '2', message: '' }); }}>
                                     Nouvelle réservation
                                 </button>
                             </div>
@@ -136,7 +158,7 @@ export function ContactPageClient() {
 
                                 <div className="contact-row">
                                     <div className="contact-field">
-                                        <label className="contact-label" htmlFor="telephone">Téléphone</label>
+                                        <label className="contact-label" htmlFor="telephone">Téléphone *</label>
                                         <input
                                             id="telephone"
                                             name="telephone"
@@ -145,6 +167,7 @@ export function ContactPageClient() {
                                             value={form.telephone}
                                             onChange={handleChange}
                                             placeholder="+41 __ ___ __ __"
+                                            required
                                         />
                                     </div>
                                     <div className="contact-field">
@@ -153,6 +176,7 @@ export function ContactPageClient() {
                                             id="date"
                                             name="date"
                                             type="date"
+                                            min={swissToday()}
                                             className="contact-input"
                                             value={form.date}
                                             onChange={handleChange}
@@ -225,7 +249,7 @@ export function ContactPageClient() {
                             <div className="contact-infoBlock">
                                 <p className="contact-infoLabel">Email</p>
                                 <a href="mailto:lagazelledorgeneva@gmail.com" className="contact-infoLink">
-                                    lagazelledorgeneva@gmail.com
+                                   lagazelledorgeneva@gmail.com
                                 </a>
                             </div>
 
@@ -244,7 +268,7 @@ export function ContactPageClient() {
                             <div className="contact-divider"></div>
 
                             <div className="contact-infoBlock">
-                                <p className="contact-infoLabel">Heures d'ouverture</p>
+                                <p className="contact-infoLabel">Heures d&apos;ouverture</p>
                                 <div className="contact-hours">
                                     <div className="contact-hourRow">
                                         <span className="contact-day">Lun – Sam</span>

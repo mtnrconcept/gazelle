@@ -62,7 +62,7 @@ export default function AdminMenuPage() {
                     <ItemList items={section.items} sectionId={section.id} editingItem={editingItem} setEditingItem={setEditingItem} saveItem={saveItem} deleteItem={deleteItem} newItem={newItem} setNewItem={setNewItem} />
 
                     {section.subsections.map((sub) => (
-                        <div key={sub.id} style={{ marginLeft: '1.5rem', marginTop: '1rem', paddingLeft: '1rem', borderLeft: '2px solid #f0e6d4' }}>
+                        <div key={sub.id} className="admin-subsection-card" style={{ marginLeft: '1.5rem', marginTop: '1rem', paddingLeft: '1rem', borderLeft: '2px solid #f0e6d4' }}>
                             <h3 style={{ fontSize: '0.95rem', fontWeight: 600, color: '#3a2819', marginBottom: '0.75rem' }}>{sub.title}</h3>
                             <ItemList items={sub.items} sectionId={sub.id} editingItem={editingItem} setEditingItem={setEditingItem} saveItem={saveItem} deleteItem={deleteItem} newItem={newItem} setNewItem={setNewItem} />
                         </div>
@@ -89,7 +89,7 @@ function ItemList({ items, sectionId, editingItem, setEditingItem, saveItem, del
                 editingItem?.id === item.id ? (
                     <ItemForm key={item.id} item={item} sectionId={sectionId} onSave={saveItem} onCancel={() => setEditingItem(null)} />
                 ) : (
-                    <div key={item.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.5rem 0', borderBottom: '1px solid #f5f5f5' }}>
+                    <div key={item.id} className="admin-menu-itemRow" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.5rem 0', borderBottom: '1px solid #f5f5f5', gap: '0.5rem', flexWrap: 'wrap' }}>
                         <div>
                             <strong style={{ fontSize: '0.875rem' }}>{item.name}</strong>
                             {item.price && <span style={{ marginLeft: '0.75rem', color: '#b86a2c', fontSize: '0.8rem' }}>{item.price}</span>}
@@ -131,11 +131,11 @@ function ItemForm({ item, sectionId, onSave, onCancel }: {
         <div style={{ padding: '0.75rem', background: '#fafafa', borderRadius: '0.5rem', margin: '0.5rem 0' }}>
             <input placeholder="Nom du plat" value={name} onChange={(e) => setName(e.target.value)} style={inputStyle} />
             <input placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} style={inputStyle} />
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <div className="admin-itemForm-twoCols" style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                 <input placeholder="Prix (ex: 25.00 CHF)" value={price} onChange={(e) => setPrice(e.target.value)} style={{ ...inputStyle, flex: 1 }} />
                 <input placeholder="URL image" value={image} onChange={(e) => setImage(e.target.value)} style={{ ...inputStyle, flex: 1 }} />
             </div>
-            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.25rem' }}>
+            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.25rem', flexWrap: 'wrap' }}>
                 <button onClick={() => onSave({ id: item?.id, name, description: description || null, price: price || null, image: image || null, sectionId, sortOrder: item?.sortOrder ?? 0 })} style={{ padding: '0.375rem 0.75rem', fontSize: '0.8rem', background: '#b86a2c', color: '#fff', border: 'none', borderRadius: '0.375rem', cursor: 'pointer' }}>
                     Enregistrer
                 </button>

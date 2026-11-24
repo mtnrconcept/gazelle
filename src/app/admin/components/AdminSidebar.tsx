@@ -19,7 +19,7 @@ export function AdminSidebar() {
     };
 
     return (
-        <aside style={{
+        <aside className="admin-sidebar" style={{
             width: '220px',
             minHeight: '100vh',
             background: '#3a2819',
@@ -29,7 +29,7 @@ export function AdminSidebar() {
             flexDirection: 'column',
             flexShrink: 0,
         }}>
-            <div style={{ padding: '0 1.25rem', marginBottom: '2rem' }}>
+            <div className="admin-sidebar-heading" style={{ padding: '0 1.25rem', marginBottom: '2rem' }}>
                 <h2 style={{ fontSize: '1.1rem', fontWeight: 700 }}>La Gazelle d&apos;Or</h2>
                 <p style={{ fontSize: '0.75rem', color: '#d9a24f', marginTop: '0.25rem' }}>Administration</p>
             </div>

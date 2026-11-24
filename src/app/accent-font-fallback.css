@@ -1,0 +1,14 @@
+@font-face {
+  font-family: 'AfricanSafe';
+  src: url('/african.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+  /* The decorative font is reliable for basic ASCII only. Accented French
+     characters are deliberately left to the next family in the stack. */
+  unicode-range: U+0020-007E;
+}
+
+:root {
+  --font-section-display: "AfricanSafe", var(--font-display), serif;
+}
